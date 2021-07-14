@@ -67,8 +67,8 @@ navbar:
           href: articles/lab02_t-tests.html
         - text: "Lab 3: ANOVA"
           href: articles/lab03_ANOVA.html
-        - text: "Lab 4: Contrasts"
-          href: articles/lab04_constrasts.html
+        - text: "Lab 4: Contrasts, estimation, and power analysis"
+          href: articles/lab04_contrasts.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:
