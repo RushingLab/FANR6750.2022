@@ -1,0 +1,320 @@
+---
+title: "Lab 3: Completely randomized ANOVA"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2021"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab03_ANOVA}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+  collapse = TRUE,
+  comment = "#>"
+)
+library(dplyr)
+library(knitr)
+library(FANR6750)
+library(WILD6900)
+library(kableExtra)
+```
+
+# Today's topics
+
+1) Brief overview of ANOVA  
+
+2) ANOVA in `R`  
+
+3) Multiple comparisons  
+
+# Brief overview of ANOVA
+
+## One-way ANOVA
+
+#### Scenario
+
+- We have independent samples from $a > 2$ groups
+
+- We assume a common variance  
+
+#### Questions
+
+- Do the means differ?  
+
+- By how much? (What are the effect sizes?)  
+
+#### Null hypothesis
+
+- $H_0 : \mu_1 = \mu_2 = \mu_3 = . . . = \mu_a$  
+
+- $H_0 : \alpha_1 = \alpha_2 = \alpha_3 = . . . = \alpha_a = 0$  
+
+## ANOVA in `R`
+
+#### Chainshaw data
+
+The kick angle measurements for the 4 brands of chainsaw:
+
+```{r echo = TRUE}
+library(FANR6750)
+data("sawData")
+
+head(sawData)
+```
+
+Visualize the data:
+
+```{r echo = TRUE, fig.width=6, fig.height=3, fig.align='center'}
+ggplot(sawData, aes(x = Brand, y = y)) +
+  geom_boxplot() +
+  scale_y_continuous("Kickback angle")
+```
+
+## Two ANOVA function: in `R`: `aov()` and `lm()`
+
+- `R` has 2 common functions for doing ANOVA: `aov()` and `lm()`  
+
+- We will primarily use `aov()` in this class
+
+#### Crude characterization
+
+```{r echo = FALSE}
+aov_fxn <- data.frame(col1 = c("Emphasis", "Typical use", "Multiple error strata?"),
+                     aov = c("ANOVA tables", "Designed experiments", "Yes"),
+                     lm = c("Linear models", "Regression analysis", "No"))
+names(aov_fxn) <- c("", "aov()", "lm()")
+
+aov_fxn %>%
+  kable("html",  align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+                full_width = FALSE)
+```
+
+## Using `aov()`
+
+#### Do the analysis
+
+```{r echo = TRUE}
+aov.out1 <- aov(y ~ Brand, data = sawData)
+```
+
+#### View the ANOVA table
+
+```{r echo = TRUE}
+summary(aov.out1)
+```
+
+The default output from `summary` is fine for viewing in the console but what if you want to include the ANOVA table in a report or paper? You could manually create a table and copy/paste the values, but that's a pain. Luckily, there is a handy package called `broom` that turns the output from many model functions into cleaned-up data frames:
+
+```{r}
+broom::tidy(aov.out1)
+```
+
+In R Markdown, we can even include that data frame as a nicely formatted table directly in the knitted document:
+
+```{r}
+aov_df <- broom::tidy(aov.out1)
+
+options(knitr.kable.NA = '') # don't print NA's in table
+knitr::kable(aov_df, 
+      col.names = c("Source", "df", "SS", "MS", "F", "p"),
+      align = 'c', format = "html") 
+```
+
+
+
+#### Estimates of means ( $\mu$'s) and SE's
+
+```{r echo = TRUE}
+model.tables(aov.out1, type = "means", se = TRUE)
+```
+
+#### Estimates of effect sizes ( $\alpha$'s) and SE's
+
+```{r echo = TRUE}
+model.tables(aov.out1, type = "effects", se = TRUE)
+```
+
+## ANOVA by hand
+
+#### Grand mean
+
+```{r echo = TRUE}
+(ybar. <- mean(sawData$y))
+```
+
+#### Group means
+
+As with most things in `R`, there are several ways to calculate the group means. First, find the group means, the hard way:
+
+```{r echo = TRUE}
+A <- sawData$y[sawData$Brand == "A"]
+B <- sawData$y[sawData$Brand == "B"]
+C <- sawData$y[sawData$Brand == "C"]
+D <- sawData$y[sawData$Brand == "D"]
+
+(ybar.i <- c(mean(A), mean(B), mean(C), mean(D)))
+```
+
+Better yet, use `tapply` to find the group means (the base `R` way):
+
+```{r echo = TRUE}
+(ybar.i <- tapply(sawData$y, INDEX = sawData$Brand, FUN = mean))
+```
+
+Finally, find the group means, the tidyverse way:
+
+```{r echo = TRUE}
+library(dplyr)
+(ybar.i <- sawData %>% 
+            group_by(Brand) %>% 
+             summarise(mu = mean(y)))
+```
+
+***
+
+Although each of these methods does what we want - return the mean kickback angle for each group - note that they do not return the same type of object. 
+
+Use the `class()` function to see what type of object each one returns.  
+
+When might the output from each method be useful?  
+
+***
+
+#### Sum of squares
+
+Sums of squares among
+
+```{r}
+# Number of saw brands
+a <- length(unique(sawData$Brand))
+
+# Number of measurements of each brand (note, this assumes balanced design)
+n <- nrow(sawData)/a
+
+SSa <- n * sum((ybar.i$mu - ybar.)^2)
+SSa
+```
+
+Sums of squares within
+
+```{r}
+# individual saw data
+y.ij <- sawData$y
+
+SSw <- sum((y.ij - rep(ybar.i$mu, each = n)) ^ 2)
+SSw
+```
+
+#### Means squares
+
+Mean squares among
+
+```{r}
+df1 <- a - 1
+(MSa <- SSa / df1)
+```
+
+Mean squares within
+
+```{r}
+df2 <- a * (n - 1)
+(MSw <- SSw / df2)
+```
+
+
+#### *F*-statistic
+
+```{r}
+(F.stat <- MSa / MSw)
+```
+
+#### Critical values and *p*-values
+
+Recall that in ANOVA, we only consider the upper tail of the *F*-distribution.  
+
+Critical value:
+
+```{r}
+alpha <- 0.05
+(F.crit <- qf(1 - alpha, df1, df2))
+```
+
+*p*-value
+
+```{r}
+(p.value <- 1 - pf(F.stat, df1, df2))
+```
+
+## Multiple comparisons
+
+#### Group means +1 SE
+
+```{r fig.align="center", fig.width=5, fig.height=4.5}
+mean.SE <- 6.364 # from model.tables() -- see slide 7.
+
+# Add SE column
+ybar.i <- dplyr::mutate(ybar.i, SE = mu + mean.SE)
+
+ggplot(ybar.i, aes(x = Brand, y = mu, fill = Brand)) +
+  geom_col() +
+  geom_errorbar(aes(ymin = mu, ymax = SE), width = 0) +
+  scale_y_continuous("Chainsaw kickback angle")
+```
+
+## Tukey’s Honestly Significant Difference test
+
+```{r}
+TukeyHSD(aov.out1)
+```
+
+#### Plot Tukey’s confidence intervals
+
+```{r fig.align="center", fig.width=5, fig.height=4.5}
+plot(TukeyHSD(aov.out1))
+```
+
+# Assignment
+
+A biologist wants to compare the growth of four different tree species she is considering for use in reforestation efforts. All 32 seedlings of the four species are planted at the same time in a large plot. Heights in meters recorded after several years. 
+
+Create an R Markdown file to do the following:
+
+1) Create an `R` chunk to load the data using:
+
+```{r eval = FALSE}
+library(FANR6750)
+data("treeHt")
+```
+
+2) Create a header called "Hypotheses" and under this header, indicate, in plain English, what the null and alternative hypotheses are. Also use R Markdown's equation features to write these hypotheses (to the extent possible) using mathematical notation
+
+3) Create a header called "ANOVA by hand". Under this header, perform an ANOVA analysis (degrees of freedom, sums-of-squares, mean-squares, and *F*-value) without using `aov()`. Compute either the critical value of *F*, or the *p*-value. Be sure to **annotate your code**. 
+
+4) Create a header called "ANOVA in R". Under this header, perform an ANOVA analysis on the data using the `aov()` function  
+
+5) Under a subheader called "ANOVA results":
+
+    + indicate whether or not the null hypothesis can be rejected at the $\alpha = 0.05$ level  
+
+    + include a well-formatted ANOVA table using the `broom::tidy()` function  
+
+    + create a barplot showing the group means and SEs
+
+6) Create a header called "Which means are different?". Use Tukey’s HSD test to determine which pairs of means differ at the $\alpha = 0.05$ level. Include a few sentences indicating which pairs are different  
+
+A few things to remember when creating the assignment:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Title the document: `title: "Lab 3 assignment"`
+
+- Be sure to include your first and last name in the `author` section 
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
+- Please upload both the `html` and `.Rmd` files when you submit your assignment  
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.

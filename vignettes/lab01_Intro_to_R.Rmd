@@ -1,0 +1,466 @@
+---
+title: "Lab 1: Introduction to R"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2021"
+output: 
+  rmarkdown::html_vignette:
+    keep_md: yes
+vignette: >
+  %\VignetteIndexEntry{lab01_Intro_to_R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(dplyr)
+library(knitr)
+```
+
+## What is `R`?
+
+`R` is a free, open-source programming language and software environment for statistical computing, bioinformatics, visualization and general computing.  
+
+It is based on an ever-expanding set of analytical packages that perform specific analytical, plotting, and other programming tasks. 
+
+## Why `R`?
+
+`R` is free(!), runs on pretty much every operating system, and has a huge user base.  
+
+`R` is far from the only programming language for working with data. But it is the most widely used language in the fields of ecology, evolution, and wildlife sciences. If you plan to pursue a career in any of these fields, proficiency in `R`is quickly becoming a prerequisite for many jobs.  
+
+Even if you don't pursue a career in one of these fields, the ability to manipulate, analyze, and visualize data (otherwise known as *data science*) is an extremely marketable skill in many professions right now.  
+
+## Additional resources and where to get help
+
+We will go over the basics of using `R` during lab sessions but there are many good online resources for learning `R` and getting help. A few of my favorites include: 
+
+- Tom Edward's online [Learning R](http://learnr.usu.edu/) course (from which much of this material is borrowed)  
+
+
+- [Data Analysis and Visualization in R for Ecologists](https://datacarpentry.org/R-ecology-lesson/) (also from which much of this material is borrowed)  
+
+Of course, if you encounter error messages you don't understand or need help figuring out how to accomplish something in `R`, google is your best friend (even the most experienced `R` users use google on a daily basis). The key to finding answers on google is asking the right questions. Because we will not spend much time on this topic in lab, please refer to these links for advice on formulating `R`-related questions:
+
+- [How to ask for R help](https://blog.revolutionanalytics.com/2014/01/how-to-ask-for-r-help.html)
+
+- [Seeking help](https://datacarpentry.org/R-ecology-lesson/00-before-we-start.html#seeking_help) from *Data Analysis and Visualization in R for Ecologists* 
+
+## Using `R`- the very basics 
+
+As a statistical programming tool, one thing R is very good at is doing math. So as a starting point, let's treat `R` like a fancy calculator.  
+
+We interact with this calculator by typing numbers and operators (+, -, *, /) into the `Console` window.  
+
+Let's try it - in the bottom left window (the Console), write the `R`code required to add two plus two and then press enter:
+
+``` {r calc, echo=TRUE, eval = FALSE}
+2+2
+```
+
+When you run the code, you should see the answer printed below the window. Play with your code a bit - try changing the number and the operators and then run the code again.  
+
+## Creating objects
+
+We can run `R` like a calculator by typing equations directly into the console and then printing the answer. But usually we don't want to just do a calculation and see the answer. Instead, we assign *values* to *objects*. That object is then saved in `R`'s memory which allows us to use that object later in our analysis. 
+
+This might seem a bit confusing if you are new to programming so let's try it. The following code creates an *object* called `x` and *assigns* it a value of `3`: 
+
+```{r echo = TRUE}
+x <- 3
+```
+
+The operator `<-` is how we do assignments in `R`. Whatever is to the left of `<-` is the object's name and whatever is to the right is the value. As we will see later, objects can be much more complex than simply a number but for now, we'll keep it simple. 
+
+***
+
+You try it - change the code to create an object called `new.x`. Instead of assigning `new.x` a number, give it a calculation, for example `25/5`. What do you think the value of `new.x` is?
+
+***  
+
+## Working with objects
+
+In the exercise above, you may have noticed that after running the code, `R` did not print anything. That is because we simply told `R` to create the object (in the top right window, if you click on the `Environment` tab, you should see `x` and `new.x`). Now that it is stored in `R`'s memory, we can do a lot of things with it. For one, we can print it to see the value. To do that, we simply type the name of the object and run the code:
+
+```{r printx, echo=TRUE}
+new.x <- 25/5
+new.x
+```
+
+We can also use objects to create new objects. *What do you think the following code does?*
+
+```{r multx, echo=TRUE}
+x <- 3
+y <- x*4
+```
+
+After running it, print the new object `y` to see its value. Were you right?
+
+## Naming objects
+
+It's a good idea to give objects names that tell you something about what the object represents. Names can be as long as you want them to be but should not have spaces (also remember long names require more typing so brevity is a good rule of thumb). Names also cannot start with a number and `R` is case-sensitive so, for example, `Apple` is **not** the same as `apple`.  
+
+## Using scripts instead of the console
+
+The console is useful for doing simple tasks but as our analyses become more complicated, the console is not very efficient. What if you need to go back and change a line of code? What if you want to show your code to someone else to get help?
+
+Instead of using the console, most of our work will be done using scripts. Scripts are special files that us to write, save, and run many lines of code. Scripts can be saved so you can work on them later or send them to collaborators.  
+
+To create a script, click `File -> New File -> R Script`. This new file should show up in a new window. 
+
+## Commenting your code
+
+`R` will ignore any code that follows a `#`. This is *very* useful for making your code more readable for both yourself and others. Use comments to remind yourself what a newly created object is, to explain what a line of code does, to leave yourself a reminder for later, etc. For example, in the previous code, it might be a good idea to use comments to define what each object represents:
+
+```{r LP_comment, echo = TRUE}
+n1 <- 44     # Number of individuals captured on first occasion
+
+n2 <- 32     # Number of individuals captured on second occasion
+  
+m2 <- 15     # Number of previously marked individuals captured on second occasion
+```
+
+Notice that when you run this code, `R` ignores the comments. 
+
+# Vectors
+
+So far, we have only been working with objects that store a single number. However, often it is more convenient to store a string of numbers as a single object. In `R`, these strings are called *vectors* and they are usually created by enclosing the string between `c(` and `)`:
+
+```{r echo = TRUE}
+x <- c(3,5,2,5)
+x
+```
+
+You can also sequences of consecutive numbers in a few different ways:
+
+```{r echo = TRUE}
+x <- 1:10
+x
+
+x2 <- seq(from = 1, to = 10, by = 1)
+x2
+```
+
+The `seq()` function is very flexible and useful so if you are not familiar with it, be sure to look at the help page to better understand how to use it.
+
+Another useful function for creating vectors is `rep()`, which repeats values of a vector:
+
+```{r echo = TRUE}
+rep(x2, times = 2)
+```
+
+or:
+
+```{r echo = TRUE}
+rep(x2, each = 2)
+```
+
+Be sure you notice the difference between using the `times` argument vs the `each` argument!
+
+A vector can also contain characters (though you cannot mix numbers and characters in the same vector!):
+
+```{r echo = TRUE}
+occasions <- c("Occasion1", "Occasion2", "Occasion3")
+occasions
+```
+
+The quotes around “Occasion1”, “Occasion2”, and "Occasion3" are critical. Without the quotes, `R` will assume there are objects called `Occasion1`, `Occasion2` and `Occasion3`. As these objects don’t exist in `R`’s memory, there will be an error message.  
+
+Vectors can be any length (including 1. In fact, the numeric objects we've been working with are just vectors with length 1). The function `length()` tells you how long a vector is:
+
+```{r echo = TRUE}
+length(x)
+```
+
+The function `class()` indicates the class (the type of element) of an object:
+
+```{r echo = TRUE}
+class(x)
+class(occasions)
+```
+
+What is the class of a vector with both numeric and characters entries? Hint:
+
+```{r echo = TRUE}
+mixed <- c(1, 2, "3", "4")
+```
+
+You can also use the `c()` function to add other elements to your vector:
+
+```{r echo = TRUE}
+y <- c(x, 4,8,3)
+```
+
+Vectors are one of the many data structures that `R` uses. Other important ones are lists (`list()`), matrices (`matrix()`), data frames (`data.frame()`), factors (`factor()`) and arrays (`array()`). We will learn about each of those data structures as we encounter them in lab exercises. 
+
+## Vectorized arithmetic
+
+One of the most useful properties of vectors in `R` is that we can use them to simplify basic arithmetic operations that need to be done on multiple observations. For example, consider the following data on wing chord (a measure of wing length) and body mass of Swainson's thrushes (*Catharus ustulatus*):
+
+
+```{r echo = FALSE, out.width="50%", fig.align="c", fig.cap="Swainson's Thrush. Image courtesy of VJAnderson via Wikicommons"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/1/1e/Swainson%27s_Thrush_0777vv.jpg")
+
+```
+
+```{r echo = FALSE}
+swth <- data.frame(Individual = 1:6, 
+                   mass = c(36.2, 34.6, 31.0, 31.8, 29.4, 32.0),
+                   wing <- c(95.1, 88.4, 97.9, 96.8, 92.3, 90.6))
+
+swth %>%
+  kable("html", col.names = c("Individual", "Mass (g)", "Wing chord (mm)"), align = 'c')
+  
+```
+
+Perhaps we want to derive the body condition of each individual based on these measures. One common metric of body condition used by ornithologists is $\frac{mass}{size}$, where wing chord is used as a proxy for body size. We *could* calculate body condition for each individual:
+
+```{r eval = FALSE}
+cond1 <- 36.2/95.1 # Body condition of the first individual
+
+cond2 <- 34.6/88.4 # Body condition of the second individual
+```
+
+But that is time consuming and error prone. Luckily, `R` will *vectorize* basic arithmetic:
+
+```{r echo = TRUE}
+mass <- c(36.2, 34.6, 31.0, 31.8, 29.4, 32.0)
+wing <- c(95.1, 88.4, 97.9, 96.8, 92.3, 90.6)
+
+cond <- mass/wing
+cond
+```
+
+As you can see, when we divide one vector by another, `R` divides the first element of the first vector by the first element of the second vector, etc. and returns a vector. 
+
+## Built-in functions
+
+The power of `R` is most apparent in the large number of built-in functions that are available for users.  
+
+Functions are small bits of code that perform a specific task. Most functions accept one or more inputs called arguments and return a value or a new object.  
+
+Let's say we have the following data on the number of ticks recorded on 5 dogs:
+
+```{r echo = FALSE}
+
+
+tick <- data.frame(Individual = 1:5, 
+                  Ticks = c(4,7,2,3,150))
+
+tick %>%
+  kable("html", align = 'c')
+  
+```
+
+
+What is the total number of ticks recorded in the study? For that, we can use the built-in `sum()` function:
+
+```{r echo = TRUE}
+ticks <- c(4,7,2,3,150)
+
+sum(ticks)
+```
+
+What is the mean number of ticks per dog?
+
+```{r echo = TRUE}
+mean(ticks)
+```
+
+And the variance?
+
+```{r echo = TRUE}
+var(ticks)
+```
+
+
+### Arguments
+
+Every function takes a different set of arguments and in many cases you will need to look up what those arguments are. The best way to get help for a specific function is to type a question mark followed by the function name, which will bring up a help page in the bottom right panel. For example, the `round` function rounds a number to a specified number of decimal places. This is a useful function when we don't want to print a really large number of digits:
+
+```{r help, eval = FALSE, echo = TRUE}
+?round
+```
+
+So we see `round` takes an argument called `x`, which is the number we want to round, and the number of `digits` we want to round to. If you provide the arguments in the exact same order as they are defined you don’t have to name them. For example, :
+
+```{r round, eval = TRUE, echo = TRUE}
+y <- mean(ticks)
+y
+
+round(y, 0)
+```
+
+If you do name the arguments, you can switch their order:
+
+```{r round2, eval = TRUE, echo = TRUE}
+round(digits = 0, x = y)
+```
+
+Although you don't have to name arguments, it’s a good idea to get in the habit of naming them. This will make you code easier to read, will help avoid mistakes that can occur when you don't put the arguments in the correct order, and makes it easier to trouble shoot code that doesn't do what you expect it to do. 
+
+## Indexing vectors
+
+Often you will need to work with just a subset of a vector. For example, maybe you have a vector of plant biomass measured along transects but you only need 
+
+```{r echo = TRUE}
+y <- c(2, 4, 8, 4, 25)
+y[c(1,3)]
+```
+
+Notice that to index certain elements of the vector `y`, we use square brackets. Inside those brackets, we provided *an integer vector*, where each integer refers to the position of elements in the first vector. The indexing vector can be any length (including 1). 
+
+We can also index vectors using *a logical vector*. A logical vector is a special type of object that contains values of `TRUE` or `FALSE`. When using a logical vector for indexing, the logical vector indicates which elements to keep (`TRUE`) or remove (`FALSE`) from the original vector. For this reason, the indexing vector must be same length as the focal vector; i.e., `length(a) == length(v)`
+
+```{r echo = TRUE}
+# Logical vector (which elements of y are greater than 4?)
+y > 4
+```
+
+```{r echo = TRUE}
+# Indexing using a logical vector (keep elements 3 and 5)
+y[y > 4]
+```
+
+We can also use indexing to remove elements from a vector:
+
+```{r echo = TRUE}
+# Remove the second element
+y[-2]
+```
+
+or to rearrange the order of a vector
+
+```{r echo = TRUE}
+y[c(5,4,3,2,1)]
+```
+
+## Data frames
+
+So  far, we have only discussed one particular class of `R` object - vectors. Vectors hold a string of values as a single object. Although useful for many applications, vectors are limited in their ability to store multiple types of data (numeric and character).  
+
+This is where data frames become useful. Perhaps the most common type data object you will use in `R` is the data frame. Data frames are tabular objects (rows and columns) similar in structure to spreadsheets (think Excel or GoogleSheets). In effect, data frames store multiple vectors - each column of the data frame is a vector. As such, each column can be a different class (numeric, character, etc.) but all values within a column must be the same class. Just as the first row of an Excel spreadsheet can be a list of column names, each column in a data frame has a name that (hopefully) provides information about what the values in that column represent.  
+
+To see how data frames work, let's load a data frame called `jayData` that comes with the `FANR6750` package. To get a quick idea of what information this data frame contains, we can use the `head()` and `tail()` functions, which will print the first and last 6 rows of the data frame:
+
+```{r}
+library(FANR6750)
+data("jayData")
+
+head(jayData)
+
+tail(jayData)
+```
+
+We can see that `jayData` contains eight columns: `x`, `y`, `elevation`, `forest`, `chaparral`, `habitat`, `seeds`, and `jays`. We'll learn more about what each of these columns represents later in the semester, though just like functions, many data sets have help pages also and you can access those help pages using `?jayData`. 
+Several other useful functions for investigating the structure of data frames are `str()` and `summary()`
+
+```{r}
+
+str(jayData)
+
+summary(jayData)
+```
+
+`str()` tells us about the structure of the data frame, for example `x` and `y`  are numeric columns and `habitat` contains character strings. `summary()` provides some simple summary statistics for each variable. 
+
+Another useful function is `nrow()`, which tells us now many rows are in the data frame (similar to `length()` for vectors):
+
+```{r}
+nrow(jayData)
+```
+
+### Subsetting data frames
+
+As you will see shortly, one of the most common tasks when working with data frames is creating new objects from *parts* of the full data frame. This task involves subsetting the data frame - selecting specific rows and columns. There are **many** ways of subsetting data frames in `R`, too many to discuss so we will only learn about a few. 
+
+#### Selecting columns
+
+First, we may want to select a subset of all of the columns in a big data frame. Data frames are essentially tables, which means we can reference both rows and columns by their number: `data.frame[row#, column#]`. The row and column numbers have to put inside of square brackets following the name of the data frame object. The row number always comes first and the column number second. If you want to select all rows of a specific column, you just leave the `row#` blank. For example, if we wanted a vector containing the number of jays at each survey location:
+
+```{r}
+jayData[,8]
+```
+
+
+We can also select columns using `data.frame$column` (where `data.frame` is the name of the data frame object and `column` is the name of the column). For example,
+
+```{r}
+jayData$jays
+```
+
+Notice that if you hit `tab` after you type the `$`, RStudio will bring up all of the columns and you can use the up or down buttons to find the one you want. 
+
+Sometimes you may want to select more than one column. The easiest way to do that is to use the `select()` function in the `dplyr` package:
+
+```{r}
+library(dplyr)
+
+select(.data = jayData, x, y, jays)
+
+```
+
+Notice that select requires us to first provide the data frame object (`.data = jayData`) and then we provide the column names (unquoted!) we want to select. You can also use select to remove columns:
+
+```{r}
+select(.data = jayData, -seeds)
+```
+
+***
+
+It's important to realize that even though there are different ways to accomplish the same general task (in this case, "subset columns of a data frame"), those methods will sometimes differ in subtle but important ways. 
+
+For example, what time of object did the `data.frame[,col#]` and `data.frame$column.name` options return? What type of object did `select(data.frame, col1, col2)` return? Those are very different results and knowing what the output will be can be useful when deciding the best way to accomplish your task.  
+
+***
+
+#### Filtering rows
+
+To select specific rows, we can use the `row#` method we learned above, this time leaving the columns blank:
+
+```{r}
+jayData[1,]
+```
+
+If we want more than one row, we just put in a vector with all of the rows we want:
+
+```{r}
+jayData[1:2,]
+
+jayData[c(1,30),]
+```
+
+Note that we can use the square brackets to also subset vectors, in which case we don't need the comma as long as you tell `R` which column you want first:
+
+```{r}
+jayData$jays[1]
+```
+
+Sometimes, we may not know the specific row number(s) we want but we do know the value of one of the columns we want to keep. Using the `filter()` function in the `dplyr` package allows us to filter rows based on the value of one of the variables. For example, if we want just surveys that were conducted in oak habitat, we use:
+
+```{r}
+head(filter(jayData, habitat == "Oak"))
+```
+
+Notice the need for two equals signs (`==`) when telling `R` we want the row where `habitat` equals `Oak`. Filter makes it very easy to select multiple rows using operators like greater than, less than, etc. 
+
+```{r}
+head(filter(jayData, elevation > 1000))
+```
+
+or a more complicated example:
+
+```{r}
+head(filter(jayData, elevation < 1000 & habitat == "Oak"))
+```
+
+# Projects and directories
+
+Click [here](https://rushinglab.github.io/FANR6750/articles/projects_and_directories.html)
+
+# Introduction to R Markdown
+
+Click [here](https://rushinglab.github.io/FANR6750/articles/Rmarkdown.html)

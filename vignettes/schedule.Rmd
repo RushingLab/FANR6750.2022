@@ -1,0 +1,85 @@
+---
+title: "Schedule (subject to change)"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2021"
+output: 
+  rmarkdown::html_vignette:
+    keep_md: yes
+vignette: >
+  %\VignetteIndexEntry{Schedule}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  collapse = TRUE, warning = FALSE, message = FALSE,
+  comment = "#>"
+)
+
+source(here::here("R/MWF.R"))
+```
+
+
+```{r schedule, echo = FALSE}
+library(kableExtra)
+
+schedule <- data.frame(Week = MWF(first.day = "2021/08/17", last.day = "2021/12/07"),
+                       Lecture = c("Course introduction", "Basic concepts in statistics", "",
+                                    "t-tests",  "t-tests", "t-tests",  "",
+                                   "Randomized ANOVA", "Randomized ANOVA", "Randomized ANOVA",  "",
+                                   "Labor Day", "Multiple comparisons", "Multiple comparisons", "",
+                                   "Statistical power", "Paper discussion: hypothesis testing and statistical power", "Contrasts", "",
+                                   "Contrasts", "Assumptions and transformations", "Nonparametrics", "",
+                                   "Nonparametrics", "Random and fixed effects", "Blocking and blocked designs",  "",
+                                    "Blocking and blocked designs", "Paper discussion: Pseudoreplication and experimental design","AB factorial designs",  "",
+                                    "AB factorial designs", "ABC factorial designs", "Nested designs", "",
+                                    "Nested designs", "Paper discussion", "Split-plot designs", "",
+                                    "Split-plot designs", "Split-plot designs", "Fall break", "",
+                                    "Repeated measures ANOVA", "Repeated measures ANOVA", "Regression review", "",
+                                    "Analysis of covariance", "Review of linear models", "Generalized linear models", "",
+                                    "Logistic regression", "Poisson regression", "GLMMs", "",
+                                   "Thanksgiving break", "", "", "",
+                                    "Model selection", "Goodness-of-fit", "Multi-model inference", "",
+                                   "Course wrap up"),
+                       Lab = c("", "", "",
+                               "Introduction to R", "", "", "",
+                               "R graphics and t-tests", "", "", "",
+                               "No lab", "", "", "",
+                               "ANOVA", "", "", "",
+                               "Multiple comparisons and power", "", "", "",
+                               "Transformations and nonparametrics", "", "", "",
+                               "Blocking", "", "", "",
+                               "Factorial designs", "", "", "",
+                               "Nested designs", "", "", "",
+                               "Split-plot designs", "", "", "",
+                               "Repeated measures", "", "", "",
+                               "ANCOVA", "", "", "",
+                               "GLMs", "", "", "",
+                               "", "", "", "",
+                               "Model selection", "", "", "",
+                               "No lab"),
+                       Reading = c("", "Chapter 1", "",
+                               "Chapter 8", "", "", "",
+                               "Chapter 10", "", "", "",
+                               "", "", "", "",
+                               "Steidl & Thomas 2002", "Johnson 1999", "", "",
+                               "", "Chapter 11", "", "",
+                               "**Exam 1 distributed**", "", "Chapter 12", "",
+                               "**Exam 1 due**", "Hurlbert 1984", "", "",
+                               "", "", "", "",
+                               "", "Resetarits 1991; Williams & Semlitsch 2010", "", "",
+                               "", "", "", "",
+                               "Von Ende 2002", "**Exam 2 distributed**", "", "",
+                               "Chapter 13", "**Exam 2 due**", "Anderson et al. 2000", "",
+                               "", "", "", "",
+                               "", "", "", "",
+                               "**Exam 3 distributed**", "", "", "",
+                               ""))
+
+schedule %>%
+  kable("html", col.names = c("Date", "Lecture topic", "Lab topic", "Reading"), align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = TRUE)
+
+```

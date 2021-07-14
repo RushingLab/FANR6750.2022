@@ -1,0 +1,340 @@
+---
+title: "Lab 5: Assumptions of ANOVA"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2021"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab05_assump_nonpar}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, fig.align = 'c',
+  warning = FALSE, message = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo = FALSE}
+library(kableExtra)
+library(FANR6750)
+library(WILD6900)
+```
+
+# Assumptions of the ANOVA model^[Because we can view the *t*-test as a special case of an ANOVA (one with only 2 groups), these assumptions also apply to *t*-tests!]
+
+All models have assumptions and knowing what those assumptions are, and whether our data violate any of them, is crucial to the application and interpretation of statistical models. 
+
+Before we get to the assumptions of ANOVA models, it may help to re-parameterize the model a bit. Remember from lecture that we can write the ANOVA model as:
+
+$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$
+
+$$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$
+
+where 
+
+- $\mu$ is the overall mean (the horiztonal black line the below figure);  
+
+- $\alpha_i$ is the difference between the overall mean and mean of group $i$ (the vertical orange, blue, and green, lines in the below figure); 
+
+- $\epsilon_{ij}$ is the difference between observation $y_{ij}$ and the mean of its group (also known as *residual variation*; the vertical black lines in the figure); and  
+
+- $\sigma^2$ is a measure of how far, on average, each observation is from its group mean (the avarge length of the black lines in the figure).  
+
+Note that this is exactly the same as the ANOVA model, we've just used some basic algebra to re-write it in different terms.  
+
+```{r echo =FALSE, fig.width=6, fig.height=4, fig.retina=2}
+set.seed(223456)
+mu <- 10
+alpha <- rnorm(3, 0, 4)
+sigma2 <- 0.5
+
+n <- 5
+
+y <- rnorm(n*3, mu + alpha, sigma2)
+
+aov_df <- data.frame(group = rep(c("A", "B", "C"), 5),
+                     y = y,
+                     Ey = rep(mu + alpha, 5),
+                     x = c(0.85, 1.85, 2.85,
+                           0.91, 1.91, 2.91,
+                           0.97, 1.97, 2.97,
+                           1.03, 2.03, 3.03,
+                           1.09, 2.09, 3.09))
+
+ybari <- data.frame(group = c("A", "B", "C"),
+                    x = 1:3,
+                    y = mu + alpha)
+ggplot(aov_df, aes(x = x, y = y)) + 
+  geom_point(aes(color = group), size = 3) +
+  scale_x_continuous("Group", labels = c("A", "B", "C"), breaks = 1:3) +
+  scale_y_continuous("Response") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mu) +
+  geom_segment(data = ybari, aes(x = x, xend = x, y = mu, yend = y, color = group), size = 1) +
+  geom_segment(data = ybari,
+               aes(x = x - 0.2, xend = x + 0.15, y = y, yend = y, color = group), size = 2) +
+  geom_segment(aes(x = x, xend = x, y = Ey, yend = y), size = 1) +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+```
+
+
+Let's break down the above equations a bit further. First:
+
+$$\Large E[y_{ij}] = \mu + \alpha_i$$
+
+this says that the expected value of observation $y_{ij}$ is $\mu + \alpha_i$. That is, if we know what group an observation is from, this is our best guess at what value it will take. In the figure, this is the horizontal line (orange, blue, or green) for each group. 
+
+Next, we can re-write the model for observation $y_{ij}$ as:
+
+$$\Large y_{ij} \sim normal(E[y_{ij}], \sigma^2)$$
+
+this says that the observations are normally distributed around the corresponding group means. 
+
+## ANOVA assumptions
+
+Now let's look more specifically at the primary assumptions of this model:
+
+1) **Normality**:^[It's important to note that this assumption applies to the *residuals*, not the response data itself. This is a common misconception] The ANOVA model assumes that the residuals ($y_{ij} - E[y_{ij}]$) are normally distributed. *Note that* 1) although we can formally test normality (see below), we often assess this assumption based on the nature of the data and statistical principles like the central limit theorem^[CLT], and 2) ANOVA results are pretty robust to minor violations of this assumption, so we can often trust our results even when the residuals are not normal. 
+
+***
+
+Look at the equations above. Where does this assumption come from in the model?  
+
+What are some biological processes that may lead to data that violate this assumption?
+
+***
+
+
+2) **Equality of variances** (also known as *homoscedasticity*): The ANOVA model also assumes that the residual variance is the same for all groups. Another way to say this is that the residual variance is independent of group/expected value. Again, we can formally test this assumption (see lecture 3) and it's important to do so because it is often violated. 
+
+***
+
+Look at the equations above. Where does this assumption come from in the model?  
+
+What are some biological processes that may lead to data that violate this assumption?  
+
+***
+
+3) **Independence**: The ANOVA model assumes that each observation $y_{ij}$ is independent of all other observations. This is actually an assumption of virtually all models we will see this semester because it's central to the way we calculate the *likelihood* of observing our data (more on this later). This assumption is a little harder to "see" in the model but it's nonetheless there. Testing for independence is tough, so usually we assess this assumption based on our understanding of how the data were generated and observed. 
+
+***
+
+What are some biological processes that may lead to data that violate this assumption?
+
+***
+
+## Testing the assumptions
+
+### A fake dataset
+
+Consider the data:
+
+```{r}
+library(FANR6750)
+data("infectionRates")
+
+str(infectionRates)
+
+summary(infectionRates)
+```
+
+These data are made-up, but imagine they come from a study in which 100 crows are placed in n = 30 enclosures in each of 3 landscapes. The response variable is the proportion of crows infected with West Nile virus at the end of the study.  
+
+#### One-way ANOVA
+
+```{r}
+anova1 <- aov(percentInfected ~ landscape, data = infectionRates)
+summary(anova1)
+```
+
+Significant, but did we meet the assumptions?
+
+#### Visualizing the data
+
+```{r fig.retina=2, fig.width=6, fig.height=4}
+library(ggplot2)
+
+ggplot(infectionRates, aes(x = landscape, y = percentInfected)) +
+  geom_boxplot() +
+  scale_y_continuous("Percent infected")
+```
+
+Notice that the variances don’t look equal among groups.
+
+#### Visualizing the residuals
+
+Histogram of residuals
+
+```{r fig.retina=2, fig.width=6,fig.height=4}
+resids <- resid(anova1)
+hist(resids, col="turquoise", breaks=10, xlab="Residuals")
+```
+
+QQ-plot of the residuals
+
+
+```{r fig.retina=2, fig.width=6,fig.height=4}
+ggplot(anova1, aes(sample = .resid)) +
+  geom_qq() +
+  geom_qq_line()
+```
+
+
+The histogram doesn’t look bad, but the QQ-plot suggests the smallest residuals are smaller than expected (below the QQ line) and the large residuals are bigger than expected (above the QQ line). We can also formally test the normality assumption using the Shapiro test.
+
+#### Normality test on residuals
+
+```{r}
+shapiro.test(resids)
+```
+
+We reject the null hypothesis that the residuals come from a normal distribution.
+
+Clearly, we have violated both the normality and equality of variance assumptions. Since we failed to meet the key assumptions of ANOVA, we should consider transformations and/or non-parametric tests.
+
+# Transformations
+
+One way to move forward with our analysis when assumptions are violated is to transform the response data. In some cases, simple transformations can help us meet assumptions. Knowing which transformation to use in which context requires some experience, and we have to keep in mind that the interpretation of the model parameters changes a bit. However, a good "toolkit" of standard transformations can often get you pretty far, so let's look at a few standard choices:
+
+### Logarithmic transformation
+
+$$\Large y = log(u + C)$$
+
+- $y$ is the transformed response variable  
+
+- $u$ is original response variable 
+
+- The constant $C$ is often 1 if there are zeros in the data
+
+**Useful when group variances are proportional to the means**
+
+Here's what the infection rate data looks like when log transformed:
+
+```{r fig.retina=2, fig.width=6, fig.height=4}
+ggplot(infectionRates, aes(x = landscape, y = log(percentInfected))) +
+  geom_boxplot() +
+  scale_y_continuous("log(Percent infected)")
+```
+
+### Square root transformation
+
+$$\Large y = \sqrt{u + C}$$
+
+- $C$ is often 0.5 or some other small number
+
+**Useful when group variances are proportional to the means**  
+
+Here's what the infection rate data looks like when square root transformed:
+
+```{r fig.retina=2, fig.width=6, fig.height=4}
+ggplot(infectionRates, aes(x = landscape, y = sqrt(percentInfected))) +
+  geom_boxplot() +
+  scale_y_continuous("sqrt(Percent infected)")
+```
+
+### Arcsine-square root transformation
+
+$$\Large y = arcsin(\sqrt{u})$$
+
+- logit transformation is an alternative: $y = log\big(\frac{u}{1−u}\big)$
+
+**Used on proportions**
+
+Here's what the infection rate data looks like when arcsine-square root transformed:
+
+```{r fig.retina=2, fig.width=6, fig.height=4}
+ggplot(infectionRates, aes(x = landscape, y = asin(sqrt(percentInfected)))) +
+  geom_boxplot() +
+  scale_y_continuous("arcsin(sqrt(Percent infected)")
+```
+
+### Reciprocal Transformation
+
+$$\Large y = \frac{1}{u + C}$$
+
+- $C$ is often 1 but could be 0 if there are no zeros in $u$
+
+**Useful when group SDs are proportional to the squared group means**
+
+Here's what the infection rate data looks like when reciprocally transformed:
+
+```{r fig.retina=2, fig.width=6, fig.height=4}
+ggplot(infectionRates, aes(x = landscape, y = 1/(percentInfected))) +
+  geom_boxplot() +
+  scale_y_continuous("1/Percent infected)")
+```
+
+## ANOVA on transformed data
+
+Transformation can be done in the `aov` formula:
+
+```{r}
+anova2 <- aov(log(percentInfected) ~ landscape, data = infectionRates)
+summary(anova2)
+```
+
+The log transformation didn’t help much: We still reject the normality assumption
+
+```{r}
+shapiro.test(resid(anova2))
+```
+
+Maybe the square-root transformation:
+
+```{r}
+anova3 <- aov(sqrt(percentInfected) ~ landscape, data = infectionRates)
+summary(anova3)
+
+shapiro.test(resid(anova3))
+```
+
+That's better
+
+## Advice for data transformations^[This information borrows heavily from Yaniv Brandvain's excellent [Applied Biostats](https://bookdown.org/ybrandvain/Applied-Biostats/normal.html#rules-for-legit-transformations) course materials]
+
+- *Think carefully about the nature of your data*: Often you will be able to decide on an appropriate transformation based on the data itself or the process that generated the data. You can't take the log or square root of negative values, so those transformations probably aren't appropriate to data with values < 0. 
+
+- *Be consistent*: Apply the same transformation to each individual  
+ .
+- *Avoid Transformed values must have a monotonic relationship with the original values e.g., larger values stay larger, so be careful with trigonometric transformations.  
+
+- Conduct your statistical tests AFTER you settle on the appropriate transformation.
+
+- Do not bias your results by losing data points when transforming the data.
+
+# Non-parametric models
+
+Occasionally, transformations will not be sufficient or appropriate for meeting the ANOVA assumptions. In this case, we can use models that do not make assumptions about the distribution on the residuals, termed *non-parametric models*. 
+
+One such test is the Wilcoxan rank sum test: 
+
+- For 2 group comparisons (alternative to *t* test)
+
+- a.k.a. the Mann-Whitney $U$ test
+
+- `wilcox.test()`
+
+Another is the Kruskal-Wallis One-Way ANOVA
+
+- For testing differences in > 2 groups
+
+- `kruskal.test()`
+
+These two functions can be used in almost the exact same way as `t.test()` and `aov()`, respectively.
+
+# Assignment
+
+1) Decide which transformation is best for the infectionRates data by conducting ANOVAs using the log, square-root, arcsine square-root, and reciprocal transformations. Use boxplots, historgrams, and Shapiro’s tests to determine the best transformation.  
+
+2) Does transformation alter the conclusion about the null hypothesis of no difference in means? If not, were the transformations necessary?  
+
+3) Test the hypothesis that infection rates are equal between suburban and urban landscapes using a Wilcoxan rank sum test. What is the conclusion?  
+
+4) Conduct a Kruskal-Wallis test on the data. What is the conclusion? Use comments in your R script (or .Rmd file) to explain your answers. Upload your results to ELC at least one day before your next lab.
+
+
+

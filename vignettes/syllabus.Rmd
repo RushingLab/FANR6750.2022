@@ -1,0 +1,128 @@
+---
+title: "Syllabus"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2021"
+output: 
+  rmarkdown::html_vignette:
+    keep_md: yes
+vignette: >
+  %\VignetteIndexEntry{Syllabus}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,warning = FALSE, message = FALSE,
+  comment = "#>"
+)
+```
+
+# LOGISTICS
+
+**Lecture**: Monday, Wednesday, Friday 11:15-12:05  
+**Location**: ENLAB 248 (Engineering Laboratory Building)  
+**Credits**: 3  
+
+# INSTRUCTOR
+Dr. Clark Rushing  
+crushing@uga.edu  
+Office: Warnell 3-409B   
+Office hours: By appointment
+
+# TEACHING ASSISTANTS
+Michael Baker
+Michael.Baker2@uga.edu
+Office: Warnell 3-409B  
+Office hours: By appointment  
+  
+Clark Rushing  
+crushing@uga.edu  
+Office: Warnell 3-409B  
+Office hours: By appointment
+
+
+# COURSE OBJECTIVES
+
+To understand: (1) the logical structure of experiments, especially the design of manipulative experiments, (2) the analysis of such experiments, focusing on analysis of variance procedures, (3) the use of models in ecological studies (experimental and observational).
+
+# PREREQUISITES
+
+All lab activities for this course will rely heavily on the statistical programming language `R`. During the first few weeks, each lab session will begin with a tutorial on these tools so students are not expected to be experts prior to the course. However, we will quickly move into activities that require some degree of R proficiency so I highly recommend that you have a basic understanding of programming in R (e.g., importing/exporting & manipulating data objects, visualizing data) prior to this course. If you find yourself struggling with any aspects of using `R`, please seek individual help during office hours. The earlier we can get you up to speed, the more painless the remainder of the semester will be.  
+
+
+# COURSE FORMAT
+
+The components of a scientific study need to be considered together rather than separately; design and analysis aspects will be completely blended in this course. Emphasis will be on application, and will include instruction on the use of the `R` statistical software. Important points will be reinforced by readings from the scientific literature and by discussions. Homework assignments and exams (take home) are intended to keep the material fresh in the students' minds. The syllabus is subject to change, but the order of material is correct. 
+
+# COURSE RESOURCES
+
+## Textbooks
+
+Lecture readings will be assigned from:  
+
+**Dowdy, S., S. Weardon and D. Chilko. 2004. Statistics for Research, 3rd ed. John Wiley & Sons**  
+
+eBook available for free through the [UGA library](http://dx.doi.org.proxy-remote.galib.uga.edu/10.1002/0471477435)  
+
+
+Lab readings will be assigned from:  
+**Dalgaard, P. 2008. Introductory Statistics with R. 2nd edition. Springer.**  
+
+eBook available for free through the [UGA library](http://preproxy.galib.uga.edu/login?url=http://dx.doi.org/10.1007/978-0-387-79054-1)  
+
+Additional readings will come from a variety of sources, including other textbooks and scientific journals, and will be posted on eLC.
+
+## Lab materials
+
+Materials for labs will be provided as HTML and R Markdown files on the course webpage. These materials will include step-by-step tutorials for all lab exercises as well as links to additional online resources, problem sets, and homework assignments. 
+
+## Software
+
+All lab computers will have R and RStudio installed on them so students are not required to install software on their own computers. However, students are free to use their own laptops during lab and having R and RStudio installed will make it easier to complete lab assignments outside of class. Any students wishing to use their own computers **should have R and RStudio installed and running prior to the first lab**. Detailed instructions for installing R and RStudio can be found [here](http://stat545.com/block000_r-rstudio-install.html).  
+
+If you plan to use your own computer, **be sure you have the most recent versions of both software programs installed**. This will greatly decrease the chances of running into issues running the code I will provide in lab. Prior to the start of the semester, test that you have R and RStudio installed correctly by doing the following: 
+
+1) Launch RStudio
+
+2) Put the cursor in the window labeled `Console`. Type the following code followed by enter or return: `x <- 2 * 4`. Next type `x` followed by enter or return. You should see the value 8 print to screen. If yes, you’ve succeeded in installing R and RStudio.
+
+If you encounter any problems with the previous steps, please contact me prior to the first class.  
+
+
+# ATTENDANCE
+
+As graduate students who willingly signed up for this course, I presume that you are eager to learn the material and are self-motivated enough to put in the required effort. For this reason, I do not set a formal attendance policy. However, we will cover a lot of material over the course of the semester and each topic will build on concepts from previous weeks. As a result, missing even a few lectures or labs will make it difficult for you to fully master the learning outcomes described above. If you know you will be missing any lectures or labs, please contact me in advance so we can make sure you do not get too far behind on the material. 
+
+### A note on fieldwork
+
+I realize that many students have field work obligations during the semester. If you need to take this course but know in advance that you will be in the field for a portion of the semester, please let me know ASAP so we can discuss whether field work will be a barrier to taking the course or merely an inconvenience. This distinction will mainly be a function of how long and when you will miss class. If these absences are relatively few, taking the course may still be an option. I will do my best to record lectures and make them available via eLC. Students will still be expected to complete and turn in any assignments they miss. If you are going to miss too many classes or will be unable to complete the assignments while you're in the field, it may be better to take the class at a time when your field commitments are smaller. 
+
+# GRADING
+
+Three take-home exams, 25% each. Exam dates in the [schedule](https://rushinglab.github.io/FANR6750/articles/schedule.html) are approximate days when the exam will be provided. The last exam will largely (~60%) take the form of a scientific paper - more details later. The remaining 25% of the grade will come from weekly lab and lecture assignments.  
+
+Homework assignments will build on concepts and skills that we cover in lecture and lab. Specific objectives and tasks for each assignment, along with any necessary data, will be provided at the end of each lab activity.  Each assignment will be due before class the week after the assignment is posted. All assignments must be prepared as R Markdown files that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). See [here](https://rushinglab.github.io/FANR6750/articles/homework.html) for instructions on submitting assignments.  
+
+All academic work must meet the standards contained in the University's academic [honesty policy](https://honesty.uga.edu/). All students are responsible for informing themselves about those standards before performing any academic work. The penalties for academic dishonesty are [severe](https://honesty.uga.edu/Academic-Honesty-Policy/Consequences_for_Honesty_Violations/), and ignorance is not an acceptable defense.  
+
+
+# GRADING SCALE
+
+```{r grading, echo=FALSE}
+library(kableExtra)
+grades <- data.frame(Grade = c("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"),
+                       Percent = c("93-100%", "90-92.9%", 
+                                   "87-89.9%", "83-86.9%", "80-82.9%", 
+                                   "77-79.9%", "73-76.9%", "70-72.9%",
+                                   "67-69.9%", "60-66.9%", "59.9% and below"),
+                       Points = c("186-200", "180-185", 
+                                   "174-179", "166-173", "160-165", 
+                                   "154-159", "146-153", "140-145",
+                                   "134-139", "126-133", "0-125"))
+
+grades %>%
+  kable("html", col.names = c("GRADE", "% RANGE", "POINT RANGE"), align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = TRUE)
+
+```

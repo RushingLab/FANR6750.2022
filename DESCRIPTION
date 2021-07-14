@@ -1,0 +1,21 @@
+Package: FANR6750
+Type: Package
+Title: Course Materials for FANR 6750
+Version: 2021.1.0
+Author: person("Clark", "Rushing", role = c("aut", "cre"), email = "crushing@uga.edu")
+Maintainer: Clark Rushing <crushing@uga.edu>
+Description: Course materials for FANR6750: Experimental Methods in Forestry and Natural Resources Research at the University of Georgia. This package primarily exists to distribute data, code, and other materials in an efficient manner.
+License: CC0
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+Imports: 
+    dplyr,
+    tidyr,
+    ggplot2
+VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
+RoxygenNote: 7.1.1
