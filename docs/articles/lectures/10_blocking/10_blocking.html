@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 10: blocking and blocked designs</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2021" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# LECTURE 10: blocking and blocked designs
+## FANR 6750 (Experimental design)
+### <br/><br/><br/>Fall 2021
+
+---
+
+
+
+
+# outline 
+
+
+1) Motivation
+
+&lt;br/&gt;
+
+--
+
+2) Design
+
+&lt;br/&gt;
+
+--
+
+3) Model
+
+&lt;br/&gt;
+
+--
+
+4) Procedure
+
+&lt;br/&gt;
+
+--
+
+5) Example
+
+
+
+---
+# motivation
+
+#### Recall that the completely randomized design is used when no sources of variation other than the treatment effects are known or anticipated  
+
+&lt;br/&gt;
+
+--
+
+#### For example, in the loblolly pine example, we assumed that the plots were essentially homogeneous with respect to soil conditions and other spatial factors
+
+&lt;br/&gt;
+
+--
+
+### However, one should always look for other sources of variation!
+
+---
+# motivation
+
+#### What other sources of variation should we look for?
+
+- Factors that are likely to influence the response variable that are not related to the treatments of interest  
+
+--
+
+- We might *not* be interested in these other factors per se  
+
+--
+
+    + In field studies, two adjacent plots that get different treatments can be more similar than two separated plots that receive the same treatment  
+    
+--
+
+    + Heavier animals in a group respond to a diet differently than light animals, as might animals from different litters  
+    
+--
+
+    + Observations taken on the same day will have a similar response relative to observations taken on different days  
+
+--
+
+#### In each of the above examples, we recognize this heterogeneity **PRIOR** to the experimental activity. That is, we recognize it in the design stage.
+
+---
+class: inverse, center, middle
+
+# block designs
+
+---
+# block designs
+
+We partition our experimental units into groups or **BLOCKS** such that:  
+
+- Within the block, experimental conditions are as homogeneous as we can make them  
+
+- Between the blocks, variation may be considerable but differences between blocks are not of immediate interest  
+
+--
+
+In the loblolly example, the plots might be located along a slope that would have an associated moisture gradient  
+
+--
+
+Our blocks would be arranged across the moisture gradient; but each block would contain an area that is homogeneous with regard to moisture  
+
+--
+
+Then, we would assign the various treatment levels at random to the experimental units contained within each block  
+
+---
+# randomized complete block design
+
+**RCBD**: If each treatment level is present in each block, we call it a complete block. And the overall design is called a randomized complete block design  
+
+--
+
+**Example**: The effect of four different drugs (A, B, C, D) on mice could be confounded by the litter the mouse came from. To remove nuisance variability we use litters as blocks.
+
+&lt;table class="table table-condensed" style="font-size: 12px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Litter (block)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Mouse&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 1 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 2 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 3 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 4 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; D &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; C &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; D &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; D &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; B &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# randomized complete block design
+
+&lt;br/&gt;
+
+- Blocking comes from agricultural field experiments (R. A. Fisher)  
+
+--
+
+- Blocking is an extension of the paired t-test for &gt;2 groups  
+
+--
+
+- It's easy to think of blocks as plots of land, but blocks need not be spatial  
+
+--
+
+#### Blocking is used when an experimenter is interested in controlling an extraneous source of variability that is not of direct interest but is likely to affect the response variable  
+
+---
+# data structure for rcbd
+
+&lt;table class="table table-condensed" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Block (\(j\))&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment (\(i\))&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; 1 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; 2 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; 3 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{11}\) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{21}\) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{31}\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{12}\) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{22}\) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{32}\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{13}\) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{23}\) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{33}\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{14}\) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{24}\) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \(y_{34}\) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+Notice that the subscript `\(j\)` now represents more than just a replicate; it also represents a block  
+
+--
+
+Also notice that no additional replicates are needed in order to develop a blocked design, just some planning such that every treatment is represented in every block  
+
+---
+class: inverse, center, middle
+
+# model
+
+---
+# model
+
+`$$\huge y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}$$`
+`$$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$`
+
+`$$\Large i = 1,..., a$$`
+`$$\Large j = 1,..., b$$`
+
+- `\(\mu =\)` grand mean  
+
+- `\(\alpha_i =\)` deviation from the mean for the `\(i\)`th treatment  
+
+- `\(\beta_j =\)` deviation from the mean for the `\(j\)`th block  
+
+- `\(\epsilon_{ij} =\)` unexplained variation  
+
+
+---
+# hypotheses
+
+### Main hypothesis
+
+`$$\Large H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$`
+
+`$$\Large H_a : At\;least\;one\;inequality$$`
+### Secondary hypothesis
+
+`$$\Large H_0 : \beta_1 = \beta_2 = ... = \beta_b = 0$$`
+
+`$$\Large H_a : At\;least\;one\;inequality$$`
+
+---
+# anova table
+
+&lt;br/&gt;
+
+&lt;table class="table table-condensed" style="font-size: 18px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Source &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; SS &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; MS &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; F &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Treatments &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(a-1\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\sum_i b(\bar{y}_i - \bar{y}.)^2\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\frac{SS_a}{a-1}\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\frac{MS_a}{MS_e}\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Blocks &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(b-1\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\sum_j a (\bar{y}_{j} - \bar{y}.)^2\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\frac{SS_b}{b-1}\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\frac{MS_b}{MS_e}\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Error &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \((a-1)(b-1)\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\sum_i \sum_j (y_{ij} - \bar{y}_i - \bar{y}_{j} + \bar{y}.)^2\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\frac{SS_e}{df_e}\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# what happens if block effect is ignored?
+
+&lt;br/&gt;
+
+- What happens mathematically if we have a blocked design but choose to not use the block factor in the analysis?  
+
+--
+
+- The treatment sum of squares and degrees of freedom are unaffected. Not so with the error sum of squares and df  
+
+--
+
+- The block sum of squares and df will be added to the error (or residual) SS and df  
+
+--
+
+- If the block effect is significant, then a substantial amount is added to the denominator in the F-test, **decreasing power**  
+
+---
+# what if the block effect isn't significant?
+
+&lt;br/&gt;
+
+#### There are differences of opinion regarding follow-up procedure if the block is not significant
+
+&lt;br/&gt;
+
+--
+
+#### Some say you are stuck with that design regardless. Others are more liberal, suggesting that you redo the analysis without the blocking factor  
+
+---
+class: middle, center, inverse
+
+# example
+
+---
+# gypsy moth data
+
+We are interested in comparing the alternative gypsy moth control strategies (Bt, Dimilin, no spray) in their effectiveness in controlling gypsy moth. Because sprayed areas are large, and
+different treatments are applied on different ridges, extraneous variability due to location is expected and should be controlled. Data are the average number of moths captured in pheromone
+traps placed in the plots.
+
+&lt;table class="table table-condensed" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Location&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Bt &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Control &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Dimilin &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# analyze using aov
+
+
+
+
+```r
+aov1 &lt;- aov(caterpillars ~ pesticide + location, gypsyData)
+summary(aov1)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sumsq &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; meansq &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; pesticide &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.830 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0392 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; location &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 430.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 143.64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.505 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0187 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 114.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# analyze using aov
+
+#### Look what happens if we ignore the blocking variable
+
+
+
+```r
+aov2 &lt;- aov(caterpillars ~ pesticide, gypsyData)
+summary(aov2)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sumsq &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; meansq &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; pesticide &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.84 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2138 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 545.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 60.64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+#### Why is the effect of pesticide no longer significant?
+
+---
+# conclusions
+
+&lt;br/&gt;
+
+- There is a treatment effect. The effect of location also was significant, so blocking is an effective design feature in this experiment  
+
+--
+
+- As with the completely randomized design, we would want to follow up a significant F-score for the treatment variable with a multiple comparison test, or else use contrasts  
+
+--
+
+- For the blocking variable, we are usually content to just know that the block effect was significant, and leave it at that  
+
+--
+
+- We might, however, want to see which forests had more gypsy moths, so there is nothing wrong with a follow-up procedure for the blocks as well
+
+---
+# summary
+
+&lt;br/&gt;
+
+- Blocking provides additional power to test treatment effects by controlling extraneous sources of variation  
+
+--
+
+- There is little lost by using a blocked design, and there is much that can be gained in terms of power  
+
+--
+
+- The key issue is that blocking must be done as part of the design. You can't "*search for blocks*" in the data
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

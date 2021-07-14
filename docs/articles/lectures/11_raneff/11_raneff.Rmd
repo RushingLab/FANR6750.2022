@@ -1,0 +1,287 @@
+---
+title: "LECTURE 11: fixed effects and random effects"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2021"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
+                      fig.retina = 2, fig.width = 9, fig.height = 7)
+library(WILD3810)
+library(emo)
+library(kableExtra)
+library(dplyr)
+library(FANR6750)
+# library(gganimate)
+```
+
+# outline 
+
+<br/>
+
+1) Motivation
+
+<br/>
+
+--
+
+2) Random effects in one-way ANOVA
+
+<br/>
+
+--
+
+3) Random effects in blocked ANOVA
+
+
+---
+# motivation
+
+#### The completely randomized ANOVA we have discussed can be applied to many different experiments. For example, it could be used to:  
+
+- Assess the best option from two different pesticides (plus no spray) used for gypsy moth control  
+
+- Assess if there is significant variability among the test scores of introductory statistics classes when taught by different instructors  
+
+--
+
+#### In the first example, we would model the effect of each pesticide as a fixed effect  
+
+--
+
+#### In the second example, the effect of each instructor would be modeled as a random effect  
+
+---
+# fixed vs random effects
+
+<br/>
+
+#### A fixed effects model is appropriate when the treatment levels included in the experiment are exhaustive  
+
+<br/>
+
+--
+
+#### A random effects model is appropirate when the treatment levels in the experiment can be considered a sample from a larger population of interest  
+
+- In the previous example, we are interested in all instructors, not just the ones included in the experiment  
+
+
+---
+# models
+
+### Fixed-effects model  
+
+$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$
+$$\Large  \epsilon_{ij} \simnormal(0, \sigma^2)$$
+--
+
+### Random-effects model
+
+$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$
+$$\Large \alpha_{i} \simnormal(0, \sigma_A^2)$$
+
+$$\Large \epsilon_{ij} \simnormal(0, \sigma^2)$$
+
+--
+
+In a random effects model, the effects are assumed to be random variables following some probability distribution
+
+---
+# hypotheses
+
+#### In a random-effects model, our interest is in assessing how much variation there is among all the effects in the population, not just the ones in our sample  
+
+
+#### As a result, our hypotheses must be written differently:
+
+--
+
+#### Fixed-effects model
+
+$$\large H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$
+
+$$\large H_a : At\;least\;one\;inequality$$
+
+--
+
+#### Random-effects model
+
+$$\large H_0 : \sigma^2_A = 0$$
+
+
+$$\large H_a : \sigma^2_A > 0$$
+
+
+---
+# implications?
+
+#### Oddly enough, in the context of a one-way ANOVA, the analysis procedure is exactly the same for the fixed-effects and random-effects models  
+
+--
+
+#### In other words, we can construct the ANOVA table and test the null hypothesis using the same procedure for the random-effects model as we used for the fixed-effects model, even though the interpretation of the results is slightly different  
+
+--
+
+#### A comprehensive list of the distinctions between the two approaches is given in section 11.1 of Dowdy et al.
+
+--
+
+#### The distinction between random and fixed effects becomes much more important in the more complicated models that we will cover soon  
+
+---
+class: inverse, center, middle
+
+# random effects in blocked anova
+
+---
+# blocked anova
+
+<br/>
+
+### Should we treat block effects as fixed or random?  
+
+<br/>
+
+--
+
+### As before, we need to answer the question: 
+
+> Can we view the blocks as samples of a larger population, or do the blocks represent all possible levels?
+
+
+---
+# random effects model for blocked design
+
+
+$$\huge y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}$$
+$$\Large \beta_{j} \sim normal(0, \sigma^2_B)$$
+
+$$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$
+
+<br/>
+
+--
+
+#### This is often called a mixed effects model because it includes fixed and random effects  
+
+--
+
+#### If we treated the $\alpha$'s as random too, we might call the model a *variance components model*  
+
+
+
+---
+# hypotheses
+
+.pull-left[
+#### Main hypothesis
+
+$$H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$
+
+$$H_a : At\;least\;one\;inequality$$
+
+OR
+
+$$H_0 : \sigma^2_A = 0$$
+
+$$H_a : \sigma^2_A > 0$$
+]
+--
+
+.pull-right[
+
+#### Secondary hypothesis
+
+$$H_0 : \beta_1 = \beta_2 = ... = \beta_b = 0$$
+
+$$H_a : At\;least\;one\;inequality$$
+OR
+
+$$H_0 : \sigma^2_B = 0$$
+
+$$H_a : \sigma^2_B > 0$$
+]
+
+---
+# implications
+
+<br/>
+<br/>
+
+#### Once again, treating block effects as random doesn't affect our calculations for the ANOVA table<sup>1</sup>  - it only affects the interpretation
+
+
+.footnote[<sup>1</sup> Technically, this is only true for balanced designs]
+
+---
+# random-effects model in `r`
+
+```{r echo = FALSE}
+gypsyData <- data.frame(location = rep(c("A", "B", "C", "D"), 3),
+                        caterpillars = c(16, 3, 10, 18, 25, 10, 15, 32, 14, 2, 16, 12),
+                        pesticide = rep(c("Bt", "Control", "Dimilin"), each = 4))
+```
+
+```{r echo = TRUE, eval = FALSE}
+aov1 <- aov(caterpillars ~ pesticide + location, gypsyData)
+summary(aov1)
+```
+
+```{r echo = FALSE}
+aov1 <- aov(caterpillars ~ pesticide + location, gypsyData)
+options(knitr.kable.NA = '')
+kable(broom::tidy(aov1)) %>%
+  kable_styling(font_size = 10, full_width = FALSE, bootstrap_options = "condensed")
+```
+
+
+--
+
+```{r echo = TRUE, eval = FALSE}
+aov2 <- aov(caterpillars ~ pesticide + Error(location), gypsyData)
+summary(aov2)
+```
+
+```{r echo = FALSE}
+aov2 <- aov(caterpillars ~ pesticide + Error(location), gypsyData)
+options(knitr.kable.NA = '')
+kable(broom::tidy(aov2)) %>%
+  kable_styling(font_size = 10, full_width = FALSE, bootstrap_options = "condensed")
+```
+
+
+
+---
+# summary
+
+- We usually model the main treatment effects as fixed, but sometimes we are interested in effects not in the sample
+
+--
+
+- Random effects models allow for inference about entire population of effects  
+
+--
+
+- Random effects models make additional distributional assumptions  
+
+--
+
+- Usually, you need many treatment levels (5-10) to get a decent estimate of the variance parameter associated with the random effects  
+
+--
+
+- In spite of the big conceptual differences, the procedures aren't much different for one-way and blocked ANOVAs  
+
+
+

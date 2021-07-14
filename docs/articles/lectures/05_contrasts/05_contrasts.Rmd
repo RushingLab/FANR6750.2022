@@ -1,0 +1,663 @@
+---
+title: "LECTURE 5: *a priori* orthogonal contrasts"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2021"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
+                      fig.retina = 2)
+library(WILD3810)
+library(emo)
+library(kableExtra)
+# library(gganimate)
+```
+
+# motivation
+
+> As the name *a priori* implies, these tests are planned **before** the experiment is done  
+
+<br/>
+--
+
+> Previously, we only considered *a posteriori* tests, which often feature all possible group comparisons, some of which may not even be of great interest  
+
+<br/>
+--
+
+> Further, hypotheses involving certain combinations of treatment groups are sometimes of interest. These cannot be tested using most multiple comparison procedures  
+
+<br/>
+--
+
+> Because tests that are not of interest are ignored, and the experiment is set up to test only certain hypotheses, orthogonal contrasts offer a more powerful procedure  
+
+---
+# chain saw kickback angles
+
+```{r echo = FALSE}
+library(FANR6750)
+library(dplyr)
+data("sawData")
+
+cs <- dplyr::mutate(sawData, ID = rep(1:5, 4)) %>%
+        tidyr::pivot_wider(names_from = Brand, values_from = y) %>%
+         select(-ID)
+
+cs %>%
+  kable("html", align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = TRUE) %>%
+  add_header_above(c("Brand" = 4))
+```
+
+--
+- Brands A and D are lightweight home models  
+
+- Brands B and C are heavy-duty industrial models
+
+---
+# hypotheses
+
+#### Questions
+
+1) Do home models differ from industrial models?
+
+2) Do the home models differ from one another?
+
+3) Do the industrial models differ from one another?
+
+--
+
+#### Hypotheses
+
+```{r echo = FALSE}
+h0 <- data.frame(col1 = c("1", "2", "3"),
+                 Comparison = c("Home vs industrial", 
+                                "Home model A vs home model D",
+                                "Industrial model B vs industrial model C"),
+                 H = c('\\(\\frac{\\mu_A + \\mu_D}{2} - \\frac{\\mu_B + \\mu_C}{2}=0\\)',
+                       '\\(\\mu_A - \\mu_D = 0\\)',
+                       '\\(\\mu_B - \\mu_C = 0\\)'))
+
+h0 %>%
+    kable(align = c("l", "l", "c"), col.names = c("", "Comparisons", "H0 to test"), 
+          booktabs = TRUE, escape = FALSE, format = "html") %>%
+    kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 16) 
+```
+
+---
+# hypotheses
+
+#### Hypotheses
+
+```{r echo = FALSE}
+h0 <- data.frame(col1 = c("1", "2", "3"),
+                 Comparison = c("Home vs industrial", 
+                                "Home model A vs home model D",
+                                "Industrial model B vs industrial model C"),
+                 H = c('\\(\\frac{\\mu_A + \\mu_D}{2} - \\frac{\\mu_B + \\mu_C}{2}=0\\)',
+                       '\\(\\mu_A - \\mu_D = 0\\)',
+                       '\\(\\mu_B - \\mu_C = 0\\)'))
+
+h0 %>%
+    kable(align = c("l", "l", "c"), col.names = c("", "Comparisons", "H0 to test"), 
+          booktabs = TRUE, escape = FALSE, format = "html") %>%
+    kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 16) 
+```
+
+--
+
+#### Linear combinations
+
+```{r echo = FALSE}
+lc <- data.frame(col1 = c("1", "2", "3"),
+                 H = c('\\((1/2)\\mu_A - (1/2)\\mu_B - (1/2)\\mu_C + (1/2)\\mu_D\\)',
+                       '\\((1)\\mu_A + (0)\\mu_B + (0)\\mu_C - (1)\\mu_D\\)',
+                       '\\((0)\\mu_A + (1)\\mu_B - (1)\\mu_C + (0)\\mu_D\\)'))
+
+lc %>%
+    kable(align = c("c", "l"), col.names = NULL, 
+          booktabs = TRUE, escape = FALSE, format = "html") %>%
+    kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 16) 
+```
+
+---
+# are these contrasts orthogonal?
+
+A set of linear combinations is called a set of orthogonal contrasts if the following conditions hold for all pairs of linear combinations:  
+
+<br/>
+
+--
+Given
+
+$$L_1 = a_1\mu_1 + a_2\mu_2 + ... + a_a\mu_a$$
+--
+
+and
+
+$$L_2 = b_1\mu_1 + b_2\mu_2 +...+ b_a\mu_a$$
+--
+
+then $L_1$ and $L_2$ are orthogonal if:
+
+$$\sum_i a_i=0$$
+$$\sum_i b_i=0$$ 
+
+$$\sum_i a_ib_i=0$$
+
+---
+# back to the saw data
+
+Returning to the question: "Does kickback differ among industrial and home types of saws?":
+
+$$H_{0_1} = \frac{\mu_A + \mu_D}{2} - \frac{\mu_B + \mu_C}{2} = 0$$
+
+--
+Multiplying through by 2 gives:
+
+$$H_{0_1} = (\mu_A + \mu_D) - (\mu_B + \mu_C) = 0$$
+
+--
+Which can be written as:
+$$L1 = (1)\mu_A + (-1)\mu_B + (-1)\mu_C + (1)\mu_D$$
+where the coefficients are $a_1 = 1$, $a_2 = -1$, $a_3 = -1$, and $a_4 = 1$
+
+--
+
+> Note that it's easier to work with coefficients that are integers rather than fractions
+
+---
+# are the contrasts orthogonal?
+
+--
+
+#### Does each set of coefficients sum to 0?
+
+- $L_1$: $\sum_i a = 1 - 1 - 1 + 1 = 0$
+
+
+- $L_2$: $\sum_i a  = 1 + 0 + 0 - 1 = 0$
+
+
+- $L_3$: $\sum_i a  = 0 + 1 - 1 + 0 = 0$
+
+--
+
+#### Do the products of pairs of coefficients sum to 0?
+
+- For $L_1$ and $L_2$: $(1)(1) + (-1)(0) + (-1)(0) + (1)(-1) = 0$
+
+- For $L_1$ and $L_3$: $(1)(0) + (-1)(1) + (-1)(-1) + (1)(0) = 0$
+
+- For $L_2$ and $L_3$: $(1)(0) + (0)(1) + (0)(-1) + (-1)(0) = 0$
+
+---
+# testing the null hypotheses
+
+To obtain the sums of squares for each contrast, we use the general formula:
+
+$$\large SS_L =\frac{(\sum_i a_i T_i)^2}{n \sum_i a_i^2}$$
+
+where $T_i$ is the sum of observations in group $i$, and $a_i$ is the corresponding coefficient for group $i$  
+
+--
+
+For thefirst hypothesis we have:
+
+$$SS_{L_1} = \frac{(165 - 215 - 245 - 155)^2}{5(1 + 1 + 1 + 1)} = 980$$
+
+---
+# sums of squares for each contrast
+
+For the second hypothesis we have: $L_2 = mu_A + 0 + 0 - mu_D$ with coefficients $a_i = (1; 0; 0;-1)$
+
+$$\large SS_{L_2} = \frac{(165 +0 +0 - 155)^2}{5(1 + 0 + 0 + 1)} = 10$$
+
+--
+
+For the third hypothesis we have: $L_3 = 0 + B - C + 0$ with coefficients $a_i = (0; 1;-1; 0)$
+
+$$\large SS_{L_3} = \frac{(0 + 215 - 245 + 0)^2}{5(0 + 1 + 1 + 0)} = 90$$
+---
+# expanded anova table
+
+For each contrast, each SS is divided by 1 d.f., and then divided by MSW.
+
+```{r echo = FALSE}
+cs <- data.frame(Source = c("Among chainsaws", "Home vs Ind ", "A vs D", "B vs C", "Within"),
+                 df = c("3","1", "1", "1", "16"),
+                 SS = c(1080, 980, 10, 90, 1620),
+                 MS = c(360, 980, 10, 90, 101),
+                 F = c(3.56, 9.68, 0.10, 0.89, NA),
+                 Fcrit = c(3.24, 4.49, 4.49, 4.49, NA))
+options(knitr.kable.NA = '') # don't print NA's in table
+cs %>%
+    kable(align = c("r", "c", "c", "c", "c", "c"), 
+          booktabs = TRUE, escape = FALSE, format = "html") %>%
+    kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 16) 
+```
+
+--
+
+Notice that the Sums of Squares are partitioned according to hypotheses we are interested in, unlike in multiple comparison procedures.
+
+---
+# example 
+
+#### Problem 10.4.3 from Dowdy et al.
+
+Study on the effectiveness of analgesics. Five persons who have a headache are chosen at random for each treatment. All patients take the medication in capsule form and do not know which group they are in. The capsules containing aspirin (with or without something else) all contain the same amount.  
+
+--
+
+.pull-left[
+```{r echo = FALSE}
+ex <- data.frame(col1 = c("I", "II", "III", "IV", "V", "VI"),
+                 Treatment = c("Placebo (control)", "Aspirin, Brand 1",
+                               "Aspirin with caffeine", "Aspirin, Brand 2",
+                               "Aspirin with buffer", "Aspirin with buffer and caffeine"))
+
+ex %>%
+    kable(col.names = c("", "Treatment"), booktabs = TRUE, escape = FALSE, format = "html") %>%
+    kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 12) 
+```
+]
+
+--
+
+.pull.right[
+<br/>
+<br/>
+The response variable is the amount of time (in hours) until relief from pain is felt.
+]
+
+---
+# example
+
+#### Questions:  
+
+1. How many orthogonal contrasts can be made?  
+
+--
+2. Make the following orthogonal comparisons:  
+
+    a. Placebo vs. analgesic  
+    
+    b. Pure aspirin vs. aspirin with additives  
+    
+    c. Aspirin 1 vs. aspirin 2  
+    
+    d. Aspirin with caffeine (alone) vs. aspirin with buffer (with or without caffeine)  
+    
+    e. Aspirin with buffer vs. aspirin with buffer and caffeine  
+
+--
+3. Show that the set of comparisons in Part 2 are mutually orthogonal.
+
+---
+# example
+
+1\. How many orthogonal contrasts can be made?  
+
+--
+
+- *Answer: a* - 1 = 5, where *a* is the number of treatment groups
+
+---
+# example
+
+2\. Make the following orthogonal comparisons:
+
+.pull-left[
+
+]
+
+.pull-right[
+
+]
+
+---
+# example
+
+2\. Make the following orthogonal comparisons:
+
+.pull-left[
+
+a. Placebo vs. analgesic
+
+
+]
+
+.pull-right[
+
+]
+
+---
+# example
+
+2\. Make the following orthogonal comparisons:
+
+.pull-left[
+
+a. Placebo vs. analgesic  
+
+- $\small H0 : \mu_1 - \frac{\mu_2 + \mu_3 + \mu_4 + \mu_5 +\mu_6}{5} = 0$  
+
+- **Coefficients**: $\small (5, -1, -1, -1, -1, -1)$  
+
+
+]
+
+.pull-right[
+
+]
+
+---
+# example
+
+2\. Make the following orthogonal comparisons:
+
+.pull-left[
+
+a. Placebo vs. analgesic
+
+- $\small H0 : \mu_1 - \frac{\mu_2 + \mu_3 +\mu_4 +\mu_5 +\mu_6}{5} = 0$  
+
+- **Coefficients**: $\small (5, -1, -1, -1, -1, -1)$  
+
+b. Pure aspirin vs. aspirin with additives
+
+
+]
+
+.pull-right[
+
+]
+
+---
+# example
+
+2\. Make the following orthogonal comparisons:
+
+.pull-left[
+
+a. Placebo vs. analgesic
+
+- $\small H0 : \mu_1 - \frac{\mu_2 + \mu_3 + \mu_4 + \mu_5 + \mu_6}{5} = 0$  
+
+- **Coefficients**: $\small (5, -1, -1, -1, -1, -1)$  
+
+b. Pure aspirin vs. aspirin with additives
+
+- $\small H0 : \frac{\mu_2 +\mu_4}{2} - \frac{\mu_3 + \mu_5 + \mu_6}{3} = 0$  
+
+- **Coefficients**: $\small (0, 3, -2, 3, -2, -2)$  
+
+]
+
+.pull-right[
+
+]
+
+---
+# example
+
+2\. Make the following orthogonal comparisons:
+
+.pull-left[
+
+a. Placebo vs. analgesic
+
+- $\small H0 : \mu_1 - \frac{\mu_2 + \mu_3 + \mu_4 + \mu_5 + \mu_6}{5} = 0$  
+
+- **Coefficients**: $\small (5, -1, -1, -1, -1, -1)$  
+
+b. Pure aspirin vs. aspirin with additives
+
+- $\small H0 : \frac{\mu_2 + \mu_4}{2} - \frac{\mu_3 + \mu_5 + \mu_6}{3} = 0$  
+
+- **Coefficients**: $\small (0, 3, -2, 3, -2, -2)$  
+
+c. Aspirin 1 vs. aspirin 2
+
+]
+
+.pull-right[
+
+]
+
+
+---
+# example
+
+2\. Make the following orthogonal comparisons:
+
+.pull-left[
+
+a. Placebo vs. analgesic
+
+- $\small H0 : \mu_1 - \frac{\mu_2 + \mu_3 + \mu_4 + \mu_5 + \mu_6}{5} = 0$  
+
+- **Coefficients**: $\small (5, -1, -1, -1, -1, -1)$  
+
+b. Pure aspirin vs. aspirin with additives
+
+- $\small H0 : \frac{\mu_2 + \mu_4}{2} - \frac{\mu_3 + \mu_5 + \mu_6}{3} = 0$  
+
+- **Coefficients**: $\small (0, 3, -2, 3, -2, -2)$  
+
+c. Aspirin 1 vs. aspirin 2
+
+- $\small H0 : \mu_2 - \mu_4 = 0$  
+
+- **Coefficients**: $\small (0, 1, 0, -1, 0, 0)$  
+]
+
+.pull-right[
+
+]
+
+
+---
+# example
+
+2\. Make the following orthogonal comparisons:
+
+.pull-left[
+
+a. Placebo vs. analgesic
+
+- $\small H0 : \mu_1 - \frac{\mu_2 + \mu_3 + \mu_4 + \mu_5 + \mu_6}{5} = 0$  
+
+- **Coefficients**: $\small (5, -1, -1, -1, -1, -1)$  
+
+b. Pure aspirin vs. aspirin with additives
+
+- $\small H0 : \frac{\mu_2 + \mu_4}{2} - \frac{\mu_3 + \mu_5 + \mu_6}{3} = 0$  
+
+- **Coefficients**: $\small (0, 3, -2, 3, -2, -2)$  
+
+c. Aspirin 1 vs. aspirin 2
+
+- $\small H0 : \mu_2 - \mu_4 = 0$  
+
+- **Coefficients**: $\small (0, 1, 0, -1, 0, 0)$  
+]
+
+.pull-right[
+
+d. Aspirin with caffeine (alone) vs. aspirin with buffer (with or without caffeine)
+
+]
+
+
+---
+# example
+
+2\. Make the following orthogonal comparisons:
+
+.pull-left[
+
+a. Placebo vs. analgesic
+
+- $\small H0 : \mu_1 - \frac{\mu_2 + \mu_3 + \mu_4 + \mu_5 + \mu_6}{5} = 0$  
+
+- **Coefficients**: $\small (5, -1, -1, -1, -1, -1)$  
+
+b. Pure aspirin vs. aspirin with additives
+
+- $\small H0 : \frac{\mu_2 + \mu_4}{2} - \frac{\mu_3 + \mu_5 + \mu_6}{3} = 0$  
+
+- **Coefficients**: $\small (0, 3, -2, 3, -2, -2)$  
+
+c. Aspirin 1 vs. aspirin 2
+
+- $\small H0 : \mu_2 - \mu_4 = 0$  
+
+- **Coefficients**: $\small (0, 1, 0, -1, 0, 0)$  
+]
+
+.pull-right[
+
+d. Aspirin with caffeine (alone) vs. aspirin with buffer (with or without caffeine)
+
+- $\small H0 : \mu_3 - \frac{\mu_5 + \mu_6}{2} = 0$  
+
+- **Coefficients**: $\small (0, 0, 2, 0, -1, -1)$
+
+]
+
+
+---
+# example
+
+2\. Make the following orthogonal comparisons:
+
+.pull-left[
+
+a. Placebo vs. analgesic
+
+- $\small H0 : \mu_1 - \frac{\mu_2 + \mu_3 + \mu_4 + \mu_5 + \mu_6}{5} = 0$  
+
+- **Coefficients**: $\small (5, -1, -1, -1, -1, -1)$  
+
+b. Pure aspirin vs. aspirin with additives
+
+- $\small H0 : \frac{\mu_2 + \mu_4}{2} - \frac{\mu_3 + \mu_5 + \mu_6}{3} = 0$  
+
+- **Coefficients**: $\small (0, 3, -2, 3, -2, -2)$  
+
+c. Aspirin 1 vs. aspirin 2
+
+- $\small H0 : \mu_2 - \mu_4 = 0$  
+
+- **Coefficients**: $\small (0, 1, 0, -1, 0, 0)$  
+]
+
+.pull-right[
+
+d. Aspirin with caffeine (alone) vs. aspirin with buffer (with or without caffeine)
+
+- $\small H0 : \mu_3 - \frac{\mu_5 + \mu_6}{2} = 0$  
+
+- **Coefficients**: $\small (0, 0, 2, 0, -1, -1)$
+
+e. Aspirin with buffer vs. aspirin with buffer and caffeine
+
+]
+
+
+---
+# example
+
+2\. Make the following orthogonal comparisons:
+
+.pull-left[
+
+a. Placebo vs. analgesic
+
+- $\small H0 : \mu_1 - \frac{\mu_2 + \mu_3 + \mu_4 + \mu_5 + \mu_6}{5} = 0$  
+
+- **Coefficients**: $\small (5, -1, -1, -1, -1, -1)$  
+
+b. Pure aspirin vs. aspirin with additives
+
+- $\small H0 : \frac{\mu_2 + \mu_4}{2} - \frac{\mu_3 + \mu_5 + \mu_6}{3} = 0$  
+
+- **Coefficients**: $\small (0, 3, -2, 3, -2, -2)$  
+
+c. Aspirin 1 vs. aspirin 2
+
+- $\small H0 : \mu_2 - \mu_4 = 0$  
+
+- **Coefficients**: $\small (0, 1, 0, -1, 0, 0)$  
+]
+
+.pull-right[
+
+d. Aspirin with caffeine (alone) vs. aspirin with buffer (with or without caffeine)
+
+- $\small H0 : \mu_3 - \frac{\mu_5 + \mu_6}{2} = 0$  
+
+- **Coefficients**: $\small (0, 0, 2, 0, -1, -1)$
+
+e. Aspirin with buffer vs. aspirin with buffer and caffeine
+
+- $\small H0 : \mu_5 - \mu_6 = 0$  
+
+- **Coefficients**: $\small (0, 0, 0, 0, 1, -1)$
+]
+
+---
+# example
+
+3\. Show that the set of comparisons in Part 2 are mutually orthogonal
+
+--
+- The sum of each set of coefficients = zero  
+
+    + **a**: $5 - 1 - 1 - 1 - 1 - 1 = 0$  
+    
+    + **b**: $0 + 3 - 2 + 3 - 2 - 2 = 0$
+
+--
+
+- The cross product (here equivalent to the inner, or dot product) of any pair is also zero  
+
+    + e.g., **a** versus **b**: $(a \cdot b) : (5)(0) + (-1)(3) + (-1)(-2) + (-1)(3) +(-1)(-2) + (-1)(-2) = 0$
+
+---
+# summary
+
+- Orthogonal contrasts are more powerful than multiple comparison procedures  
+
+--
+
+- They also require more thought and preparation (good things!)  
+
+--
+
+- There can be only $a - 1$ comparisons  
+
+--
+
+- If the contrasts are not orthogonal, they can't be used to fully partition the Sums of Squares among groups  
+
+--
+
+- If the comparisons really represent more than 1 treatment variable, it will be better to use a factorial design. More on that later.

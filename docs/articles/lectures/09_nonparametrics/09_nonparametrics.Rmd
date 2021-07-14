@@ -1,0 +1,280 @@
+---
+title: "LECTURE 9: non-parametric statistics"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2021"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
+                      fig.retina = 2, fig.width = 9, fig.height = 7)
+library(WILD3810)
+library(emo)
+library(kableExtra)
+library(dplyr)
+library(FANR6750)
+# library(gganimate)
+```
+
+# outline 
+
+<br/>
+
+1) Motivation
+
+<br/>
+
+--
+
+2) Kruskal-Wallis test
+
+<br/>
+
+--
+
+3) Wilcoxan test
+
+
+---
+# motivation
+
+#### Parametric models assume that random variables follow standard probability distributions, such as:
+
+- normal (Gaussian)  
+
+- gamma  
+
+- binomial  
+
+- Poisson  
+
+- multinomial  
+
+--
+
+#### The model underlying ANOVA is parametric because it assumes: 
+
+$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$
+
+---
+# what if assumptions don't hold?
+
+### At least three options:
+
+1) Use a more complicated model that relaxes some assumptions, such as:
+
+  + Generalized linear models that don't assume normality  
+
+  + Linear models with multiple variance parameters  
+
+  + Time-series models or spatial models allowing for correlated residuals  
+
+
+
+**2) Non-parametrics**  
+
+
+3) Transform the data
+
+<br/>
+
+--
+
+#### Non-parametric statistics are distribution free (but not assumption free!)
+
+---
+# non-parametric statistics
+
+#### Key idea
+
+> Replace the original observations with their ranks, which will result in tests that are less sensitive to extreme values  
+
+--
+
+```{r}
+rank_df <- data.frame(Group = rep(c("A", "B"), each = 4),
+                      Original = c(9, 3, 11, 4, 10, 992, 8, 2),
+                      Rank = c(5, 2, 7, 3, 6, 8, 4, 1))
+
+rank_df %>%
+  kable(format = 'html', col.names = c("Group", "Original data", "Rank-transformed data"), 
+        align = 'c') %>%
+  kable_styling(font_size = 11, bootstrap_options = c("condensed"), full_width = FALSE)
+```
+
+---
+class: inverse, center, middle
+
+# kruskal-wallis test
+
+---
+# kruskal-wallis test
+
+#### This is the non-parametric counterpart to one-way ANOVA
+
+--
+
+### Procedure
+
+1) Rank the data  
+
+--
+2) Compute the test statistic:  
+
+$$\large H = \frac{n\big[\sum_i(\bar{r}_i - (N+1)/2)^2\big]}{N(N+1)/12}$$
+where $\bar{r}_i$ is the mean rank of group $i$, and $N$ is the total number of observations across all the groups.
+
+--
+
+3) Compare $H$ to a chi-squared distribution and reject null hypothesis if $H \geq \chi^2_{\alpha,a-1}$
+
+---
+# $\chi^2$ distribution
+
+```{r}
+x <- seq(from = 0, to = 10, by = 0.1)
+
+chi2 <- data.frame(x = x,
+                   y = dchisq(x, df = 3))
+
+ggplot(chi2, aes(x = x, y = y)) +
+  geom_path() +
+  scale_x_continuous(expression(chi^2)) +
+  scale_y_continuous("") +
+  labs(title = "Chi−squared distribution with df=3")
+```
+
+---
+# but what is the null hypothesis?
+
+#### Null hypothesis
+
+> The mean rank of all groups is equal to the mean rank of the entire data set
+
+$$\large H_0 : E(\bar{r}_i) = \frac{N + 1}{2}$$
+for all $i$  
+
+--
+#### Alternative hypothesis
+
+> The mean rank of at least one group is not equal to the mean rank of the entire data set
+
+$$\large H_a : E(\bar{r}_i) \neq \frac{N + 1}{2}$$
+
+for at least one $i$
+
+---
+# back to the chainsaw data
+
+```{r}
+cs2 <- data.frame(blank = c(NA, NA, NA, NA, NA),
+                  degree1 = c(42, 17, 24, 39, 43),
+                  rank1 = c(12, 1, 3, 9, 13),
+                  degree2 = c(28, 50, 44, 32, 61),
+                  rank2 = c(4, 17, 14, 7, 20),
+                  degree3 = c(57, 45, 48, 41, 54),
+                  rank3 = c(19, 15, 16, 11, 18),
+                  degree4 = c(29, 40, 22, 34, 30),
+                  rank4 = c(5, 10, 2, 8, 6))
+options(knitr.kable.NA = '')
+cs2 %>%
+  kable(format = 'html', col.names = c("", "Degrees", "Rank",
+                                           "Degrees", "Rank", 
+                                           "Degrees", "Rank", 
+                                           "Degrees", "Rank")) %>%
+  add_header_above(c("Model" = 1, "A" = 2, "B" = 2, "C" = 2, "D" = 2)) %>%
+  kable_styling(full_width = TRUE, bootstrap_options = "condensed", font_size = 12)
+```
+
+--
+
+```{r}
+r.i <- data.frame(model = '\\(\\bar{r}_i\\)',
+                  degree1 = NA,
+                  rank1 = "7.6",
+                  degree2 = NA,
+                  rank2 = "12.4",
+                  degree3 = NA,
+                  rank3 = "15.8",
+                  degree4 = NA,
+                  rank4 = "6.2")
+
+r.i %>%
+  kable(format = 'html', col.names = NULL, escape = TRUE, align = "r") %>%
+  kable_styling(full_width = TRUE, bootstrap_options = "condensed", font_size = 12)
+```
+
+--
+
+$$\large H = \frac{293}{35} = 8.37$$
+
+--
+
+Reject the null because $8.37$ is greater than $\chi^2_{0.05;3} = 7.815$
+
+---
+class: inverse, center, middle
+
+# wilcoxon rank sum test
+
+---
+# wilcoxon rank sum test
+
+#### Suppose we just wanted to compare models A and D  
+
+--
+
+#### A non-parametric alternative to the two-sample $t$ test is the Wilcoxon rank sum test
+
+- This is also known as the Mann-Whitney U test  
+
+- For paired data, there is the the Wilcoxon signed-rank test  
+
+--
+
+#### The procedure is similar as before except the test statistic is different and we compare it to a standard normal distribution  
+
+
+---
+# wilcoxon rank sum test
+
+### Test statistic
+
+$$\Large z = \frac{\bar{r}_1 - (N + 1)/2}{\sqrt{(N - n_1)(N + 1)/(12n_1)}}$$
+
+--
+
+### Decision rule
+
+- Reject if $|z| > z_{\alpha/2}$ (for a two-tailed test)  
+
+- $z_{\alpha/2}$ is for the standard normal distribution, i.e. $normal(0, 1)$
+
+---
+# summary
+
+<br/>
+
+--
+
+- Nonparametric tests are simple and easy to implement  
+
+--
+
+- However, they aren't as efficient as their parametric counterparts  
+
+--
+
+- They are also much harder to devise for complicated models such as those that we will cover soon  
+
+--
+
+- Parametric assumptions usually are not problematic

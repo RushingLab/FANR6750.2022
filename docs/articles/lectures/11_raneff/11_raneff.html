@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 11: fixed effects and random effects</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2021" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# LECTURE 11: fixed effects and random effects
+## FANR 6750 (Experimental design)
+### <br/><br/><br/>Fall 2021
+
+---
+
+
+
+
+# outline 
+
+&lt;br/&gt;
+
+1) Motivation
+
+&lt;br/&gt;
+
+--
+
+2) Random effects in one-way ANOVA
+
+&lt;br/&gt;
+
+--
+
+3) Random effects in blocked ANOVA
+
+
+---
+# motivation
+
+#### The completely randomized ANOVA we have discussed can be applied to many different experiments. For example, it could be used to:  
+
+- Assess the best option from two different pesticides (plus no spray) used for gypsy moth control  
+
+- Assess if there is significant variability among the test scores of introductory statistics classes when taught by different instructors  
+
+--
+
+#### In the first example, we would model the effect of each pesticide as a fixed effect  
+
+--
+
+#### In the second example, the effect of each instructor would be modeled as a random effect  
+
+---
+# fixed vs random effects
+
+&lt;br/&gt;
+
+#### A fixed effects model is appropriate when the treatment levels included in the experiment are exhaustive  
+
+&lt;br/&gt;
+
+--
+
+#### A random effects model is appropirate when the treatment levels in the experiment can be considered a sample from a larger population of interest  
+
+- In the previous example, we are interested in all instructors, not just the ones included in the experiment  
+
+
+---
+# models
+
+### Fixed-effects model  
+
+`$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$`
+`$$\Large  \epsilon_{ij} \simnormal(0, \sigma^2)$$`
+--
+
+### Random-effects model
+
+`$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$`
+`$$\Large \alpha_{i} \simnormal(0, \sigma_A^2)$$`
+
+`$$\Large \epsilon_{ij} \simnormal(0, \sigma^2)$$`
+
+--
+
+In a random effects model, the effects are assumed to be random variables following some probability distribution
+
+---
+# hypotheses
+
+#### In a random-effects model, our interest is in assessing how much variation there is among all the effects in the population, not just the ones in our sample  
+
+
+#### As a result, our hypotheses must be written differently:
+
+--
+
+#### Fixed-effects model
+
+`$$\large H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$`
+
+`$$\large H_a : At\;least\;one\;inequality$$`
+
+--
+
+#### Random-effects model
+
+`$$\large H_0 : \sigma^2_A = 0$$`
+
+
+`$$\large H_a : \sigma^2_A &gt; 0$$`
+
+
+---
+# implications?
+
+#### Oddly enough, in the context of a one-way ANOVA, the analysis procedure is exactly the same for the fixed-effects and random-effects models  
+
+--
+
+#### In other words, we can construct the ANOVA table and test the null hypothesis using the same procedure for the random-effects model as we used for the fixed-effects model, even though the interpretation of the results is slightly different  
+
+--
+
+#### A comprehensive list of the distinctions between the two approaches is given in section 11.1 of Dowdy et al.
+
+--
+
+#### The distinction between random and fixed effects becomes much more important in the more complicated models that we will cover soon  
+
+---
+class: inverse, center, middle
+
+# random effects in blocked anova
+
+---
+# blocked anova
+
+&lt;br/&gt;
+
+### Should we treat block effects as fixed or random?  
+
+&lt;br/&gt;
+
+--
+
+### As before, we need to answer the question: 
+
+&gt; Can we view the blocks as samples of a larger population, or do the blocks represent all possible levels?
+
+
+---
+# random effects model for blocked design
+
+
+`$$\huge y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}$$`
+`$$\Large \beta_{j} \sim normal(0, \sigma^2_B)$$`
+
+`$$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$`
+
+&lt;br/&gt;
+
+--
+
+#### This is often called a mixed effects model because it includes fixed and random effects  
+
+--
+
+#### If we treated the `\(\alpha\)`'s as random too, we might call the model a *variance components model*  
+
+
+
+---
+# hypotheses
+
+.pull-left[
+#### Main hypothesis
+
+`$$H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$`
+
+`$$H_a : At\;least\;one\;inequality$$`
+
+OR
+
+`$$H_0 : \sigma^2_A = 0$$`
+
+`$$H_a : \sigma^2_A &gt; 0$$`
+]
+--
+
+.pull-right[
+
+#### Secondary hypothesis
+
+`$$H_0 : \beta_1 = \beta_2 = ... = \beta_b = 0$$`
+
+`$$H_a : At\;least\;one\;inequality$$`
+OR
+
+`$$H_0 : \sigma^2_B = 0$$`
+
+`$$H_a : \sigma^2_B &gt; 0$$`
+]
+
+---
+# implications
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+#### Once again, treating block effects as random doesn't affect our calculations for the ANOVA table&lt;sup&gt;1&lt;/sup&gt;  - it only affects the interpretation
+
+
+.footnote[&lt;sup&gt;1&lt;/sup&gt; Technically, this is only true for balanced designs]
+
+---
+# random-effects model in `r`
+
+
+
+
+```r
+aov1 &lt;- aov(caterpillars ~ pesticide + location, gypsyData)
+summary(aov1)
+```
+
+&lt;table class="table table-condensed" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sumsq &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; meansq &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; pesticide &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.830 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0392 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; location &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 430.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 143.64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.505 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0187 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 114.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+--
+
+
+```r
+aov2 &lt;- aov(caterpillars ~ pesticide + Error(location), gypsyData)
+summary(aov2)
+```
+
+&lt;table class="table table-condensed" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; stratum &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sumsq &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; meansq &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; location &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 430.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 143.64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Within &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; pesticide &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.83 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0392 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Within &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 114.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+---
+# summary
+
+- We usually model the main treatment effects as fixed, but sometimes we are interested in effects not in the sample
+
+--
+
+- Random effects models allow for inference about entire population of effects  
+
+--
+
+- Random effects models make additional distributional assumptions  
+
+--
+
+- Usually, you need many treatment levels (5-10) to get a decent estimate of the variance parameter associated with the random effects  
+
+--
+
+- In spite of the big conceptual differences, the procedures aren't much different for one-way and blocked ANOVAs
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

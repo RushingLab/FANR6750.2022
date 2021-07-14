@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 4: multiple comparison procedures</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2021" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# LECTURE 4: multiple comparison procedures
+## FANR 6750 (Experimental design)
+### <br/><br/><br/>Fall 2021
+
+---
+
+
+
+
+# motivation
+
+&lt;br/&gt;
+
+&gt; Following a significant *F*-test, the next step is to determine which means differ  
+
+&lt;br/&gt;
+
+--
+&gt; If all group means are to be compared, then we should correct for multiple testing
+
+&lt;br/&gt;
+
+--
+
+&gt; That is, conducting many tests increases the probability of finding one that is significant, even if it is not
+
+---
+
+&lt;img src="https://imgs.xkcd.com/comics/significant.png" height="600px" style="display: block; margin: auto;" /&gt;
+
+---
+# outline
+
+&lt;br/&gt;
+#### 1) Fisher's LSD
+
+&lt;br/&gt;  
+--
+
+#### 2) Pairwise *t*-tests
+
+&lt;br/&gt; 
+--
+
+#### 3) Tukey's HSD test
+
+&lt;br/&gt; 
+--
+
+#### 4) Example
+
+---
+# ronald fisher
+
+&lt;img src="figs/Fisher1946.jpeg" width="400px" height="304px" style="display: block; margin: auto;" /&gt;
+
+&lt;br/&gt;
+
+&gt; To call in the statistician after the experiment is done may be no more than asking him to perform a post-mortem examination: he may be able to say what the experiment died of
+
+---
+# fisher's lsd test
+
+&gt; Warning: This test makes no correction for multiple testing  
+
+--
+
+#### The least significant difference test is based on the two-sample *t*-statistic
+
+`$$\large t = \frac{\bar{y}_1 - \bar{y}_2}{SEDM}$$`
+--
+
+#### Fisher said that 2 means ( `\(\bar{y}_i\)` and `\(\bar{y}_j\)` ) are different if:
+
+`$$\large |\bar{y}_i - \bar{y}_j| \geq t_{1-\alpha/2,a(n-1)}\sqrt{\frac{2MSW}{n}}$$`
+
+&lt;br/&gt;
+
+where MSW (aka MSE) comes from the ANOVA table
+
+---
+class: center, inverse, middle
+
+## PAIRWISE *t*-TEST
+
+---
+## PAIRWISE *t*-TEST
+
+&lt;br/&gt;
+
+### One can always fall back on pairwise, two-sample *t*-tests, but you should adjust the p values
+
+&lt;br/&gt;
+
+--
+### Bonferroni adjustment
+
+- Multiply each *p*-value by the number of tests  
+
+- If this results in *p* &gt; 1, set *p* to 1  
+
+---
+class: center, middle, inverse
+
+# tukey's hsd test
+
+---
+# john tukey
+
+&lt;br/&gt;
+
+&lt;img src="figs/John_Tukey.jpeg" width="246px" height="300px" style="display: block; margin: auto;" /&gt;
+
+&lt;br/&gt;
+
+&gt; The combination of some data and an aching desire for an answer does not ensure that a reasonable answer can be extracted from a given body of data
+
+---
+# tukey's hsd test
+
+&lt;br/&gt;
+
+#### According to Tukey's Honestly Significant Difference test, two means ( `\(\bar{y}_i\)` and `\(\bar{y}_j\)`) are different if:
+
+`$$\large |\bar{y}_i - \bar{y}_j | \geq  q_{1- \alpha,a,a(n-1)}\sqrt{\frac{MSW}{n}}$$`
+
+&lt;br/&gt;
+
+where `\(q\)` comes from the "Studentized Range Distribution"(see `qtukey` in `R`). MSW comes from the ANOVA table
+
+---
+class: center, middle, inverse
+
+# example
+
+---
+# example
+
+**Question:** Is there a difference in Canada Warbler abundance across elevations?
+
+&lt;br/&gt;
+
+.pull-left[
+
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/8G7D5475-Canada.jpg" width="80%" /&gt;
+
+]
+
+.pull-right[
+&lt;table class="table table-condensed" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="1"&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Elevation&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Replicate &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Low &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Medium &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; High &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+# example
+
+**Question:** Is there a difference in Canada Warbler abundance across elevations?
+
+&lt;br/&gt;
+
+.pull-left[
+
+&lt;table class="table table-condensed" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="1"&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Elevation&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Replicate &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Low &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Medium &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; High &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+.pull-right[
+
+&lt;table class="table table-condensed" style="font-size: 18px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Source &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; SS &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; MS &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; F &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Among groups &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 31.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 15.7 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 7.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Within groups &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2.1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+---
+# example
+
+**Question:** Is there a difference in Canada Warbler abundance across elevations?
+
+--
+
+#### Fisher's LSD test
+
+- `\(\large t_{1-\alpha/2,a(n-1)} = t_{0.975,9} = 2.26\)`  
+
+--
+
+- LSD = `\(\large t_{1-\alpha/2;a(n-1)}\sqrt{2MSW/n} = 2.32\)`  
+
+--
+
+#### Tukey's HSD test
+
+- `\(\large q_{1-\alpha,a,a(n-1)} = q_{0.95,3,9} = 3.95\)`  
+
+--
+
+- HSD = `\(\large q_{1-\alpha,a,a(n-1)}\sqrt{MSW/n} = 2.86\)`  
+
+&lt;br/&gt;
+--
+Note that it's more difficult to observe a difference between group means with the more conservative Tukey test
+
+---
+# summary
+
+--
+- Only do multiple comparison tests after a significant *F*-test  
+
+--
+- The motivation is that if you do 100 tests, 5 (on average) will be significant even if there is no difference  
+
+--
+- From least conservative to most conservative, the order is: Fisher's LSD, Tukey's HSD, and then pairwise *t*-tests with Bonferroni adjustments  
+
+--
+- There are many other types of multiple comparison tests other than the 3 we covered  
+
+--
+- Tukey's HSD test is probably the method of choice these days. However,
+
+  + It is so conservative that sometimes you won't see any pairwise differences even after a significant *F*-test
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,383 @@
+---
+title: "LECTURE 10: blocking and blocked designs"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2021"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
+                      fig.retina = 2, fig.width = 9, fig.height = 7)
+library(WILD3810)
+library(emo)
+library(kableExtra)
+library(dplyr)
+library(FANR6750)
+# library(gganimate)
+```
+
+# outline 
+
+
+1) Motivation
+
+<br/>
+
+--
+
+2) Design
+
+<br/>
+
+--
+
+3) Model
+
+<br/>
+
+--
+
+4) Procedure
+
+<br/>
+
+--
+
+5) Example
+
+
+
+---
+# motivation
+
+#### Recall that the completely randomized design is used when no sources of variation other than the treatment effects are known or anticipated  
+
+<br/>
+
+--
+
+#### For example, in the loblolly pine example, we assumed that the plots were essentially homogeneous with respect to soil conditions and other spatial factors
+
+<br/>
+
+--
+
+### However, one should always look for other sources of variation!
+
+---
+# motivation
+
+#### What other sources of variation should we look for?
+
+- Factors that are likely to influence the response variable that are not related to the treatments of interest  
+
+--
+
+- We might *not* be interested in these other factors per se  
+
+--
+
+    + In field studies, two adjacent plots that get different treatments can be more similar than two separated plots that receive the same treatment  
+    
+--
+
+    + Heavier animals in a group respond to a diet differently than light animals, as might animals from different litters  
+    
+--
+
+    + Observations taken on the same day will have a similar response relative to observations taken on different days  
+
+--
+
+#### In each of the above examples, we recognize this heterogeneity **PRIOR** to the experimental activity. That is, we recognize it in the design stage.
+
+---
+class: inverse, center, middle
+
+# block designs
+
+---
+# block designs
+
+We partition our experimental units into groups or **BLOCKS** such that:  
+
+- Within the block, experimental conditions are as homogeneous as we can make them  
+
+- Between the blocks, variation may be considerable but differences between blocks are not of immediate interest  
+
+--
+
+In the loblolly example, the plots might be located along a slope that would have an associated moisture gradient  
+
+--
+
+Our blocks would be arranged across the moisture gradient; but each block would contain an area that is homogeneous with regard to moisture  
+
+--
+
+Then, we would assign the various treatment levels at random to the experimental units contained within each block  
+
+---
+# randomized complete block design
+
+**RCBD**: If each treatment level is present in each block, we call it a complete block. And the overall design is called a randomized complete block design  
+
+--
+
+**Example**: The effect of four different drugs (A, B, C, D) on mice could be confounded by the litter the mouse came from. To remove nuisance variability we use litters as blocks.
+
+```{r}
+mouse <- data.frame(Litter = c(1, 2, 3),
+                    m1 = c("B", "A", "C"),
+                    m2 = c("A", "C", "D"),
+                    m3 = c("D", "B", "A"),
+                    m4 = c("C", "D", "B"))
+
+mouse %>%
+  kable(format = "html", col.names = c(" ", "1", "2", "3", "4"), 
+        align = "c") %>%
+  kable_styling(bootstrap_options = "condensed", font_size = 12) %>%
+  add_header_above(header = c("Litter (block)" = 1, "Mouse" = 4))
+```
+
+---
+# randomized complete block design
+
+<br/>
+
+- Blocking comes from agricultural field experiments (R. A. Fisher)  
+
+--
+
+- Blocking is an extension of the paired t-test for >2 groups  
+
+--
+
+- It's easy to think of blocks as plots of land, but blocks need not be spatial  
+
+--
+
+#### Blocking is used when an experimenter is interested in controlling an extraneous source of variability that is not of direct interest but is likely to affect the response variable  
+
+---
+# data structure for rcbd
+
+```{r}
+rcbc <- data.frame(block = c("1", "2", "3", "4"),
+                  t1 = c('\\(y_{11}\\)', '\\(y_{12}\\)', '\\(y_{13}\\)', '\\(y_{14}\\)'),
+                  t2 = c('\\(y_{21}\\)', '\\(y_{22}\\)', '\\(y_{23}\\)', '\\(y_{24}\\)'),
+                  t3 = c('\\(y_{31}\\)', '\\(y_{32}\\)', '\\(y_{33}\\)', '\\(y_{34}\\)'))
+
+options(knitr.kable.NA = '')
+rcbc %>%
+  kable(format = 'html', col.names = c(" ", "1", "2", "3"), escape = FALSE) %>%
+  add_header_above(c("Block (\\(j\\))" = 1, "Treatment (\\(i\\))" = 3)) %>%
+  kable_styling(full_width = FALSE, bootstrap_options = "condensed", font_size = 14)
+```
+
+--
+
+Notice that the subscript $j$ now represents more than just a replicate; it also represents a block  
+
+--
+
+Also notice that no additional replicates are needed in order to develop a blocked design, just some planning such that every treatment is represented in every block  
+
+---
+class: inverse, center, middle
+
+# model
+
+---
+# model
+
+$$\huge y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}$$
+$$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$
+
+$$\Large i = 1,..., a$$
+$$\Large j = 1,..., b$$
+
+- $\mu =$ grand mean  
+
+- $\alpha_i =$ deviation from the mean for the $i$th treatment  
+
+- $\beta_j =$ deviation from the mean for the $j$th block  
+
+- $\epsilon_{ij} =$ unexplained variation  
+
+
+---
+# hypotheses
+
+### Main hypothesis
+
+$$\Large H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$
+
+$$\Large H_a : At\;least\;one\;inequality$$
+### Secondary hypothesis
+
+$$\Large H_0 : \beta_1 = \beta_2 = ... = \beta_b = 0$$
+
+$$\Large H_a : At\;least\;one\;inequality$$
+
+---
+# anova table
+
+<br/>
+
+```{r anova_tab}
+anova_tab <- data.frame(Source = c("Treatments", "Blocks", "Error"),
+                        df = c('\\(a-1\\)', '\\(b-1\\)', '\\((a-1)(b-1)\\)'),
+                        SS = c('\\(\\sum_i b(\\bar{y}_i - \\bar{y}.)^2\\)', 
+                               '\\(\\sum_j a (\\bar{y}_{j} - \\bar{y}.)^2\\)',
+                               '\\(\\sum_i \\sum_j (y_{ij} - \\bar{y}_i - \\bar{y}_{j} + \\bar{y}.)^2\\)'),
+                        MS = c('\\(\\frac{SS_a}{a-1}\\)', '\\(\\frac{SS_b}{b-1}\\)', '\\(\\frac{SS_e}{df_e}\\)'),
+                        F = c('\\(\\frac{MS_a}{MS_e}\\)', '\\(\\frac{MS_b}{MS_e}\\)', ""))
+
+anova_tab %>%
+  kable(align = 'c', booktabs = TRUE, escape = FALSE, format = "html") %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 18) 
+```
+
+---
+# what happens if block effect is ignored?
+
+<br/>
+
+- What happens mathematically if we have a blocked design but choose to not use the block factor in the analysis?  
+
+--
+
+- The treatment sum of squares and degrees of freedom are unaffected. Not so with the error sum of squares and df  
+
+--
+
+- The block sum of squares and df will be added to the error (or residual) SS and df  
+
+--
+
+- If the block effect is significant, then a substantial amount is added to the denominator in the F-test, **decreasing power**  
+
+---
+# what if the block effect isn't significant?
+
+<br/>
+
+#### There are differences of opinion regarding follow-up procedure if the block is not significant
+
+<br/>
+
+--
+
+#### Some say you are stuck with that design regardless. Others are more liberal, suggesting that you redo the analysis without the blocking factor  
+
+---
+class: middle, center, inverse
+
+# example
+
+---
+# gypsy moth data
+
+We are interested in comparing the alternative gypsy moth control strategies (Bt, Dimilin, no spray) in their effectiveness in controlling gypsy moth. Because sprayed areas are large, and
+different treatments are applied on different ridges, extraneous variability due to location is expected and should be controlled. Data are the average number of moths captured in pheromone
+traps placed in the plots.
+
+```{r}
+gm <- data.frame(Location = 1:4,
+                  Bt = c(16, 3, 10, 18),
+                  Control = c(25, 10, 15, 32),
+                  Dimilin = c(14, 2, 16, 12))
+
+gm %>%
+  kable(format = 'html', col.names = c(" ", "Bt", "Control", "Dimilin")) %>%
+  add_header_above(c("Location" = 1, "Treatment" = 3)) %>%
+  kable_styling(full_width = FALSE, bootstrap_options = "condensed", font_size = 14)
+```
+
+---
+# analyze using aov
+
+```{r echo = FALSE}
+gypsyData <- data.frame(location = rep(c("A", "B", "C", "D"), 3),
+                        caterpillars = c(16, 3, 10, 18, 25, 10, 15, 32, 14, 2, 16, 12),
+                        pesticide = rep(c("Bt", "Control", "Dimilin"), each = 4))
+```
+
+```{r echo = TRUE, eval = FALSE}
+aov1 <- aov(caterpillars ~ pesticide + location, gypsyData)
+summary(aov1)
+```
+
+```{r echo = FALSE}
+aov1 <- aov(caterpillars ~ pesticide + location, gypsyData)
+options(knitr.kable.NA = '')
+kable(broom::tidy(aov1))
+```
+
+---
+# analyze using aov
+
+#### Look what happens if we ignore the blocking variable
+
+
+```{r echo = TRUE, eval = FALSE}
+aov2 <- aov(caterpillars ~ pesticide, gypsyData)
+summary(aov2)
+```
+
+```{r echo = FALSE}
+aov2 <- aov(caterpillars ~ pesticide, gypsyData)
+options(knitr.kable.NA = '')
+kable(broom::tidy(aov2))
+```
+
+--
+
+#### Why is the effect of pesticide no longer significant?
+
+---
+# conclusions
+
+<br/>
+
+- There is a treatment effect. The effect of location also was significant, so blocking is an effective design feature in this experiment  
+
+--
+
+- As with the completely randomized design, we would want to follow up a significant F-score for the treatment variable with a multiple comparison test, or else use contrasts  
+
+--
+
+- For the blocking variable, we are usually content to just know that the block effect was significant, and leave it at that  
+
+--
+
+- We might, however, want to see which forests had more gypsy moths, so there is nothing wrong with a follow-up procedure for the blocks as well
+
+---
+# summary
+
+<br/>
+
+- Blocking provides additional power to test treatment effects by controlling extraneous sources of variation  
+
+--
+
+- There is little lost by using a blocked design, and there is much that can be gained in terms of power  
+
+--
+
+- The key issue is that blocking must be done as part of the design. You can't "*search for blocks*" in the data  
+
+
+
