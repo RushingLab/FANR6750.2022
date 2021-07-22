@@ -9,8 +9,13 @@ articles:
   lab03_ANOVA: lab03_ANOVA.html
   lab04_contrasts: lab04_contrasts.html
   lab05_assump_nonpar: lab05_assump_nonpar.html
+  lab06_blocking: lab06_blocking.html
+  lab07_factorial: lab07_factorial.html
+  lab08_nested: lab08_nested.html
+  lab09_splitplot: lab09_splitplot.html
+  lab10_repeated_measures: lab10_repeated_measures.html
   projects_and_directories: projects_and_directories.html
   schedule: schedule.html
   syllabus: syllabus.html
-last_built: 2021-07-13T20:56Z
+last_built: 2021-07-22T17:30Z
 

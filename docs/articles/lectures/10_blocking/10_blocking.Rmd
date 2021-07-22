@@ -293,14 +293,14 @@ different treatments are applied on different ridges, extraneous variability due
 traps placed in the plots.
 
 ```{r}
-gm <- data.frame(Location = 1:4,
+gm <- data.frame(Region = 1:4,
                   Bt = c(16, 3, 10, 18),
                   Control = c(25, 10, 15, 32),
                   Dimilin = c(14, 2, 16, 12))
 
 gm %>%
   kable(format = 'html', col.names = c(" ", "Bt", "Control", "Dimilin")) %>%
-  add_header_above(c("Location" = 1, "Treatment" = 3)) %>%
+  add_header_above(c("Region" = 1, "Treatment" = 3)) %>%
   kable_styling(full_width = FALSE, bootstrap_options = "condensed", font_size = 14)
 ```
 
@@ -308,18 +308,16 @@ gm %>%
 # analyze using aov
 
 ```{r echo = FALSE}
-gypsyData <- data.frame(location = rep(c("A", "B", "C", "D"), 3),
-                        caterpillars = c(16, 3, 10, 18, 25, 10, 15, 32, 14, 2, 16, 12),
-                        pesticide = rep(c("Bt", "Control", "Dimilin"), each = 4))
+data("mothData")
 ```
 
 ```{r echo = TRUE, eval = FALSE}
-aov1 <- aov(caterpillars ~ pesticide + location, gypsyData)
+aov1 <- aov(caterpillar ~ Treatment + Region, mothData)
 summary(aov1)
 ```
 
 ```{r echo = FALSE}
-aov1 <- aov(caterpillars ~ pesticide + location, gypsyData)
+aov1 <- aov(caterpillar ~ Treatment + Region, mothData)
 options(knitr.kable.NA = '')
 kable(broom::tidy(aov1))
 ```
@@ -331,12 +329,12 @@ kable(broom::tidy(aov1))
 
 
 ```{r echo = TRUE, eval = FALSE}
-aov2 <- aov(caterpillars ~ pesticide, gypsyData)
+aov2 <- aov(caterpillar ~ Treatment, mothData)
 summary(aov2)
 ```
 
 ```{r echo = FALSE}
-aov2 <- aov(caterpillars ~ pesticide, gypsyData)
+aov2 <- aov(caterpillar ~ Treatment, mothData)
 options(knitr.kable.NA = '')
 kable(broom::tidy(aov2))
 ```

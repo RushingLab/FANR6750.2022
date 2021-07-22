@@ -146,7 +146,25 @@
       <a href="../articles/lab03_ANOVA.html">Lab 3: ANOVA</a>
     </li>
     <li>
-      <a href="../articles/lab04_constrasts.html">Lab 4: Contrasts</a>
+      <a href="../articles/lab04_contrasts.html">Lab 4: Contrasts, estimation, and power analysis</a>
+    </li>
+    <li>
+      <a href="../articles/lab05_assump_nonpar.html">Lab 5: Assumptions of ANOVA, tranformations, and non-parametric tests</a>
+    </li>
+    <li>
+      <a href="../articles/lab06_blocking.html">Lab 6: Randomized Complete Block Design</a>
+    </li>
+    <li>
+      <a href="../articles/lab07_factorial.html">Lab 7: Factorial designs</a>
+    </li>
+    <li>
+      <a href="../articles/lab08_nested.html">Lab 8: Nested ANOVA</a>
+    </li>
+    <li>
+      <a href="../articles/lab09_splitplot.html">Lab 9: Split plot designs</a>
+    </li>
+    <li>
+      <a href="../articles/lab10_repeated_measures.html">Lab 10: Repeated measures</a>
     </li>
   </ul>
 </li>
@@ -205,44 +223,33 @@
 <h1 class="hasAnchor">
 <a href="#instructor" class="anchor"></a>INSTRUCTOR</h1>
 <p>Dr. Clark Rushing<br><a href="mailto:crushing@uga.edu" class="email">crushing@uga.edu</a><br>
-Office: Warnell 3-409B Office hours: By appointment</p>
+Office: Warnell 3-409B<br>
+Office hours: By appointment</p>
 </div>
 <div id="teaching-assistants" class="section level1">
 <h1 class="hasAnchor">
 <a href="#teaching-assistants" class="anchor"></a>TEACHING ASSISTANTS</h1>
-<p>Clark Rushing<br><a href="mailto:crushing@uga.edu" class="email">crushing@uga.edu</a><br>
-Office: Warnell 3-409B Office hours: By appointment</p>
-<p>Clark Rushing<br><a href="mailto:crushing@uga.edu" class="email">crushing@uga.edu</a><br>
-Office: Warnell 3-409B Office hours: By appointment</p>
+<p>Michael Baker<br><a href="mailto:michael.baker2@uga.edu" class="email">michael.baker2@uga.edu</a><br>
+Office: ?<br>
+Office hours: By appointment</p>
+<p>Sameen Raut<br><a href="mailto:sameen.raut@uga.edu" class="email">sameen.raut@uga.edu</a><br>
+Office: ?<br>
+Office hours: By appointment</p>
 </div>
 <div id="course-objectives" class="section level1">
 <h1 class="hasAnchor">
 <a href="#course-objectives" class="anchor"></a>COURSE OBJECTIVES</h1>
 <p>To understand: (1) the logical structure of experiments, especially the design of manipulative experiments, (2) the analysis of such experiments, focusing on analysis of variance procedures, (3) the use of models in ecological studies (experimental and observational).</p>
 </div>
-<div id="learning-outcomes" class="section level1">
-<h1 class="hasAnchor">
-<a href="#learning-outcomes" class="anchor"></a>LEARNING OUTCOMES</h1>
-<ol style="list-style-type: decimal">
-<li>Understand common deterministic and stochastic models used to analyze ecological data</li>
-<li>Understand key principles of linear models, including design matrices, linear predictors, and model interpretations</li>
-<li>Understand key principles of Bayesian statistics, including Bayes theorem, Markov Chain Monte Carlo methods, prior distributions, and posterior sampling</li>
-<li>Understand the concepts underlying Bayesian hierarchical models, including fixed vs. random effects, hyperparameters, and shrinkage</li>
-<li>Develop custom Bayesian models using MCMC software (e.g., JAGS) to estimate parameter values and derived quantities of interest for common ecological processes</li>
-<li>Be able to evaluate model convergence/fit of Bayesian models</li>
-<li>Be able to prepare reproducible reports using R and R Markdown</li>
-</ol>
-</div>
 <div id="prerequisites" class="section level1">
 <h1 class="hasAnchor">
 <a href="#prerequisites" class="anchor"></a>PREREQUISITES</h1>
-<p>Students should have at least one semester of both basic ecology and introductory statistics. Although we will thoroughly cover the foundational principles of common statistical models, a basic understanding of ecological theory and statistical inference will be very helpful.</p>
-<p>All lab activities for this course will rely heavily on the statistical programming language R (and associated software, including RStudio, JAGS, and git). During the first few weeks, each lab session will begin with a tutorial on these tools so students are not expected to be experts prior to the course. However, we will quickly move into activities that require some degree of R proficiency so I highly recommend that you have a basic understanding of programming in R (e.g., importing/exporting &amp; manipulating data objects, visualizing data) prior to this course. If you find yourself struggling with any aspects of using R, please seek individual help during office hours. The earlier we can get you up to speed, the more painless the remainder of the semester will be.</p>
+<p>All lab activities for this course will rely heavily on the statistical programming language <code>R</code>. During the first few weeks, each lab session will begin with a tutorial on these tools so students are not expected to be experts prior to the course. However, we will quickly move into activities that require some degree of R proficiency so I highly recommend that you have a basic understanding of programming in R (e.g., importing/exporting &amp; manipulating data objects, visualizing data) prior to this course. If you find yourself struggling with any aspects of using <code>R</code>, please seek individual help during office hours. The earlier we can get you up to speed, the more painless the remainder of the semester will be.</p>
 </div>
 <div id="course-format" class="section level1">
 <h1 class="hasAnchor">
 <a href="#course-format" class="anchor"></a>COURSE FORMAT</h1>
-<p>The components of a scientific study need to be considered together rather than separately; design and analysis aspects will be completely blended in this course. Emphasis will be on application, and will include instruction on the use of the R statistical software. Important points will be reinforced by readings from the scientific literature and by discussions. Homework assignments and exams (take home) are intended to keep the material fresh in the students’ minds. The syllabus is subject to change, but the order of material is correct.</p>
+<p>The components of a scientific study need to be considered together rather than separately; design and analysis aspects will be completely blended in this course. Emphasis will be on application, and will include instruction on the use of the <code>R</code> statistical software. Important points will be reinforced by readings from the scientific literature and by discussions. Homework assignments and exams (take home) are intended to keep the material fresh in the students’ minds. The syllabus is subject to change, but the order of material is correct.</p>
 </div>
 <div id="course-resources" class="section level1">
 <h1 class="hasAnchor">
@@ -271,7 +278,15 @@ Office: Warnell 3-409B Office hours: By appointment</p>
 <li><p>Launch RStudio</p></li>
 <li><p>Put the cursor in the window labeled <code>Console</code>. Type the following code followed by enter or return: <code>x &lt;- 2 * 4</code>. Next type <code>x</code> followed by enter or return. You should see the value 8 print to screen. If yes, you’ve succeeded in installing R and RStudio.</p></li>
 </ol>
+<div id="course-r-package" class="section level3">
+<h3 class="hasAnchor">
+<a href="#course-r-package" class="anchor"></a>Course R package</h3>
+<p>Materials for the course will be distributed through an <code>R</code> package called <em>FANR6750</em>. The main purpose of the package is to distribute code and data that will used for labs, though eventually additional materials may be included, including lectures and reference documents. You can install the most current version of <em>FANR6750</em> with:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"RushingLab/FANR6750"</span><span class="op">)</span></code></pre></div>
 <p>If you encounter any problems with the previous steps, please contact me prior to the first class.</p>
+</div>
 </div>
 </div>
 <div id="attendance" class="section level1">
@@ -288,7 +303,7 @@ Office: Warnell 3-409B Office hours: By appointment</p>
 <h1 class="hasAnchor">
 <a href="#grading" class="anchor"></a>GRADING</h1>
 <p>Three take-home exams, 25% each. Exam dates in the <a href="https://rushinglab.github.io/FANR6750/articles/schedule.html">schedule</a> are approximate days when the exam will be provided. The last exam will largely (~60%) take the form of a scientific paper - more details later. The remaining 25% of the grade will come from weekly lab and lecture assignments.</p>
-<p>Homework assignments will build on concepts and skills that we cover in lecture and lab. Specific objectives and tasks for each assignment, along with any necessary data, will be posted on the course website. Each assignment will be due before class the week after the assignment is posted. All assignments must be prepared as R Markdown files that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). See <a href="https://rushinglab.github.io/FANR6750/articles/homework.html">here</a> for instructions on submitting assignments.</p>
+<p>Homework assignments will build on concepts and skills that we cover in lecture and lab. Specific objectives and tasks for each assignment, along with any necessary data, will be provided at the end of each lab activity. Each assignment will be due before class the week after the assignment is posted. All assignments must be prepared as R Markdown files that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). See <a href="https://rushinglab.github.io/FANR6750/articles/homework.html">here</a> for instructions on submitting assignments.</p>
 <p>All academic work must meet the standards contained in the University’s academic <a href="https://honesty.uga.edu/">honesty policy</a>. All students are responsible for informing themselves about those standards before performing any academic work. The penalties for academic dishonesty are <a href="https://honesty.uga.edu/Academic-Honesty-Policy/Consequences_for_Honesty_Violations/">severe</a>, and ignorance is not an acceptable defense.</p>
 </div>
 <div id="grading-scale" class="section level1">

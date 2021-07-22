@@ -69,6 +69,18 @@ navbar:
           href: articles/lab03_ANOVA.html
         - text: "Lab 4: Contrasts, estimation, and power analysis"
           href: articles/lab04_contrasts.html
+        - text: "Lab 5: Assumptions of ANOVA, tranformations, and non-parametric tests"
+          href: articles/lab05_assump_nonpar.html
+        - text: "Lab 6: Randomized Complete Block Design"
+          href: articles/lab06_blocking.html
+        - text: "Lab 7: Factorial designs"
+          href: articles/lab07_factorial.html
+        - text: "Lab 8: Nested ANOVA"
+          href: articles/lab08_nested.html
+        - text: "Lab 9: Split plot designs"
+          href: articles/lab09_splitplot.html
+        - text: "Lab 10: Repeated measures"
+          href: articles/lab10_repeated_measures.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

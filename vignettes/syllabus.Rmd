@@ -31,14 +31,14 @@ Office: Warnell 3-409B
 Office hours: By appointment
 
 # TEACHING ASSISTANTS
-Michael Baker
-Michael.Baker2@uga.edu
-Office: Warnell 3-409B  
+Michael Baker  
+michael.baker2@uga.edu  
+Office: ?  
 Office hours: By appointment  
   
-Clark Rushing  
-crushing@uga.edu  
-Office: Warnell 3-409B  
+Sameen Raut  
+sameen.raut@uga.edu  
+Office: ?  
 Office hours: By appointment
 
 
@@ -86,6 +86,15 @@ If you plan to use your own computer, **be sure you have the most recent version
 1) Launch RStudio
 
 2) Put the cursor in the window labeled `Console`. Type the following code followed by enter or return: `x <- 2 * 4`. Next type `x` followed by enter or return. You should see the value 8 print to screen. If yes, you’ve succeeded in installing R and RStudio.
+
+### Course R package
+
+Materials for the course will be distributed through an `R` package called *FANR6750*. The main purpose of the package is to distribute code and data that will used for labs, though eventually additional materials may be included, including lectures and reference documents. You can install the most current version of *FANR6750* with:
+
+``` r
+install.packages("devtools")
+devtools::install_github("RushingLab/FANR6750")
+```
 
 If you encounter any problems with the previous steps, please contact me prior to the first class.  
 

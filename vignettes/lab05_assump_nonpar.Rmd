@@ -13,6 +13,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE, fig.align = 'c',
+  fig.retina = 2,
   warning = FALSE, message = FALSE,
   comment = "#>"
 )
@@ -131,8 +132,6 @@ What are some biological processes that may lead to data that violate this assum
 
 ### A fake dataset
 
-Consider the data:
-
 ```{r}
 library(FANR6750)
 data("infectionRates")
@@ -176,15 +175,13 @@ hist(resids, col="turquoise", breaks=10, xlab="Residuals")
 
 QQ-plot of the residuals
 
-
 ```{r fig.retina=2, fig.width=6,fig.height=4}
 ggplot(anova1, aes(sample = .resid)) +
   geom_qq() +
   geom_qq_line()
 ```
 
-
-The histogram doesn’t look bad, but the QQ-plot suggests the smallest residuals are smaller than expected (below the QQ line) and the large residuals are bigger than expected (above the QQ line). We can also formally test the normality assumption using the Shapiro test.
+The histogram doesn’t look bad, but the QQ-plot suggests the smallest residuals are smaller than expected (below the QQ line) and the large residuals are bigger than expected (above the QQ line). We can also formally test the normality assumption using the Shapiro-Wilk test.
 
 #### Normality test on residuals
 
@@ -283,36 +280,13 @@ The log transformation didn’t help much: We still reject the normality assumpt
 shapiro.test(resid(anova2))
 ```
 
-Maybe the square-root transformation:
-
-```{r}
-anova3 <- aov(sqrt(percentInfected) ~ landscape, data = infectionRates)
-summary(anova3)
-
-shapiro.test(resid(anova3))
-```
-
-That's better
-
-## Advice for data transformations^[This information borrows heavily from Yaniv Brandvain's excellent [Applied Biostats](https://bookdown.org/ybrandvain/Applied-Biostats/normal.html#rules-for-legit-transformations) course materials]
-
-- *Think carefully about the nature of your data*: Often you will be able to decide on an appropriate transformation based on the data itself or the process that generated the data. You can't take the log or square root of negative values, so those transformations probably aren't appropriate to data with values < 0. 
-
-- *Be consistent*: Apply the same transformation to each individual  
- .
-- *Avoid Transformed values must have a monotonic relationship with the original values e.g., larger values stay larger, so be careful with trigonometric transformations.  
-
-- Conduct your statistical tests AFTER you settle on the appropriate transformation.
-
-- Do not bias your results by losing data points when transforming the data.
-
 # Non-parametric models
 
 Occasionally, transformations will not be sufficient or appropriate for meeting the ANOVA assumptions. In this case, we can use models that do not make assumptions about the distribution on the residuals, termed *non-parametric models*. 
 
 One such test is the Wilcoxan rank sum test: 
 
-- For 2 group comparisons (alternative to *t* test)
+- For 2 group comparisons (alternative to *t*-test)
 
 - a.k.a. the Mann-Whitney $U$ test
 
@@ -328,13 +302,38 @@ These two functions can be used in almost the exact same way as `t.test()` and `
 
 # Assignment
 
-1) Decide which transformation is best for the infectionRates data by conducting ANOVAs using the log, square-root, arcsine square-root, and reciprocal transformations. Use boxplots, historgrams, and Shapiro’s tests to determine the best transformation.  
+Create an R Markdown file to do the following:
 
-2) Does transformation alter the conclusion about the null hypothesis of no difference in means? If not, were the transformations necessary?  
+1) Create an `R` chunk to load the data using:
 
-3) Test the hypothesis that infection rates are equal between suburban and urban landscapes using a Wilcoxan rank sum test. What is the conclusion?  
+```{r eval = FALSE}
+library(FANR6750)
+data("infectionRates")
+```
 
-4) Conduct a Kruskal-Wallis test on the data. What is the conclusion? Use comments in your R script (or .Rmd file) to explain your answers. Upload your results to ELC at least one day before your next lab.
+2) Create a header called "ANOVA on transformed data". Within this section, decide which transformation is best for the `infectionRates` data by conducting ANOVAs using the log, square-root, arcsine square-root, and reciprocal transformations. Use boxplots, histograms, and Shapiro’s tests to determine the best transformation. 
+
+Within this section, use subheaders to delineate different transformations. At this point in the semester, your figures should be starting to look more professional so **take time to make them look nice** and **include captions** (see `fig.caption` chunk option). Also include a subheader within which you **write a short conclusion** about which transformation you think is best for these data.
+
+3) Within the section with your conclusion about which transformation to use, discuss whether the transformation alters the conclusion about the null hypothesis of no difference in means? If not, were the transformations necessary?  
+
+4) Create a header called "Do infection rates differ between suburban and urban areas?" In this section, test the hypothesis that infection rates are equal between suburban and urban landscapes using a Wilcoxan rank sum test. What is the conclusion?  
+
+5) Create a header called "Non-parametric test". In this section, conduct a Kruskal-Wallis test on the data. What is the conclusion? Explain your answers.
+
+A few things to remember when creating the assignment:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Title the document: `title: "Lab 5 assignment"`
+
+- Be sure to include your first and last name in the `author` section 
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
+- Please upload both the `html` and `.Rmd` files when you submit your assignment  
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
 
 
 

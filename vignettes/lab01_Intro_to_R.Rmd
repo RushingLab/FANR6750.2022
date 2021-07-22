@@ -13,6 +13,8 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
+   warning = FALSE, message = FALSE,
+   fig.align = "c", fig.retina = 2,
   collapse = TRUE,
   comment = "#>"
 )

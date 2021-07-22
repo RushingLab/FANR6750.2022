@@ -1,0 +1,312 @@
+---
+title: "Lab 6: Randomized Complete Block Design"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2021"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab06_blocking}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,fig.retina = 2,
+                      fig.align = "c", fig.height = 4, fig.width = 4,
+                       warning = FALSE, message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Recap
+
+Remember from lecture that randomized complete block design (RCBD) is like one-way ANOVA except experimental units are organized into blocks to account for extraneous source of variation.  
+
+Blocks can be regions, time periods, individual subjects, etc. but blocking must occur **during the design phase** of the study.
+
+We can write the additive RCBD model as:
+
+$$\large y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}$$
+
+# Blocked ANOVA by hand
+
+To "fit" the RCBD model by hand, we'll use the gypsy moth data we saw in lecture: 
+
+```{r mothData, eval = FALSE}
+library(FANR6750)
+data("mothData")
+
+head(mothData)
+```
+
+```{r mothTable, echo = FALSE}
+library(FANR6750)
+data("mothData")
+
+knitr::kable(head(mothData), align = "c")
+```
+
+## Factors
+
+So far, we have generally treated data as either numeric/integer if the vector consisted of numbers, or character if the data consisted of non-numeric information. To perform the RCBD analysis, we need to learn about another type of object in `R` - factors.  
+
+Factors look like character strings but they behave quite differently, and understanding the way that `R` handles factors is key to working this type of data. The key difference between factors and character strings is that factors are used to represent *categorical* data with a fixed number of possible values, called *levels*^[Under the hood, `R` actually treats factors as integers - 1, 2, 3... - with character labels for each level]. 
+
+Factors can be created using the `factor()` function:
+
+```{r}
+age <- factor(c("adult", "juvenile", "adult", "juvenile"))
+```
+
+Because we didn't explicitly tell `R` the levels of this factor, it will assume the levels are *adult* and *juvenile*. Furthermore, by default `R` assigns levels in alphabetical order, so `adult` will be the first level and `juvenile` will be the second level:
+
+```{r}
+levels(age)
+```
+
+Sometimes alphabetical order might not make sense:
+
+```{r}
+treatment <- factor(c("medium", "low", "high"))
+```
+
+***
+What order will `R` assign to the treatment levels?
+
+***
+
+If you want to order the factor in a different way, you can use the optional `levels` argument:
+
+```{r}
+treatment <- factor(c("low", "medium", "high"), levels = c("low", "medium", "high"))
+levels(treatment)
+```
+
+Sometimes you may also need to remove factor levels. For example, let's see what happens if we have a type in one of the factors:
+
+```{r}
+sex = factor(c("male", "female", "female", "Male", "male", "female", "female"))
+
+barplot(table(sex))
+```
+
+Oops, one of the field techs accidentally capitalized "Male". Let's change that to lowercase:
+
+```{r}
+sex[sex == "Male"] <- "male"
+barplot(table(sex))
+```
+
+Hmm, there's still a bar for `Male`. We can see what's happening here by looking at the levels:
+
+```{r}
+levels(sex)
+```
+
+Removing/editing the factors doesn't change the levels! So `R` still thinks there are three levels, just zero `Male` entries. To remove that mis-specified level, we need to drop it:
+
+```{r}
+sex <- droplevels(sex)
+barplot(table(sex))
+```
+
+That's better. 
+
+The bottom line is be careful when working with factors, since their behavior is not always intuitive. There are more great online resources for working with factors in `R`, including [this tutorial](https://swcarpentry.github.io/r-novice-inflammation/12-supp-factors/) and even a package ([forcats](https://forcats.tidyverse.org/)) that tries to make it a bit easier. 
+
+## Back to the data
+
+Before we analyze the moth data, we need to tell `R` to treat the `Treatment` and `Plot` variables as factors:
+
+```{r}
+str(mothData)
+```
+
+Right now, they are character and integer objects, respectively. 
+
+```{r}
+mothData$Treatment <- factor(mothData$Treatment, levels = c("Control", "Bt", "Dimilin"))
+levels(mothData$Treatment)
+
+mothData$Region <- factor(mothData$Region)
+levels(mothData$Region)
+```
+
+Note that we were explicit about the order of levels for `Treatment` so that controls came first. 
+
+### Means
+
+Next, compute the means:
+
+```{r}
+library(dplyr)
+
+# Grand mean
+(grand.mean <- mean(mothData$caterpillar))
+
+# Treatment means
+(treatment.means <- group_by(mothData, Treatment) %>% summarise(mu = mean(caterpillar)))
+
+# Block means
+(block.means <- group_by(mothData, Region) %>% summarise(mu = mean(caterpillar)))
+```
+
+### Treatment sums of squares
+
+Remember the formula for the treatment sums of squares
+
+$$\Large b \times \sum_{i=1}^a (\bar{y}_i - \bar{y}_.)^2$$
+
+```{r}
+b <- nlevels(mothData$Region)
+(SS.treat <- b * sum((treatment.means$mu - grand.mean)^2))
+```
+
+### Block sums of squares
+
+The formula for the block sums of squares
+
+$$\Large a \times \sum_{j=1}^b (\bar{y}_j - \bar{y}_.)^2$$
+
+```{r}
+a <- nlevels(mothData$Treatment)
+(SS.block <- a * sum((block.means$mu - grand.mean)^2))
+```
+
+### Within groups sums of squares
+
+$$\Large \sum_{i=1}^a \sum_{j=1}^b (y_{ij} - \bar{y}_i - \bar{y}_j + \bar{y}_.)^2$$
+
+```{r}
+treatment.means.long <- rep(treatment.means$mu, each = b)
+block.means.long <- rep(block.means$mu, times = a)
+(SS.within <- sum((mothData$caterpillar - treatment.means.long - block.means.long + grand.mean)^2))
+```
+
+***
+
+**NOTE**: For the above code to work, `treatment.means` and `block.means` must be in the same order as in the original data.
+
+***
+
+### Create ANOVA table
+
+Now we're ready to create the ANOVA table. Start with what we've calculated so far:
+
+```{r}
+df.treat <- a - 1
+df.block <- b - 1
+df.within <- df.treat*df.block
+ANOVAtable <- data.frame(df = c(df.treat, df.block, df.within),
+                         SS = c(SS.treat, SS.block, SS.within))
+rownames(ANOVAtable) <- c("Treatment", "Block", "Within")
+ANOVAtable
+```
+
+Next, add the mean squares:
+
+```{r}
+MSE <- ANOVAtable$SS / ANOVAtable$df
+ANOVAtable$MSE <- MSE ## makes a new column!
+```
+
+Now, the *F*-values (with `NA` for error/within/residual row):
+
+```{r}
+F.stat <- c(MSE[1]/MSE[3], MSE[2]/MSE[3], NA)
+ANOVAtable$F.stat <- F.stat
+```
+
+Finally, the *p*-values
+
+```{r}
+p <- c(1 - pf(F.stat[1], 2, 6), 1 - pf(F.stat[2], 3, 6), NA)
+ANOVAtable$p <- p
+```
+
+***
+
+Quick reminder about calculating *p*-values
+
+```{r}
+qf(0.95, 2, 6) # 95% of the distribution is below this value of F
+
+1-pf(F[1], 2, 6) # Proportion of the distribution beyond this F value
+```
+
+Be sure you understand what each of these functions is doing!
+
+***
+
+
+And we'll display the table using `kable()`, with a few options to make it look a little nicer:
+
+```{r}
+options(knitr.kable.NA = "") # leave NA cells empty
+knitr::kable(ANOVAtable, digits = 2, align = "c",
+             col.names = c("df", "SS", "MSE", "F", "p-value"),
+             caption = "RCBD ANOVA table calculated by hand")
+```
+
+## Blocked ANOVA using `aov()`
+
+```{r}
+aov1 <- aov(caterpillar ~ Treatment + Region, mothData)
+summary(aov1)
+```
+
+Same as what we got by hand! Look what happens if we ignore the blocking variable:
+
+```{r}
+aov2 <- aov(caterpillar ~ Treatment, mothData)
+summary(aov2)
+```
+
+***
+
+Why is the effect of pesticide no longer significant?
+
+***
+
+## Treating block effects as random effects
+
+```{r}
+aov3 <- aov(caterpillar ~ Treatment + Error(Region), mothData)
+summary(aov3)
+```
+
+The values of the ANOVA table are the same as before, and there is no reason to use random effects here if interest only lies in testing the null hypothesis concerning pesticides.
+
+Later, we will see cases where it is important to use random and fixed effects.
+
+# Exercise
+
+Some time ago, plantations of *Pinus caribaea* were established at four locations on Puerto Rico. As part of a spacing study, four spacings were used at each location to determine the effect of four specific spacing intervals on tree height. Twenty years after the plantations were established, measurements were made in the study plots as follows:
+
+```{r echo = FALSE}
+data("pineData")
+pineData$Location <- c("Caracoles", NA, NA, NA, "Utuado", NA, NA, NA, 
+                       "Guzman", NA, NA, NA, "Lares", NA, NA, NA)
+knitr::kable(pineData, align = c("l", "c"),
+             col.names = c("Location", "Spacing (ft)", "Height (ft)"))
+```
+
+You can access these data using:
+
+```{r}
+library(FANR6750)
+data("pineData")
+```
+
+Create an `R` script or R Markdown file to the address the following:
+
+1) What is the primary null hypothesis of interest? State it, and the associated alternative hypothesis, as comments in the file  
+
+2) Test for effects of location and spacing on plant height using the `aov()` function. NOTE: spacing must be treated as a factor, not as a numeric vector  
+
+3) Perform a Tukey test to determine which spacings differ  
+
+Note well! Please complete this exercise, because doing so will help you on subsequent assignments and exams. You do not need to turn it in!
+
+
+

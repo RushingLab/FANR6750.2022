@@ -48,3 +48,33 @@ caterpillar <- data.frame(location = 1:12,
 usethis::use_data(caterpillar, overwrite = TRUE)
 
 
+mothData <- data.frame(Treatment = rep(c("Control", "Bt", "Dimilin"), each = 4),
+                       Region = rep(c(1:4), 3),
+                       caterpillar = c( 25, 10, 15, 32, 16, 3, 10, 18, 14, 2, 16, 12))
+
+
+usethis::use_data(mothData, overwrite = TRUE)
+
+pineData <- read.csv("data-raw/pineData.csv")
+usethis::use_data(pineData, overwrite = TRUE)
+
+microtusData <- read.csv("data-raw/microtus_data.csv")
+usethis::use_data(microtusData, overwrite = TRUE)
+
+acidityData <- read.csv("data-raw/acidityData.csv")
+usethis::use_data(acidityData, overwrite = TRUE)
+
+fishData <- read.csv("data-raw/fishData.csv")
+usethis::use_data(fishData, overwrite = TRUE)
+
+mothData2 <- read.csv("data-raw/gypsyData.csv")
+usethis::use_data(mothData2, overwrite = TRUE)
+
+meatData <- read.csv("data-raw/meat.csv")
+usethis::use_data(meatData, overwrite = TRUE)
+
+yieldData <- read.csv("data-raw/yieldData.csv")
+usethis::use_data(yieldData, overwrite = TRUE)
+
+plantData <- read.csv("data-raw/plantData.csv")
+usethis::use_data(plantData, overwrite = TRUE)
