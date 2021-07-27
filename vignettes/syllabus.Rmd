@@ -28,20 +28,20 @@ knitr::opts_chunk$set(
 
 # INSTRUCTOR
 Dr. Clark Rushing  
-crushing@uga.edu  
+clark.rushing@uga.edu  
 Office: Warnell 3-409B   
 Office hours: By appointment
 
 # TEACHING ASSISTANTS
 Michael Baker  
 michael.baker2@uga.edu  
-Office: ?  
-Office hours: By appointment  
+Office: 1-102A  
+Office hours: Tu/Th 10-11:30 or by appointment  
   
 Sameen Raut  
 sameen.raut@uga.edu  
-Office: ?  
-Office hours: By appointment
+Office: 4-291  
+Office hours: W 1-3:30 or by appointment
 
 
 # COURSE OBJECTIVES

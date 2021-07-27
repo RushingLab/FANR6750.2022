@@ -1,0 +1,289 @@
+---
+title: "Lab 12: Linear models"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2021"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab12_lm}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.align = "c", fig.height = 4, fig.width = 4,
+  fig.retina = 2,
+  warning = FALSE, message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+library(WILD3810)
+library(kableExtra)
+```
+
+# Linear model review
+
+Remember from lecture that a linear model is an equation of the form:
+
+$$\large y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + . . . + \beta_px_{ip} + \epsilon_i$$
+
+where the $\beta$’s are coefficients, and the $x$ values are predictor variables (or dummy variables for categorical predictors).
+
+This equation is often expressed in matrix notation as:
+
+$$\large y = \mathbf{X\beta} + \epsilon$$
+
+where $X$ is a design matrix and $\beta$ is a vector of coefficients.
+
+# The Island Scrub Jay (*Aphelocoma insularis*)
+
+
+```{r echo=FALSE, out.height="70%", out.width="70%"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/5/55/Aphelocoma_insularis_Bouton_2.jpg")
+```
+
+For this lab, we'll use the Island Scrub Jay data from lecture:
+
+```{r eval = FALSE}
+library(FANR6750)
+
+# Survey location/predictor data
+data("cruzData")
+head(cruzData)
+
+# Jay counts
+data("jayData")
+head(jayData)
+```
+
+```{r echo = FALSE}
+library(FANR6750)
+data("jayData")
+data("cruzData")
+kable(head(cruzData))
+kable(head(jayData))
+```
+
+The `cruzData` object has one row for each of the 2787 grid cell covering the island. The `jayData` object has counts of jays and habitat predictors for 100 (fake) survey locations.
+
+## Maps in `R`
+
+Although we do not have time to fully cover it in this course, `R` has an excellent GIS and mapping capabilities. We can analyze spatial data make nice maps using a number of packages, including `raster` and `sf`. For example, we can convert the jay data to a *simple features* (`sf`) spatial object, which `ggplot2` knows how to use for maps:
+
+```{r}
+# Set CRS
+projcrs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+
+# Covert data frame to sf data frame
+cruz_sf <- sf::st_as_sf(x = cruzData, coords = c("x", "y"), crs = projcrs)
+
+# Map elevation
+ggplot(cruz_sf) +
+  geom_sf(aes(color = elevation), shape = 15, size = 2)
+```
+
+Or forest cover:
+
+```{r}
+ggplot(cruz_sf) +
+  geom_sf(aes(color = forest), shape = 15, size = 2)
+```
+
+Or chaparral with the survey locations:
+
+```{r}
+jay_sf <- sf::st_as_sf(x = jayData, coords = c("x", "y"), crs = projcrs)
+ggplot() +
+  geom_sf(data = cruz_sf, aes(color = chaparral), shape = 15, size = 2) +
+  geom_sf(data = jay_sf, color = "red")
+```
+
+## Fit some models 
+
+### Simple linear regression
+
+```{r}
+fm1 <- lm(jays ~ elevation, data = jayData)
+summary(fm1)
+```
+
+### Linear regression with quadratic effects
+
+```{r}
+fm2 <- lm(jays ~ elevation + I(elevation^2), data = jayData)
+summary(fm2)
+```
+
+***
+
+What is the quadratic effect measuring? How do we interpret the coefficients from this model?
+
+***
+
+### Multiple linear regression
+
+```{r}
+fm3 <- lm(jays ~ elevation + chaparral, data = jayData)
+summary(fm3)
+```
+
+***
+
+How do we interpret the elevation and chaparral parameters in this model?
+
+***
+
+### One-way ANOVA
+
+```{r}
+fm4 <- lm(jays ~ habitat, data = jayData)
+summary(fm4)
+```
+
+### ANCOVA
+
+```{r}
+fm5 <- lm(jays ~ habitat + elevation, data = jayData)
+summary(fm5)
+```
+
+### One factor and continuous covariates with quadratic effects
+
+```{r}
+fm6 <- lm(jays ~ habitat + elevation + I(elevation^2) + chaparral, data = jayData)
+summary(fm6)
+```
+
+***
+
+Now things are getting pretty complicated. Be sure you can explain, in plain English, what each parameter represents
+
+***
+
+Let's also take a moment to make some visualizations. For example, understanding quadratic effects is often easiest by visualizing predicted values:
+
+First, create a sequence of values of elevation, holding other predictors constant
+
+```{r}
+nd1 <- data.frame(habitat = "Oak", elevation = seq(min(jayData$elev), 
+                                                   max(jayData$elev), length=100),
+                  chaparral=mean(jayData$chaparral))
+```
+
+Next, obtain the predictions from the fitted model:
+
+```{r}
+E6.elev <- predict(fm6, newdata = nd1, 
+                   type = "response", 
+                   se.fit = TRUE, 
+                   interval = "confidence")
+E6.elev <- cbind(E6.elev$fit, nd1)
+head(E6.elev)
+```
+
+And finally, make the plot:
+
+```{r}
+ggplot() +
+  geom_point(data = jayData, aes(x = elevation, y = jays)) +
+  geom_path(data = E6.elev, aes(x = elevation, y = fit)) +
+  geom_ribbon(data = E6.elev, aes(x = elevation, ymin = lwr, ymax = upr),
+              fill = NA, color = "black", linetype = "longdash") +
+  scale_x_continuous("Elevation") +
+  scale_y_continuous("Number of Jays")
+```
+
+We can also predict the number of jays at each point on the entire island:
+
+```{r}
+E6 <- predict(fm6, type = "response", 
+              newdata = cruzData, 
+              interval = "confidence")
+E6 <- cbind(cruzData[,c("x","y")], E6)
+
+E6_sf <- sf::st_as_sf(x = E6, coords = c("x", "y"), crs = projcrs)
+
+ggplot(E6_sf) +
+  geom_sf(aes(color = fit), shape = 15, size = 2) +
+  scale_color_viridis_c(limits = c(30, 55)) +
+  labs(title = "Expected number of Jays")
+
+```
+
+Although not often included in papers, it's also important to show uncertainy in these predictions:
+
+```{r}
+ggplot(E6_sf) +
+  geom_sf(aes(color = lwr), shape = 15, size = 2) +
+  scale_color_viridis_c(limits = c(30, 55)) +
+  labs(title = "Lower CI")
+```
+
+
+```{r}
+ggplot(E6_sf) +
+  geom_sf(aes(color = upr), shape = 15, size = 2) +
+  scale_color_viridis_c(limits = c(30, 55)) +
+  labs(title = "Upper CI")
+```
+
+
+#### Another way to obtain the predictions
+
+We could also obtain the predictions as follows:
+
+```{r}
+X <- model.matrix(~habitat + elevation + I(elevation^2) + chaparral, data = cruzData)
+beta <- coef(fm6) # beta estimates
+E <- X %*% beta # expected number of jays at each pixel
+head(E, n=4)
+```
+
+The `predict()` function may often be a little easier but understanding how to do obtain the predictions "by hand" like this is a good check on whether you understand 1) the design matrix, and 2) the relationship between the design matrix, model parameters, and predicted values.
+
+# Assignment: Species Richness in Switzerland
+
+Birds are sampled at 267 locations (quadrats) as part of the Swiss breeding bird survey
+
+The following predictor variables are available: elevation, percent cover of forest, and the presence of water
+
+The country-wide data can be loaded using:
+
+```{r}
+library(FANR6750)
+data("switzerland")
+```
+
+The survey data can be loaded using:
+
+```{r}
+data("swissData")
+```
+
+Create an R markdown report to do the following:
+
+1) Fit 4 models of species richness using `lm()`. At least one model should include an interaction, and one model should include quadratic effects
+
+2) Interpret, in plain English, the $\beta$ parameter estimates for each model.
+
+3) Create the design matrix for one of the models, and (matrix) multiply it by the $\beta$ coefficients to compute the expected number of species at each plot
+
+4) Use `predict()` to plot the relationship between expected species richness and the predictor variable with the quadratic effects. Include 95% CI in your plot.
+
+5) Using the model with the interaction, predict species richness at each location in Switzerland. Include a map of the predicted values (you may use whatever graphing package you like to make the map but it must be made in `R` and your code must be included).
+
+You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above. 
+
+As always:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Title the document: `title: "Lab 12 assignment"`
+
+- Be sure to include your first and last name in the `author` section 
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
+- Please upload both the `html` and `.Rmd` files when you submit your assignment  
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.

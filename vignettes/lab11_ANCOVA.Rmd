@@ -1,0 +1,361 @@
+---
+title: "Lab 11: Analysis of Covariance (ANCOVA)"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2021"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab11_ANCOVA}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.align = "c", fig.height = 4, fig.width = 4,
+  fig.retina = 2,
+  warning = FALSE, message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+library(WILD3810)
+library(kableExtra)
+```
+
+# Scenario
+
+Very commonly, we are interested in doing a one-way ANOVA but we need to account for the effect of a continuous predictor variable. How do we include the continuous predictor in the ANOVA model? Analysis of covariance (ANOVA).
+
+ANCOVA can be thought of as a hybrid between ANOVA and regression. Actually, it's more accurate to say that ANOVA, regression, and ANCOVA are all linear models. And understanding how these models are the same, and how they differ, is critical to the application of modern statistical methods.
+
+
+## Example: the Diet Data
+
+Load the data and check structure:
+
+```{r setup}
+library(FANR6750)
+data("dietData")
+str(dietData)
+```
+
+We need to change diet to a factor, and while doing so we'll explicitly define the level order: 
+
+```{r}
+dietData$diet <- factor(dietData$diet, levels = c("Control", "Low", "Med", "High"))
+levels(dietData$diet)
+```
+
+Let's also visualize the data:
+
+```{r}
+library(ggplot2)
+
+ggplot(dietData, aes(x = length, y = weight)) +
+  geom_point()
+
+ggplot(dietData, aes(x = diet, y = weight)) +
+  geom_boxplot()
+```
+
+And finally, let's quantify the relationship between length and weight using a linear regression:
+
+```{r eval = FALSE}
+fm1 <- lm(weight ~ length, dietData)
+summary(fm1)
+```
+
+```{r echo = FALSE}
+fm1 <- lm(weight ~ length, dietData)
+kable(broom::tidy(fm1), col.names = c("Term", "Estimate", "SE", "Statistic", "p-value"))
+```
+
+We can also add regression lines and CIs to our plot using the `predict()` function:
+
+1) Create a new data frame containing a sequence of values of the predictor variable length
+
+2) Predict weight using these values of length
+
+3) Put predictions and data together for easy plotting
+
+```{r}
+lengths <- dietData$length
+nd <- data.frame(length = seq(min(lengths), max(lengths), length = 50))
+E1 <- predict(fm1, newdata = nd, se.fit = TRUE, interval="confidence")
+predictionData <- data.frame(E1$fit, nd)
+
+ggplot() +
+  geom_point(data = dietData, aes(x = length, y = weight)) +
+  geom_ribbon(data = predictionData, aes(x = length, ymin = lwr, ymax = upr),
+              color = "black", linetype = "longdash", fill = NA) +
+  geom_path(data = predictionData, aes(x = length, y = fit)) 
+```
+
+***
+
+Note that in this simple case, you could use the built in `stat_smooth()` in `ggplot2` to plot the regression line, though that will not always work. `predict()` is a more general method for creating and plotting regression lines from fitted models.
+
+***
+
+It's clear that there is a strong, positive relationship between length and weight (the *p*-value for the slope coefficient for `length` is so small that `R` rounds it to 0). If we want to quantify whether there is an effect of diet on weight, we will clearly need to control for length in our analysis. 
+
+## One-way ANOVA using `lm()`
+
+We can also fit the conventional one-way ANOVA using `lm()`. We do that by changing the `contrasts=` argument so that the estimates will correspond to the additive model:
+
+```{r}
+fm2 <- lm(weight ~ diet, dietData, contrasts = list(diet="contr.sum"))
+summary.aov(fm2)
+```
+
+***
+
+As always in `R`, there are multiple ways to do any task. The `aov()` function gives identical results to the `lm()` function above:
+
+```{r}
+summary(aov(weight ~ diet, dietData, contrasts = list(diet="contr.sum")))
+```
+
+***
+
+Note that `summary()` will return an alternative output compared to `summary.aov()`:
+
+```{r}
+summary(fm2)
+```
+
+Because we:
+
+1) Set the contrast argument to `contrast="contr.sum"`, and
+
+2) centered the length covariate,
+
+the intercept is the grand mean ($\mu$) and the other estimates are the effect sizes ($\alpha_i$).
+
+Also note that you can set the behavior for all subsequent `lm()` or `aov()` calls, by setting `R`’s options:
+
+```{r eval = FALSE}
+options(contrasts=c("contr.sum", "contr.poly"))
+```
+
+And to check the value of an option:
+
+```{r eval = FALSE}
+options("contrasts")
+```
+
+***
+
+Note that Options are reset every time you close and reopen `R`
+
+***
+
+As we saw earlier, the predict function can also be used to obtain group means, SEs, and CIs from a one-way ANOVA:
+
+```{r}
+nd2 <- data.frame(diet=levels(dietData$diet))
+E2 <- predict(fm2, newdata=nd2,
+se.fit=TRUE, interval="confidence")
+(predData2 <- data.frame(E2$fit, nd2))
+
+predData2$diet <- factor(predData2$diet, levels = c("Control", "Low", "Med", "High"))
+
+ggplot(predData2) +
+  geom_col(aes(x = diet, y = fit), fill = "grey50") +
+  geom_errorbar(aes(x = diet, ymin = lwr, ymax = upr), width = 0.1) +
+  scale_y_continuous("Weight") 
+  
+```
+
+## ANCOVA
+
+Recall the additive model:
+
+$$\Large y_{ij} = \mu + \alpha_i + \beta(x_{ij} − \bar{x}) + \epsilon_{ij}$$
+
+Make sure the contrasts are set as before:
+
+```{r}
+options(contrasts=c("contr.sum", "contr.poly"))
+```
+
+Centering the covariate isn’t required, but doing so allows the intercept to be interpreted as the grand mean:
+
+```{r}
+dietData$lengthCentered <- dietData$length - mean(dietData$length)
+```
+
+Now we can fit the model using `lm()`:
+
+```{r}
+fm3 <- lm(weight ~ lengthCentered + diet, dietData)
+```
+
+***
+
+Always put the covariate before the treatment variable in the formula. With ANCOVA, we want to assess treatment effects *after* accounting for the continuous covariate
+
+***
+
+### Aside: Dummy variables and contrasts^[h/t to Bryan Nuse for this material]
+
+Understanding and interpreting parameters from complex linear models can be challenging. If you are unsure about what `R` is doing under the hood with factors, contrasts (and interactions), a great place to start is looking at the model matrix. To do that, we need to better understand how the model matrix is constructed.
+
+Let's start by creating two new versions of the diet data frame. We'll also set the factor levels and center the length data on one of the new data frames:
+
+```{r}
+df <- df.orig <- dietData
+
+df$diet <- factor(df$diet, levels = unique(df$diet))
+df$length <- df$length- mean(df$length)       ###  Center df$girth
+```
+
+
+Now, fit a linear model (first check the default contrasts):
+
+```{r}
+options("contrasts") 
+mod1 <- lm(weight ~ length + diet, data = df)
+```
+
+And look at the estimated coefficients:
+
+```{r}
+coef(mod1)
+```
+
+
+Because `contr.treatment` was used, `(Intercept)` represents the mean of the Control group, at the mean value of length (which we have set to 0).  
+
+Now let's look at the model matrix using the `model.matrix()` function:
+
+```{r}
+model.matrix(mod1)
+```
+
+Remember that, in the model matrix, there is **one row for each observation** in the data and **one column for each parameter in the model**. In this case, the columns correspond to:
+
+1) the intercept (= 1 for all observations)
+2) the value of continuous covariate for each observation,
+3-5) the factor levels
+
+At the bottom of print out, this function also tells you the contrasts used.
+
+For factor levels (the final three columns in this case), the model matrix gives the values of the 'dummy variables' used to represent the factor diet. There will always be $a-1$ dummy variables for a factor with a groups.
+
+Why are there $a-1$ dummy variables instead of $a$? Notice that the Control group is not in the design matrix. It has been taken as the "reference condition": its mean is represented by the intercept.  Where observations belong to the Control group, all the dummy variables have a value of 0.
+
+To get the expected response for a particular observation, say row 1 of the data, we simply take the dot product (that is, a *linear combination*) of the coefficients with the appropriate row of the design matrix:
+
+```{r}
+sum(coef(mod1) * model.matrix(mod1)[1,])
+### in other words:
+coef(mod1) %*% model.matrix(mod1)[1,]
+```
+
+To do this for all rows in one go, use matrix multiplication:
+
+```{r}
+coef(mod1) %*% t(model.matrix(mod1))
+```
+
+What's with the `t()` function? If you're unsure, now's a good time to review matrix multiplication. 
+
+Next, what happens when we use `contr.sum`, or sum-to-zero contrasts?
+
+```{r}
+mod2 <- lm(weight ~ length + diet, data = df, contrasts = list(diet="contr.sum"))
+
+coef(mod2)
+```
+
+The `(Intercept)` now represents the Grand Mean (because we centered length). Also notice that the factor level now missing is `High`. Where did it go? Actually, we don't need it because the effect of `High` can be calculated as `Grand.Mean - sum(diet1, diet2, diet3)`.
+
+How do you know what the intercept represents in this case? The design matrix! 
+
+```{r}
+model.matrix(mod2)
+```
+
+Look carefully at the matrix (it might help to estimate the expected value for a few observations "by hand" to see how the dummy variables add or take away each parameters for different treatments). 
+
+So we can see that the design matrix has changed simply because we used different contrasts in the model but did the fitted values change?
+
+```{r}
+all(round(coef(mod1) %*% t(model.matrix(mod1)),5) == round(coef(mod2) %*% t(model.matrix(mod2)),5))
+```
+
+Did the residuals change?
+
+```{r}
+all(round(resid(mod1), 5) == round(resid(mod2), 5))
+```
+
+No indeed. Specifying different contrasts in this way is called a `re-parameterization` of the model. It's a different way of doing the arithmetic of the linear model, but it comes out to the same thing. We choose a parameterization based on how we want to interpret the results. For ANOVA or ANCOVA, that's usually sum-to-zero contrasts using `contr.sum`.
+
+## Back to the ANCOVA
+
+```{r}
+summary(fm3)
+```
+
+Note that the null hypothesis of no diet effect is rejected, even though it was not rejected before.
+
+It may also be helpful to view the ANOVA table using:
+
+```{r}
+summary.aov(fm3)
+```
+
+And as before, we can create predictions of weight over a sequences of lengths, for every level of diet:
+
+```{r}
+lengthC <- dietData$lengthCentered
+nd3 <- data.frame(diet=rep(c("Control", "Low", "Med", "High"), each = 20),
+                  lengthCentered=rep(seq(min(lengthC), max(lengthC),length = 20), times = 4))
+E3 <- predict(fm3, newdata=nd3, se.fit = TRUE, interval = "confidence")
+predData3 <- data.frame(E3$fit, nd3)
+
+ggplot() +
+  geom_point(data = dietData, aes(x = lengthCentered, y = weight, color = diet)) +
+  geom_line(data = predData3, aes(x = lengthCentered, y = fit, color = diet)) +
+  scale_y_continuous("Weight") +
+  scale_x_continuous("Length")
+```
+
+We can also look at multiple comparisons using:
+
+```{r}
+library(multcomp)
+summary(glht(fm3, linfct=mcp(diet="Tukey")))
+```
+
+# Assignment
+
+Complete the following and upload your R markdown file to ELC before next week.
+
+1) Fit an ANCOVA model to the `treeData` data set, which represent the height of trees following a fertilizer experiment. The covariate is pH.
+
+2) Use sum-to-zero contrasts (`contr.sum`) so that your estimates correspond to the additive model from the lecture notes.
+
+3) Interpret each of the estimates from `lm()`. What is the null hypothesis associated with each p-value?
+
+4) Plot the data and the regression lines. Use different colors or symbols to distinguish the treatment groups.
+
+5) Which fertilizer treatments are significantly different?
+
+You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above. 
+
+As always:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Title the document: `title: "Lab 11 assignment"`
+
+- Be sure to include your first and last name in the `author` section 
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
+- Please upload both the `html` and `.Rmd` files when you submit your assignment  
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+

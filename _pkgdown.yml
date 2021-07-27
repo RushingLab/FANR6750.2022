@@ -81,6 +81,14 @@ navbar:
           href: articles/lab09_splitplot.html
         - text: "Lab 10: Repeated measures"
           href: articles/lab10_repeated_measures.html
+        - text: "Lab 11: ANCOVA"
+          href: articles/lab11_ANCOVA.html
+        - text: "Lab 12: Linear models"
+          href: articles/lab12_lm.html
+        - text: "Lab 13: Generalized linear models"
+          href: articles/lab13_glm.html
+        - text: "Lab 14: Model selection and multi-model inference"
+          href: articles/lab14_model_selection.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

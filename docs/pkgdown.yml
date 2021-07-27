@@ -14,8 +14,12 @@ articles:
   lab08_nested: lab08_nested.html
   lab09_splitplot: lab09_splitplot.html
   lab10_repeated_measures: lab10_repeated_measures.html
+  lab11_ANCOVA: lab11_ANCOVA.html
+  lab12_lm: lab12_lm.html
+  lab13_glm: lab13_glm.html
+  lab14_model_selection: lab14_model_selection.html
   projects_and_directories: projects_and_directories.html
   schedule: schedule.html
   syllabus: syllabus.html
-last_built: 2021-07-22T20:30Z
+last_built: 2021-07-27T16:25Z
 

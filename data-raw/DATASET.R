@@ -78,3 +78,12 @@ usethis::use_data(yieldData, overwrite = TRUE)
 
 plantData <- read.csv("data-raw/plantData.csv")
 usethis::use_data(plantData, overwrite = TRUE)
+
+swissData <- read.csv("data-raw/swissData.csv")
+usethis::use_data(swissData, overwrite = TRUE)
+
+switzerland <- read.csv("data-raw/Switzerland.csv")
+usethis::use_data(switzerland, overwrite = TRUE)
+
+vegData <- read.csv("data-raw/vegData.csv")
+usethis::use_data(vegData, overwrite = TRUE)
