@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 )
 library(dplyr)
 library(knitr)
+source(here::here("R/zzz.R"))
 ```
 
 ## What is `R`?

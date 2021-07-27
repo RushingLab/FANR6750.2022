@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 ```{r setup, echo = FALSE}
 library(kableExtra)
 library(FANR6750)
-library(WILD6900)
+source(here::here("R/zzz.R"))
 ```
 
 # Assumptions of the ANOVA model^[Because we can view the *t*-test as a special case of an ANOVA (one with only 2 groups), these assumptions also apply to *t*-tests!]

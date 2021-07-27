@@ -356,7 +356,7 @@
 
 <span class="co"># Grand mean</span>
 <span class="op">(</span><span class="va">grand.mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mothData</span><span class="op">$</span><span class="va">caterpillar</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 14.41667</span>
+<span class="co">#&gt; [1] 14.42</span>
 
 <span class="co"># Treatment means</span>
 <span class="op">(</span><span class="va">treatment.means</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">mothData</span>, <span class="va">Treatment</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">caterpillar</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -385,7 +385,7 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nlevels.html">nlevels</a></span><span class="op">(</span><span class="va">mothData</span><span class="op">$</span><span class="va">Region</span><span class="op">)</span>
 <span class="op">(</span><span class="va">SS.treat</span> <span class="op">&lt;-</span> <span class="va">b</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">treatment.means</span><span class="op">$</span><span class="va">mu</span> <span class="op">-</span> <span class="va">grand.mean</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 223.1667</span></code></pre></div>
+<span class="co">#&gt; [1] 223.2</span></code></pre></div>
 </div>
 <div id="block-sums-of-squares" class="section level3">
 <h3 class="hasAnchor">
@@ -395,7 +395,7 @@
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nlevels.html">nlevels</a></span><span class="op">(</span><span class="va">mothData</span><span class="op">$</span><span class="va">Treatment</span><span class="op">)</span>
 <span class="op">(</span><span class="va">SS.block</span> <span class="op">&lt;-</span> <span class="va">a</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">block.means</span><span class="op">$</span><span class="va">mu</span> <span class="op">-</span> <span class="va">grand.mean</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 430.9167</span></code></pre></div>
+<span class="co">#&gt; [1] 430.9</span></code></pre></div>
 </div>
 <div id="within-groups-sums-of-squares" class="section level3">
 <h3 class="hasAnchor">
@@ -405,7 +405,7 @@
 <code class="sourceCode R"><span class="va">treatment.means.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">treatment.means</span><span class="op">$</span><span class="va">mu</span>, each <span class="op">=</span> <span class="va">b</span><span class="op">)</span>
 <span class="va">block.means.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">block.means</span><span class="op">$</span><span class="va">mu</span>, times <span class="op">=</span> <span class="va">a</span><span class="op">)</span>
 <span class="op">(</span><span class="va">SS.within</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">mothData</span><span class="op">$</span><span class="va">caterpillar</span> <span class="op">-</span> <span class="va">treatment.means.long</span> <span class="op">-</span> <span class="va">block.means.long</span> <span class="op">+</span> <span class="va">grand.mean</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 114.8333</span></code></pre></div>
+<span class="co">#&gt; [1] 114.8</span></code></pre></div>
 <hr>
 <p><strong>NOTE</strong>: For the above code to work, <code>treatment.means</code> and <code>block.means</code> must be in the same order as in the original data.</p>
 <hr>
@@ -422,10 +422,10 @@
                          SS <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">SS.treat</span>, <span class="va">SS.block</span>, <span class="va">SS.within</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">ANOVAtable</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Treatment"</span>, <span class="st">"Block"</span>, <span class="st">"Within"</span><span class="op">)</span>
 <span class="va">ANOVAtable</span>
-<span class="co">#&gt;           df       SS</span>
-<span class="co">#&gt; Treatment  2 223.1667</span>
-<span class="co">#&gt; Block      3 430.9167</span>
-<span class="co">#&gt; Within     6 114.8333</span></code></pre></div>
+<span class="co">#&gt;           df    SS</span>
+<span class="co">#&gt; Treatment  2 223.2</span>
+<span class="co">#&gt; Block      3 430.9</span>
+<span class="co">#&gt; Within     6 114.8</span></code></pre></div>
 <p>Next, add the mean squares:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">MSE</span> <span class="op">&lt;-</span> <span class="va">ANOVAtable</span><span class="op">$</span><span class="va">SS</span> <span class="op">/</span> <span class="va">ANOVAtable</span><span class="op">$</span><span class="va">df</span>
@@ -442,7 +442,7 @@
 <p>Quick reminder about calculating <em>p</em>-values</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">qf</a></span><span class="op">(</span><span class="fl">0.95</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span> <span class="co"># 95% of the distribution is below this value of F</span>
-<span class="co">#&gt; [1] 5.143253</span>
+<span class="co">#&gt; [1] 5.143</span>
 
 <span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">pf</a></span><span class="op">(</span><span class="cn">F</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span> <span class="co"># Proportion of the distribution beyond this F value</span>
 <span class="co">#&gt; [1] 1</span></code></pre></div>
@@ -468,7 +468,7 @@
 <tr class="odd">
 <td align="left">Treatment</td>
 <td align="center">2</td>
-<td align="center">223.17</td>
+<td align="center">223.2</td>
 <td align="center">111.58</td>
 <td align="center">5.83</td>
 <td align="center">0.04</td>
@@ -476,7 +476,7 @@
 <tr class="even">
 <td align="left">Block</td>
 <td align="center">3</td>
-<td align="center">430.92</td>
+<td align="center">430.9</td>
 <td align="center">143.64</td>
 <td align="center">7.51</td>
 <td align="center">0.02</td>
@@ -484,7 +484,7 @@
 <tr class="odd">
 <td align="left">Within</td>
 <td align="center">6</td>
-<td align="center">114.83</td>
+<td align="center">114.8</td>
 <td align="center">19.14</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -501,9 +501,9 @@
 <code class="sourceCode R"><span class="va">aov1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">caterpillar</span> <span class="op">~</span> <span class="va">Treatment</span> <span class="op">+</span> <span class="va">Region</span>, <span class="va">mothData</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">aov1</span><span class="op">)</span>
 <span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)  </span>
-<span class="co">#&gt; Treatment    2  223.2  111.58   5.830 0.0392 *</span>
-<span class="co">#&gt; Region       3  430.9  143.64   7.505 0.0187 *</span>
-<span class="co">#&gt; Residuals    6  114.8   19.14                 </span>
+<span class="co">#&gt; Treatment    2    223   111.6    5.83  0.039 *</span>
+<span class="co">#&gt; Region       3    431   143.6    7.51  0.019 *</span>
+<span class="co">#&gt; Residuals    6    115    19.1                 </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
 <p>Same as what we got by hand! Look what happens if we ignore the blocking variable:</p>
@@ -511,8 +511,8 @@
 <code class="sourceCode R"><span class="va">aov2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">caterpillar</span> <span class="op">~</span> <span class="va">Treatment</span>, <span class="va">mothData</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">aov2</span><span class="op">)</span>
 <span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)</span>
-<span class="co">#&gt; Treatment    2  223.2  111.58    1.84  0.214</span>
-<span class="co">#&gt; Residuals    9  545.8   60.64</span></code></pre></div>
+<span class="co">#&gt; Treatment    2    223   111.6    1.84   0.21</span>
+<span class="co">#&gt; Residuals    9    546    60.6</span></code></pre></div>
 <hr>
 <p>Why is the effect of pesticide no longer significant?</p>
 <hr>
@@ -526,12 +526,12 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Error: Region</span>
 <span class="co">#&gt;           Df Sum Sq Mean Sq F value Pr(&gt;F)</span>
-<span class="co">#&gt; Residuals  3  430.9   143.6               </span>
+<span class="co">#&gt; Residuals  3    431     144               </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Error: Within</span>
 <span class="co">#&gt;           Df Sum Sq Mean Sq F value Pr(&gt;F)  </span>
-<span class="co">#&gt; Treatment  2  223.2  111.58    5.83 0.0392 *</span>
-<span class="co">#&gt; Residuals  6  114.8   19.14                 </span>
+<span class="co">#&gt; Treatment  2    223   111.6    5.83  0.039 *</span>
+<span class="co">#&gt; Residuals  6    115    19.1                 </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
 <p>The values of the ANOVA table are the same as before, and there is no reason to use random effects here if interest only lies in testing the null hypothesis concerning pesticides.</p>

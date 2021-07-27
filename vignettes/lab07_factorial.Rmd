@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-library(WILD3810)
+source(here::here("R/zzz.R"))
 library(kableExtra)
 ```
 
