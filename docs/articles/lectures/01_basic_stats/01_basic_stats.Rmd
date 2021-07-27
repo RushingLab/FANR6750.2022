@@ -15,7 +15,7 @@ output:
 ```{r setup, echo = FALSE, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, fig.retina = 2)
-library(WILD3810)
+source(here::here("R/zzz.R"))
 library(emo)
 # library(gganimate)
 ```

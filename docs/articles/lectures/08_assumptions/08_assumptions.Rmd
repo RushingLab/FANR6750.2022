@@ -16,7 +16,7 @@ output:
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
                       fig.retina = 2, fig.width = 9, fig.height = 7)
-library(WILD3810)
+source(here::here("R/zzz.R"))
 library(emo)
 library(kableExtra)
 library(dplyr)
