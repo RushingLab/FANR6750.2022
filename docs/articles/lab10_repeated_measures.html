@@ -310,7 +310,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_path</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span><span class="st">"Week"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span><span class="st">"Number of leaves"</span><span class="op">)</span></code></pre></div>
-<p><img src="lab10_repeated_measures_files/figure-html/unnamed-chunk-3-1.png" width="384"></p>
+<p><img src="lab10_repeated_measures_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Now let’s fit the univariate model:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aov1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">leaves</span> <span class="op">~</span> <span class="va">fertilizer</span> <span class="op">*</span> <span class="va">week</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span><span class="op">(</span><span class="va">plant</span><span class="op">)</span>,
@@ -485,7 +485,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span><span class="st">"Time interval"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span><span class="st">"Growth rate (leaves/week)"</span>, limits  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="lab10_repeated_measures_files/figure-html/unnamed-chunk-14-1.png" width="384"></p>
+<p><img src="lab10_repeated_measures_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>

@@ -309,12 +309,12 @@
 <code class="sourceCode R"><span class="va">sex</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"female"</span>, <span class="st">"Male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"female"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="lab06_blocking_files/figure-html/unnamed-chunk-6-1.png" width="384"></p>
+<p><img src="lab06_blocking_files/figure-html/unnamed-chunk-6-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>Oops, one of the field techs accidentally capitalized “Male”. Let’s change that to lowercase:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sex</span><span class="op">[</span><span class="va">sex</span> <span class="op">==</span> <span class="st">"Male"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"male"</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="lab06_blocking_files/figure-html/unnamed-chunk-7-1.png" width="384"></p>
+<p><img src="lab06_blocking_files/figure-html/unnamed-chunk-7-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>Hmm, there’s still a bar for <code>Male</code>. We can see what’s happening here by looking at the levels:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span>
@@ -323,7 +323,7 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html">droplevels</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="lab06_blocking_files/figure-html/unnamed-chunk-9-1.png" width="384"></p>
+<p><img src="lab06_blocking_files/figure-html/unnamed-chunk-9-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>That’s better.</p>
 <p>The bottom line is be careful when working with factors, since their behavior is not always intuitive. There are more great online resources for working with factors in <code>R</code>, including <a href="https://swcarpentry.github.io/r-novice-inflammation/12-supp-factors/">this tutorial</a> and even a package (<a href="https://forcats.tidyverse.org/">forcats</a>) that tries to make it a bit easier.</p>
 </div>
@@ -538,9 +538,9 @@
 <p>Later, we will see cases where it is important to use random and fixed effects.</p>
 </div>
 </div>
-<div id="exercise" class="section level1">
+<div id="assignment" class="section level1">
 <h1 class="hasAnchor">
-<a href="#exercise" class="anchor"></a>Exercise</h1>
+<a href="#assignment" class="anchor"></a>Assignment</h1>
 <p>Some time ago, plantations of <em>Pinus caribaea</em> were established at four locations on Puerto Rico. As part of a spacing study, four spacings were used at each location to determine the effect of four specific spacing intervals on tree height. Twenty years after the plantations were established, measurements were made in the study plots as follows:</p>
 <table class="table">
 <thead><tr class="header">
@@ -635,13 +635,27 @@
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">FANR6750</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"pineData"</span><span class="op">)</span></code></pre></div>
-<p>Create an <code>R</code> script or R Markdown file to the address the following:</p>
+<p><strong>Questions/tasks</strong></p>
 <ol style="list-style-type: decimal">
 <li><p>What is the primary null hypothesis of interest? State it, and the associated alternative hypothesis, as comments in the file</p></li>
 <li><p>Test for effects of location and spacing on plant height using the <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> function. NOTE: spacing must be treated as a factor, not as a numeric vector</p></li>
 <li><p>Perform a Tukey test to determine which spacings differ</p></li>
 </ol>
-<p>Note well! Please complete this exercise, because doing so will help you on subsequent assignments and exams. You do not need to turn it in!</p>
+<p>Put your answers in an R Markdown report. Your report should include:</p>
+<ol style="list-style-type: decimal">
+<li><p>A well-formatted ANOVA table (with caption); and</p></li>
+<li><p>A publication-quality plot (or plots) of the estimated effect of location and spacing on plant height. The figure(s) should also have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined.</p></li>
+</ol>
+<p>You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above.</p>
+<p>As always:</p>
+<ul>
+<li><p>Be sure the output type is set to: <code>output: html_document</code></p></li>
+<li><p>Title the document: <code>title: "Lab 6 assignment"</code></p></li>
+<li><p>Be sure to include your first and last name in the <code>author</code> section</p></li>
+<li><p>Be sure to set <code>echo = TRUE</code> in all <code>R</code> chunks so we can see both your code and the output</p></li>
+<li><p>Please upload both the <code>html</code> and <code>.Rmd</code> files when you submit your assignment</p></li>
+<li><p>See the R Markdown reference sheet for help with creating <code>R</code> chunks, equations, tables, etc.</p></li>
+</ul>
 </div>
 <div class="footnotes">
 <hr>

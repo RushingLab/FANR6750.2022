@@ -11,7 +11,7 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE,fig.retina = 2,
-                      fig.align = "c", fig.height = 4, fig.width = 4,
+                      fig.align = 'center', fig.height = 4, fig.width = 4,
                        warning = FALSE, message = FALSE,
   collapse = TRUE,
   comment = "#>"
@@ -280,7 +280,7 @@ The values of the ANOVA table are the same as before, and there is no reason to 
 
 Later, we will see cases where it is important to use random and fixed effects.
 
-# Exercise
+# Assignment
 
 Some time ago, plantations of *Pinus caribaea* were established at four locations on Puerto Rico. As part of a spacing study, four spacings were used at each location to determine the effect of four specific spacing intervals on tree height. Twenty years after the plantations were established, measurements were made in the study plots as follows:
 
@@ -299,7 +299,7 @@ library(FANR6750)
 data("pineData")
 ```
 
-Create an `R` script or R Markdown file to the address the following:
+**Questions/tasks**  
 
 1) What is the primary null hypothesis of interest? State it, and the associated alternative hypothesis, as comments in the file  
 
@@ -307,7 +307,28 @@ Create an `R` script or R Markdown file to the address the following:
 
 3) Perform a Tukey test to determine which spacings differ  
 
-Note well! Please complete this exercise, because doing so will help you on subsequent assignments and exams. You do not need to turn it in!
+Put your answers in an R Markdown report. Your report should include:
+
+1) A well-formatted ANOVA table (with caption); and
+
+2) A publication-quality plot (or plots) of the estimated effect of location and spacing on plant height. The figure(s) should also have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined.
+
+You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above.  
+
+As always:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Title the document: `title: "Lab 6 assignment"`
+
+- Be sure to include your first and last name in the `author` section 
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
+- Please upload both the `html` and `.Rmd` files when you submit your assignment  
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
 
 
 

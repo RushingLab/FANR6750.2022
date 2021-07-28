@@ -241,7 +241,7 @@
 <li><p><span class="math inline">\(\sigma^2\)</span> is a measure of how far, on average, each observation is from its group mean (the avarge length of the black lines in the figure).</p></li>
 </ul>
 <p>Note that this is exactly the same as the ANOVA model, we’ve just used some basic algebra to re-write it in different terms.</p>
-<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-2-1.png" width="576"></p>
+<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Let’s break down the above equations a bit further. First:</p>
 <p><span class="math display">\[\Large E[y_{ij}] = \mu + \alpha_i\]</span></p>
 <p>this says that the expected value of observation <span class="math inline">\(y_{ij}\)</span> is <span class="math inline">\(\mu + \alpha_i\)</span>. That is, if we know what group an observation is from, this is our best guess at what value it will take. In the figure, this is the horizontal line (orange, blue, or green) for each group.</p>
@@ -322,7 +322,7 @@
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">infectionRates</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">landscape</span>, y <span class="op">=</span> <span class="va">percentInfected</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span><span class="st">"Percent infected"</span><span class="op">)</span></code></pre></div>
-<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
+<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Notice that the variances don’t look equal among groups.</p>
 </div>
 <div id="visualizing-the-residuals" class="section level4">
@@ -332,13 +332,13 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">resids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">anova1</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">resids</span>, col<span class="op">=</span><span class="st">"turquoise"</span>, breaks<span class="op">=</span><span class="fl">10</span>, xlab<span class="op">=</span><span class="st">"Residuals"</span><span class="op">)</span></code></pre></div>
-<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
+<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>QQ-plot of the residuals</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">anova1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">.resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
+<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The histogram doesn’t look bad, but the QQ-plot suggests the smallest residuals are smaller than expected (below the QQ line) and the large residuals are bigger than expected (above the QQ line). We can also formally test the normality assumption using the Shapiro-Wilk test.</p>
 </div>
 <div id="normality-test-on-residuals" class="section level4">
@@ -376,7 +376,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">infectionRates</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">landscape</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">percentInfected</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span><span class="st">"log(Percent infected)"</span><span class="op">)</span></code></pre></div>
-<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-9-1.png" width="576"></p>
+<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="square-root-transformation" class="section level3">
 <h3 class="hasAnchor">
@@ -392,7 +392,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">infectionRates</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">landscape</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">percentInfected</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span><span class="st">"sqrt(Percent infected)"</span><span class="op">)</span></code></pre></div>
-<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
+<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="arcsine-square-root-transformation" class="section level3">
 <h3 class="hasAnchor">
@@ -408,7 +408,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">infectionRates</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">landscape</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">asin</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">percentInfected</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span><span class="st">"arcsin(sqrt(Percent infected)"</span><span class="op">)</span></code></pre></div>
-<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-11-1.png" width="576"></p>
+<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="reciprocal-transformation" class="section level3">
 <h3 class="hasAnchor">
@@ -425,7 +425,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">infectionRates</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">landscape</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="va">percentInfected</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span><span class="st">"1/Percent infected)"</span><span class="op">)</span></code></pre></div>
-<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-12-1.png" width="576"></p>
+<p><img src="lab05_assump_nonpar_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="anova-on-transformed-data" class="section level2">
 <h2 class="hasAnchor">

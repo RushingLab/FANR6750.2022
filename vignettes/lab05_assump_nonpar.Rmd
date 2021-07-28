@@ -12,8 +12,8 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE, fig.align = 'c',
-  fig.retina = 2,
+  collapse = TRUE, 
+  fig.align = "center", fig.width=6, fig.height=5, fig.retina=2,
   warning = FALSE, message = FALSE,
   comment = "#>"
 )
@@ -47,7 +47,7 @@ where
 
 Note that this is exactly the same as the ANOVA model, we've just used some basic algebra to re-write it in different terms.  
 
-```{r echo =FALSE, fig.width=6, fig.height=4, fig.retina=2}
+```{r echo =FALSE}
 set.seed(223456)
 mu <- 10
 alpha <- rnorm(3, 0, 4)

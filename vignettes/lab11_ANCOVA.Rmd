@@ -11,7 +11,7 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  fig.align = "c", fig.height = 4, fig.width = 4,
+  fig.align = 'center', fig.height = 4, fig.width = 4,
   fig.retina = 2,
   warning = FALSE, message = FALSE,
   collapse = TRUE,
@@ -308,7 +308,7 @@ summary.aov(fm3)
 
 And as before, we can create predictions of weight over a sequences of lengths, for every level of diet:
 
-```{r}
+```{r fig.width=6}
 lengthC <- dietData$lengthCentered
 nd3 <- data.frame(diet=rep(c("Control", "Low", "Med", "High"), each = 20),
                   lengthCentered=rep(seq(min(lengthC), max(lengthC),length = 20), times = 4))

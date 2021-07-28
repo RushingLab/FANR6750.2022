@@ -11,7 +11,7 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  fig.align = "c", fig.height = 4, fig.width = 4,
+  fig.align = "center", fig.height = 5, fig.width = 6,
   fig.retina = 2,
   warning = FALSE, message = FALSE,
   collapse = TRUE,
@@ -87,7 +87,7 @@ As we can see, these data contain information on leaf growth by 10 plants subjec
 
 As always, it helps to visualize the data:
 
-```{r}
+```{r fig.align="center"}
 library(ggplot2)
 
 ggplot(plantData, aes(x = week, y = leaves, 

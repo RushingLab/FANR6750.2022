@@ -14,7 +14,7 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
    warning = FALSE, message = FALSE,
-   fig.align = "c", fig.retina = 2,
+   fig.align = 'center', fig.retina = 2,
   collapse = TRUE,
   comment = "#>"
 )
@@ -341,17 +341,31 @@ or to rearrange the order of a vector
 y[c(5,4,3,2,1)]
 ```
 
-## Data frames
+# Data frames
 
 So  far, we have only discussed one particular class of `R` object - vectors. Vectors hold a string of values as a single object. Although useful for many applications, vectors are limited in their ability to store multiple types of data (numeric and character).  
 
 This is where data frames become useful. Perhaps the most common type data object you will use in `R` is the data frame. Data frames are tabular objects (rows and columns) similar in structure to spreadsheets (think Excel or GoogleSheets). In effect, data frames store multiple vectors - each column of the data frame is a vector. As such, each column can be a different class (numeric, character, etc.) but all values within a column must be the same class. Just as the first row of an Excel spreadsheet can be a list of column names, each column in a data frame has a name that (hopefully) provides information about what the values in that column represent.  
 
-To see how data frames work, let's load a data frame called `jayData` that comes with the `FANR6750` package. To get a quick idea of what information this data frame contains, we can use the `head()` and `tail()` functions, which will print the first and last 6 rows of the data frame:
+To see how data frames work, let's load a data frame called `jayData` that comes with the `FANR6750` package. 
+
+***
+
+Note - In general, if you want to access function or data sets that come with packages, you first need to *load* the package in your current working environment. To do that, use the `library()` function, with the unquoted package name as the argument. Once loaded, all of the package's functions are available to use. 
+
+Alternatively, you can access functions from a given package without loading the package using `package.name::function.name()`. For example, if you want to use the `filter()` function from the `dplyr` package, you could type `dplyr::filter()`. Although less commonly used, this method has a few advantages:
+
+1) Sometimes different packages have functions with the same names. `R` will default to using the function from the package that was loaded last. For example, the `raster` package also has a function called `filter()` so if you load `dplyr` first (using `library() `and then `raster`, `R` will default to using `raster`'s `filter()` function, which could cause problems. 
+
+2) If you share your code with others, the `::` method makes it clear which packages are being use for which functions. That additional clarity is often helpful and is the reason I will often use `::` in this course.
+
+***
+
+To get a quick idea of what information this data frame contains, we can use the `head()` and `tail()` functions, which will print the first and last 6 rows of the data frame:
 
 ```{r}
 library(FANR6750)
-data("jayData")
+data("jayData") # the data() function loads data sets the come with packages
 
 head(jayData)
 
@@ -402,21 +416,21 @@ Sometimes you may want to select more than one column. The easiest way to do tha
 ```{r}
 library(dplyr)
 
-select(.data = jayData, x, y, jays)
+head(select(.data = jayData, x, y, jays))
 
 ```
 
 Notice that select requires us to first provide the data frame object (`.data = jayData`) and then we provide the column names (unquoted!) we want to select. You can also use select to remove columns:
 
 ```{r}
-select(.data = jayData, -seeds)
+head(select(.data = jayData, -seeds))
 ```
 
 ***
 
 It's important to realize that even though there are different ways to accomplish the same general task (in this case, "subset columns of a data frame"), those methods will sometimes differ in subtle but important ways. 
 
-For example, what time of object did the `data.frame[,col#]` and `data.frame$column.name` options return? What type of object did `select(data.frame, col1, col2)` return? Those are very different results and knowing what the output will be can be useful when deciding the best way to accomplish your task.  
+For example, what type of object did the `data.frame[,col#]` and `data.frame$column.name` options return? What type of object did `select(data.frame, col1, col2)` return? Those are very different results and knowing what the output will be can be useful when deciding the best way to accomplish your task.  
 
 ***
 

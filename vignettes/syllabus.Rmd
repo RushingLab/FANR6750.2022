@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+*Disclaimer*: The course syllabus is a general plan for the course; deviations announced to the class by the instructor may be necessary.
+
 # LOGISTICS
 
 **Lecture**: Monday, Wednesday, Friday 11:15-12:05  
@@ -117,6 +119,7 @@ Homework assignments will build on concepts and skills that we cover in lecture 
 
 All academic work must meet the standards contained in the University's academic [honesty policy](https://honesty.uga.edu/). All students are responsible for informing themselves about those standards before performing any academic work. The penalties for academic dishonesty are [severe](https://honesty.uga.edu/Academic-Honesty-Policy/Consequences_for_Honesty_Violations/), and ignorance is not an acceptable defense.  
 
+If you know ahead of time that you will miss an assignment or exam, please let me know as soon as possible so that we can arrange a make up. If you do not let me or a TA know ahead of time, missed/late assignments will lose 10% of the final grade per day that they are late.
 
 # GRADING SCALE
 
@@ -137,3 +140,34 @@ grades %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = TRUE)
 
 ```
+
+# UNIVERSITY HONOR CODE & ACADEMIC HONESTY
+
+As a University of Georgia student, you have agreed to abide by the UGA academic honesty policy. UGA Student Honor code: 
+
+> I will be academically honest in all of my academic work and will not tolerate academic dishonesty of others  
+
+A Culture of Honesty, the University's policy and procedures for handling cases of suspected dishonesty, can be found at [https://honesty.uga.edu/](https://honesty.uga.edu/)  
+
+You are responsible for informing yourself about the university’s standards before performing any academic work. Lack of knowledge of the academic honesty policy is not a reasonable explanation for a violation. Please ask if you have questions related to course assignments and the academic honesty policy. Any form of possible academic dishonesty will be reported to the UGA Office of the Vice President for Instruction.
+
+# ACCOMMODATIONS FOR DISABILITIES
+
+If you require a disability-required accommodation, it is essential that you register with the Disability Resource Center (Clark Howell Hall; https://drc.uga.edu; 706-542-8719 [voice]; 706-542-8778 [TTY]) and notify me of your eligibility for reasonable accommodations. We can then plan how best to coordinate your accommodations. Please note that accommodations cannot be provided retroactively. 
+
+# WELLNESS STATEMENT 
+
+Mental Health and Wellness Resources:
+
+- If you or someone you know needs assistance, you are encouraged to contact Student Care and Outreach in the Division of Student Affairs at 706-542-7774 or visit [https://sco.uga.edu/](https://sco.uga.edu/). They will help you navigate any difficult circumstances you may be facing by connecting you with the appropriate resources or services.
+
+- UGA has several resources for a student seeking mental health services ([https://www.uhs.uga.edu/bewelluga/bewelluga](https://www.uhs.uga.edu/bewelluga/bewelluga)) or crisis support ([https://www.uhs.uga.edu/info/emergencies](https://www.uhs.uga.edu/info/emergencies)).
+
+- If you need help managing stress anxiety, relationships, etc., please visit BeWellUGA ([https://www.uhs.uga.edu/bewelluga/bewelluga](https://www.uhs.uga.edu/bewelluga/bewelluga)) for a list of FREE workshops, classes, mentoring, and health coaching led by licensed clinicians and health educators in the University Health Center.
+
+- Additional resources can be accessed through the UGA App.
+
+
+# FERPA NOTICE
+
+The Federal Family Educational Rights and Privacy Act (FERPA) grants students certain information privacy rights. To comply with FERPA, all communication that refers to individual students must be through a secure medium (UGAMail or eLC) or in person. Instructors are not allowed to respond to messages that refer to individual students or student progress in the course through non-UGA accounts, phone calls, or other types of electronic media. For details, please visit [https://apps.reg.uga.edu/FERPA](https://apps.reg.uga.edu/FERPA).
