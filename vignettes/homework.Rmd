@@ -22,30 +22,28 @@ All homework assignments for this course will be completed R Markdown files. To 
 
 ## Step 1: Create a new directory to store your homework files
 
-1a) Create a new directory (or ideally a subdirectoy of your `FANR6750\` directory) and call it `LastNameFirstName-Homework#`, replacing `LastNameFirstName` with your last and first names and `#` with the appropriate homework number
+1) Create a new directory (or ideally a subdirectoy of your `FANR6750\` directory) and call it `LastNameFirstName-Homework#`, replacing `LastNameFirstName` with your last and first names and `#` with the appropriate homework number
 
-## Step 2: Create a new R Markdown file using the homework template
+## Step 2: Create a new R Markdown file
 
 2a) Click on `File -> New File -> R Markdown...`
 
-2b) In the window on the left, select `From Template`
+2b) In the `Title:` window type `Lab # assignment`, substituting the correct lab number. 
 
-2c) Scroll down through the options until you see `FANR6750-Homework#` (where `#` will be the appropriate homework number). Select that template 
+2c) In the `Author` window, type your name  
 
-2d) In the `Name:` window type `LastnameFirstname-homework#`, substituting your last and first names and the correct homework number. In the `Location` window, navigate to your newly create `LastNameFirstName-Homework#` directory
+2d) Click `Ok`
 
-2e) Click `Ok`
+2e) Save the R Markdown file as `LastnameFirstname-homework#` in the directory you created in step 1, replacing `LastNameFirstName` with your last and first names and `#` with the appropriate homework number  
 
 ## Step 3: Complete the assignment
 
-3a) Change the `author: YOUR NAME HERE` field in the header to your name. 
-
-3b) Work your way through the entire document, following the instructions as you go
+3) Complete the assignment, following the instructions in the lab document as you go
 
 ## Step 4: Submit your assignment
 
-4a) Before submitting your assignment, always click the "Knit" button to be sure your .Rmd file can be rendered as a HTML page. **If you have any problems rendering the file, please contact me prior to the submission deadline.**
+4a) Before submitting your assignment, always click the "Knit" button to be sure your .Rmd file can be rendered as a HTML page. **If you have any problems rendering the file, please contact your TA prior to the submission deadline.**
 
-4b) Once you know your file can be rendered, upload **both** the `LastnameFirstname-homework#.Rmd` *and* the `LastnameFirstname-homework#.html` files to Canvas under the correct assignment folder
+4b) Once you know your file can be rendered, upload **both** the `LastnameFirstname-homework#.Rmd` *and* the `LastnameFirstname-homework#.html` files to eLC under the correct assignment folder
 
 **Assignments that fail to follow this instructions will not be graded**

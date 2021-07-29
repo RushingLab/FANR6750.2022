@@ -21,6 +21,8 @@ library(emo)
 # library(gganimate)
 ```
 
+class: inverse
+
 # outline
 
 <br/>
@@ -123,7 +125,7 @@ class: inverse, center, middle
 > Theory says that the test statistic will follow a $t$-distribution with $n - 1$ degrees of freedom, **if the null hypothesis is true**
 
 ---
-# the *t*-distribution
+## THE *t*-DISTRIBUTION
 
 <br/>
 ```{r t, fig.width=8, fig.height=6}
@@ -196,10 +198,10 @@ par(op)
 
 
 ---
-### MORE ON $\large p$-values
+### MORE ON $\large p$-VALUES
 
 <br/>
-#### A $p$-value tells us how likely the null hypothesis is  
+#### A $p$-value tells us how likely the null hypothesis is, given your observations  
 
 --
 <br/>
@@ -360,11 +362,13 @@ ggplot(df, aes(x = Elevation, y = Trees)) + geom_boxplot()
 --
 
 - Mean of low group: $\large \bar{y}_L = 20.2$  
+
 - Mean of high group: $\large \bar{y}_H = 6.1$  
 
 --
 
 - Standard deviation of low group: $\large s_L = 6.03$  
+
 - Standard deviation of high group: $\large s_H = 5.63$  
 
 --
