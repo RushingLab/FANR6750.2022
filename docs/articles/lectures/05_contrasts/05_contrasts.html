@@ -30,7 +30,7 @@ class: center, middle, inverse, title-slide
 &lt;br/&gt;
 --
 
-&gt; Previously, we only considered *a posteriori* tests, which often feature all possible group comparisons, some of which may not even be of great interest  
+&gt; Previously, we considered *a posteriori* tests, which often feature all possible comparisons, some of which may not be of interest  
 
 &lt;br/&gt;
 --
@@ -209,26 +209,23 @@ and
 
 then `\(L_1\)` and `\(L_2\)` are orthogonal if:
 
-`$$\sum_i a_i=0$$`
-`$$\sum_i b_i=0$$` 
-
-`$$\sum_i a_ib_i=0$$`
+`$$\large \sum_i a_i=0;\;\; \sum_i b_i=0; \;\;and \; \sum_i a_ib_i=0$$`
 
 ---
 # back to the saw data
 
 Returning to the question: "Does kickback differ among industrial and home types of saws?":
 
-`$$H_{0_1} = \frac{\mu_A + \mu_D}{2} - \frac{\mu_B + \mu_C}{2} = 0$$`
+`$$\large H_{0_1} = \frac{\mu_A + \mu_D}{2} - \frac{\mu_B + \mu_C}{2} = 0$$`
 
 --
 Multiplying through by 2 gives:
 
-`$$H_{0_1} = (\mu_A + \mu_D) - (\mu_B + \mu_C) = 0$$`
+`$$\large H_{0_1} = (\mu_A + \mu_D) - (\mu_B + \mu_C) = 0$$`
 
 --
 Which can be written as:
-`$$L1 = (1)\mu_A + (-1)\mu_B + (-1)\mu_C + (1)\mu_D$$`
+`$$\large L1 = (1)\mu_A + (-1)\mu_B + (-1)\mu_C + (1)\mu_D$$`
 where the coefficients are `\(a_1 = 1\)`, `\(a_2 = -1\)`, `\(a_3 = -1\)`, and `\(a_4 = 1\)`
 
 --
@@ -267,24 +264,24 @@ To obtain the sums of squares for each contrast, we use the general formula:
 
 `$$\large SS_L =\frac{(\sum_i a_i T_i)^2}{n \sum_i a_i^2}$$`
 
-where `\(T_i\)` is the sum of observations in group `\(i\)`, and `\(a_i\)` is the corresponding coefficient for group `\(i\)`  
+where `\(\large  T_i\)` is the sum of observations in group `\(\large  i\)`, and `\(\large  a_i\)` is the corresponding coefficient for group `\(\large  i\)`  
 
 --
 
-For the first hypothesis we have:
+For thefirst hypothesis we have:
 
-`$$SS_{L_1} = \frac{(165 - 215 - 245 - 155)^2}{5(1 + 1 + 1 + 1)} = 980$$`
+$$ \large SS_{L_1} = \frac{(165 - 215 - 245 - 155)^2}{5(1 + 1 + 1 + 1)} = 980$$
 
 ---
 # sums of squares for each contrast
 
-For the second hypothesis we have: `\(L_2 = mu_A + 0 + 0 - mu_D\)` with coefficients `\(a_i = (1; 0; 0;-1)\)`
+For the second hypothesis we have: `\(\large L_2 = \mu_A + 0 + 0 - \mu_D\)` with coefficients `\(\large a_i = (1, 0, 0,-1)\)`
 
 `$$\large SS_{L_2} = \frac{(165 +0 +0 - 155)^2}{5(1 + 0 + 0 + 1)} = 10$$`
 
 --
 
-For the third hypothesis we have: `\(L_3 = 0 + B - C + 0\)` with coefficients `\(a_i = (0; 1;-1; 0)\)`
+For the third hypothesis we have: `\(\large L_3 = 0 + \mu_B - \mu_C + 0\)` with coefficients `\(\large a_i = (0, 1,-1, 0)\)`
 
 `$$\large SS_{L_3} = \frac{(0 + 215 - 245 + 0)^2}{5(0 + 1 + 1 + 0)} = 90$$`
 ---
@@ -421,7 +418,7 @@ The response variable is the amount of time (in hours) until relief from pain is
     
     c. Aspirin 1 vs. aspirin 2  
     
-    d. Aspirin with caffeine (alone) vs. aspirin with buer (with or without caffeine)  
+    d. Aspirin with caffeine (alone) vs. aspirin with buffer (with or without caffeine)  
     
     e. Aspirin with buffer vs. aspirin with buffer and caffeine  
 
@@ -523,7 +520,7 @@ a. Placebo vs. analgesic
 
 b. Pure aspirin vs. aspirin with additives
 
-- `\(\small H0 : \frac{\mu_2 + \mu_4}{2} - \frac{\mu_3 + \mu_5 + \mu_6}{3} = 0\)`  
+- `\(\small H0 : \frac{\mu_2 +\mu_4}{2} - \frac{\mu_3 + \mu_5 + \mu_6}{3} = 0\)`  
 
 - **Coefficients**: `\(\small (0, 3, -2, 3, -2, -2)\)`  
 

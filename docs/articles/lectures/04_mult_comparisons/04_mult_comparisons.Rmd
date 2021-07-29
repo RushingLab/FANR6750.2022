@@ -46,6 +46,8 @@ knitr::include_graphics("https://imgs.xkcd.com/comics/significant.png")
 ```
 
 ---
+class: inverse
+
 # outline
 
 <br/>
