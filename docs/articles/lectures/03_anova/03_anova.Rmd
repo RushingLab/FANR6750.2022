@@ -22,6 +22,8 @@ library(kableExtra)
 # library(gganimate)
 ```
 
+class: inverse
+
 # outline
 
 <br/>
@@ -230,9 +232,9 @@ $$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$
 ---
 # the additive model
 
-$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$
+$$\large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$
 
-$$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$
+$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$
 
 #### Notes
 
@@ -263,6 +265,7 @@ $$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$
 #### Variation among groups 
 
 $$\Large SS_A = n \sum_i (\bar{y}_i - \bar{y}.)^2$$
+
 ---
 # motivating example
 
@@ -370,6 +373,11 @@ $$\LARGE F = \frac{MS_A}{MS_W}$$
 - Compare the F statistic to the critical value: $\large F_{a-1,a(n-1)}$  
 
 - This is always a one-tailed test. Why?
+
+---
+class: inverse, center, middle
+
+# anova table
 
 ---
 # anova table
