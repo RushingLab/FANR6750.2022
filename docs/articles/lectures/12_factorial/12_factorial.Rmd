@@ -160,7 +160,7 @@ ggplot(microtus, aes(x = food, y = microtus, color = pred)) +
 
 
 ---
-# data structure for $\Large a \times b$ factorial design
+## DATA STRUCTURE FOR $\large a \times b$ FACTORIAL DESIGN
 
 ```{r}
 ab <- data.frame(replicate = c("1", "2", "1", "2"),
@@ -296,7 +296,7 @@ microtus %>%
 ```
 
 ---
-# $\Large a \times b \times c$ design
+## $\large a \times b \times c$ DESIGN
 
 - The $\large a \times b$ factorial design can be extended to three or more factors  
 

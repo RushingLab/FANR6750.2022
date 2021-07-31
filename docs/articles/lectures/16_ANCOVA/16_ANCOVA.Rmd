@@ -201,7 +201,7 @@ ggplot(df, aes(x = x, y = y)) +
 ---
 # testing
 
-#### Once we have the estimates, we can test the null hypothesis $\large \beta_1 = 0$ using a *t* test:
+#### Once we have the estimates, we can test the null hypothesis $\large \beta_1 = 0$ using a *t* -test:
 
 $$\Large t = \frac{\hat{\beta}_1}{SE(\hat{\beta}_1)}$$
 <br/>
@@ -251,7 +251,7 @@ class: middle, center, inverse
 
 --
 
-#### An ANCOVA can be thought of as several regressions, one for each level of the treatment factor Thus, we need a intercepts and one slope parameter  
+#### An ANCOVA can be thought of as several regressions, one for each level of the treatment factor. Thus, we need $a$ intercepts and one slope parameter  
 
 --
 

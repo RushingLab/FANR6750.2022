@@ -264,6 +264,7 @@ ggplot(var.i, aes(x = Habitat, y = var.i)) +
 - In general, this problem is hard to diagnose unless you know the details of the design  
 
 --
+
 - Plot group variances against group means. There shouldn't be any pattern  
 
 --
@@ -341,7 +342,7 @@ $$\huge y = log(u + C)$$
 
 --
 
-- The constant C is often 1, or 0 if there are no zeros in the data ($u$)
+- The constant C is often 1, or 0 if there are no zeros in the data ( $u$ )
 
 --
 

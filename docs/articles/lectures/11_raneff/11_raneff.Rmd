@@ -71,7 +71,7 @@ library(FANR6750)
 
 --
 
-#### A random effects model is appropirate when the treatment levels in the experiment can be considered a sample from a larger population of interest  
+#### A random effects model is appropriate when the treatment levels in the experiment can be considered a sample from a larger population of interest  
 
 - In the previous example, we are interested in all instructors, not just the ones included in the experiment  
 
@@ -116,10 +116,10 @@ $$\large H_a : At\;least\;one\;inequality$$
 
 #### Random-effects model
 
-$$\large H_0 : \sigma^2_A = 0$$
+$$\large H_0 : \sigma^2_A = 0$$
 
 
-$$\large H_a : \sigma^2_A > 0$$
+$$\large H_a : \sigma^2_A > 0$$
 
 
 ---
