@@ -97,4 +97,4 @@ navbar:
         - text: "Projects and directories"
           href: articles/projects_and_directories.html
         - text: "R Markdown reference"
-          href: articles/Rmarkdown.html
+          href: articles/RMarkdown.html

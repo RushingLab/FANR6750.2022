@@ -480,4 +480,4 @@ Click [here](https://rushinglab.github.io/FANR6750/articles/projects_and_directo
 
 # Introduction to R Markdown
 
-Click [here](https://rushinglab.github.io/FANR6750/articles/Rmarkdown.html)
+Click [here](https://rushinglab.github.io/FANR6750/articles/RMarkdown.html)
