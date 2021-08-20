@@ -468,7 +468,7 @@ Notice the need for two equals signs (`==`) when telling `R` we want the row whe
 head(filter(jayData, elevation > 1000))
 ```
 
-or a more complicated example:
+or a slightly more complicated example:
 
 ```{r}
 head(filter(jayData, elevation < 1000 & habitat == "Oak"))
