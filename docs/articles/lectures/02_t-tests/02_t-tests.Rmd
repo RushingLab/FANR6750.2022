@@ -173,7 +173,7 @@ par(op)
 
 
 ---
-### $\large p$-values
+### $\Large p$-values
 
 <br/>
 ```{r p, fig.width=8, fig.height=6}
@@ -204,10 +204,10 @@ par(op)
 
 
 ---
-### MORE ON $\large p$-VALUES
+### MORE ON $\Large p$-VALUES
 
 <br/>
-#### A $p$-value tells us how likely the null hypothesis is, given your observations  
+#### A $\large p$-value tells us how likely the null hypothesis is, given your observations  
 
 --
 <br/>
@@ -215,7 +215,7 @@ par(op)
 
 --
 <br/>
-#### A $p$-value does not tell us how much evidence there is in favor of a particular difference in means
+#### A $\large p$-value does not tell us how much evidence there is in favor of a particular difference in means
 
 ---
 # one-tailed vs. two-tailed tests
