@@ -570,7 +570,7 @@ boxplot(diffs, #names="Difference between untreated and treated",
 
 - Standard deviation of differences: $\large s_d = 2.24$  
 
-- Standard error of mean differences: $\large SEM_d = 0.65$  
+- Standard error of mean differences: $\large SEDM = 0.65$  
 
 - Test statistic: $\large t = 1.5/0.65 = 2.32$, Critical value: $\large t_{0.95;11} = 1.80$
 
@@ -590,4 +590,3 @@ boxplot(diffs, #names="Difference between untreated and treated",
 
 #### **Reading:** Chapter 8 from Dowdy et al.
 
-pkgdown::build_site
