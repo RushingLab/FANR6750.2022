@@ -379,11 +379,11 @@ ggplot(df, aes(x = Elevation, y = Trees)) + geom_boxplot()
 
 --
 
-- Standard error of difference in means $\large SEM_1 = 2.61$  
+- Standard error of difference in means $\large SEMD_1 = 2.61$  
 
 --
 
-- Test statistic: $\large t = (20.2 - 6:1)/2.61 = 5.4$  
+- Test statistic: $\large t = (20.2 - 6.1)/2.61 = 5.4$  
 
 --
 
