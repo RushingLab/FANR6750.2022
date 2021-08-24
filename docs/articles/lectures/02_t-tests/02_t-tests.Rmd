@@ -379,7 +379,7 @@ ggplot(df, aes(x = Elevation, y = Trees)) + geom_boxplot()
 
 --
 
-- Standard error of difference in means $\large SEMD_1 = 2.61$  
+- Standard error of difference in means $\large SEDM_1 = 2.61$  
 
 --
 
@@ -589,3 +589,5 @@ boxplot(diffs, #names="Difference between untreated and treated",
 <br/>
 
 #### **Reading:** Chapter 8 from Dowdy et al.
+
+pkgdown::build_site
