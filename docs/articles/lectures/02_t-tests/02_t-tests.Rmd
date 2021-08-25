@@ -16,8 +16,9 @@ output:
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
                       fig.retina = 2)
-library(WILD3810)
-library(emo)
+library(FANR6750)
+source(here::here("R/zzz.R"))
+# library(emo)
 # library(gganimate)
 ```
 
