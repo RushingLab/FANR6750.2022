@@ -388,7 +388,7 @@ ggplot(df, aes(x = Elevation, y = Trees)) + geom_boxplot()
 
 --
 
-- Critical value: $\large t_{0.95;df=10+10-2} = 1.73$, $\large p$-value: $< 0.001$  
+- Critical value: $\large t_{0.95,df=10+10-2} = 1.73$, $\large p$-value: $< 0.001$  
 
 --
 
@@ -480,7 +480,7 @@ par(op)
 
 --
 
-#### Critical value: $\large F_{0.975;df=9;9} = 4.03$  
+#### Critical value: $\large F_{0.975,df=9,9} = 4.03$  
 
 --
 
@@ -573,7 +573,7 @@ boxplot(diffs, #names="Difference between untreated and treated",
 
 - Standard error of mean differences: $\large SEDM = 0.65$  
 
-- Test statistic: $\large t = 1.5/0.65 = 2.32$, Critical value: $\large t_{0.95;11} = 1.80$
+- Test statistic: $\large t = 1.5/0.65 = 2.32$, Critical value: $\large t_{0.95,11} = 1.80$
 
 --
 
