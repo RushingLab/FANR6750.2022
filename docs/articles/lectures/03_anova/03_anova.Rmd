@@ -16,9 +16,10 @@ output:
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
                       fig.retina = 2)
-library(WILD3810)
-library(emo)
+library(FANR6750)
+#library(emo)
 library(kableExtra)
+source(here::here("R/zzz.R"))
 # library(gganimate)
 ```
 
@@ -250,7 +251,7 @@ $$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$
   + If all $\large\alpha_i = 0$, there is no treatment effect  
 
   + Thus, we can write either  
-    - $H_0 : \mu_1 = \mu_2=... =\mu_a = 0$, or  
+    - $H_0 : \mu_1 = \mu_2=... =\mu_a$, or  
     - $H_0 : \alpha_1 = \alpha_2=... =\alpha_a = 0$  
 
 --
@@ -624,7 +625,7 @@ anova_tab %>%
 ### Decision?
 
 ---
-# can we make casual inference?
+# can we make causal inference?
 
 <br/>
 
