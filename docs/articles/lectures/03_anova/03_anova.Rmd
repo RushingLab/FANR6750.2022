@@ -631,7 +631,7 @@ anova_tab %>%
 
 --
 
-### **Answer**: Definitely not
+### **Answer**: Definitely not.
 
 <br/>
 
