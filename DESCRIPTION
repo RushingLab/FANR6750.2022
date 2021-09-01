@@ -9,8 +9,7 @@ License: CC0
 Encoding: UTF-8
 LazyData: true
 Suggests: 
-    knitr,
-    rmarkdown
+    gganimate
 Imports: 
     dplyr,
     tidyr,
@@ -21,7 +20,9 @@ Imports:
     here,
     kableExtra,
     broom,
-    sf
+    sf,
+    rmarkdown,
+    knitr
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)

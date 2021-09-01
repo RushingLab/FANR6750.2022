@@ -143,12 +143,12 @@ A set of linear combinations is called a set of orthogonal contrasts if the foll
 --
 Given
 
-$$L_1 = a_1\mu_1 + a_2\mu_2 + ... + a_a\mu_a$$
+$$\Large L_1 = a_1\mu_1 + a_2\mu_2 + ... + a_a\mu_a$$
 --
 
 and
 
-$$L_2 = b_1\mu_1 + b_2\mu_2 +...+ b_a\mu_a$$
+$$\Large L_2 = b_1\mu_1 + b_2\mu_2 +...+ b_a\mu_a$$
 --
 
 then $L_1$ and $L_2$ are orthogonal if:
@@ -183,23 +183,23 @@ where the coefficients are $a_1 = 1$, $a_2 = -1$, $a_3 = -1$, and $a_4 = 1$
 
 #### Does each set of coefficients sum to 0?
 
-- $L_1$: $\sum_i a = 1 - 1 - 1 + 1 = 0$
+- $\large L_1$: $\large \sum_i a = 1 - 1 - 1 + 1 = 0$
 
 
-- $L_2$: $\sum_i a  = 1 + 0 + 0 - 1 = 0$
+- $\large L_2$: $\large \sum_i a  = 1 + 0 + 0 - 1 = 0$
 
 
-- $L_3$: $\sum_i a  = 0 + 1 - 1 + 0 = 0$
+- $\large L_3$: $\large \sum_i a  = 0 + 1 - 1 + 0 = 0$
 
 --
 
 #### Do the products of pairs of coefficients sum to 0?
 
-- For $L_1$ and $L_2$: $(1)(1) + (-1)(0) + (-1)(0) + (1)(-1) = 0$
+- For $\large L_1$ and $\large L_2$: $\large (1)(1) + (-1)(0) + (-1)(0) + (1)(-1) = 0$
 
-- For $L_1$ and $L_3$: $(1)(0) + (-1)(1) + (-1)(-1) + (1)(0) = 0$
+- For $\large L_1$ and $\large L_3$: $\large (1)(0) + (-1)(1) + (-1)(-1) + (1)(0) = 0$
 
-- For $L_2$ and $L_3$: $(1)(0) + (0)(1) + (0)(-1) + (-1)(0) = 0$
+- For $\large L_2$ and $\large L_3$: $\large (1)(0) + (0)(1) + (0)(-1) + (-1)(0) = 0$
 
 ---
 # testing the null hypotheses
