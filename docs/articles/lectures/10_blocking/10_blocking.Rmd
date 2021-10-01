@@ -16,8 +16,8 @@ output:
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
                       fig.retina = 2, fig.width = 9, fig.height = 7)
-library(WILD3810)
-library(emo)
+#library(WILD3810)
+#library(emo)
 library(kableExtra)
 library(dplyr)
 library(FANR6750)
@@ -265,7 +265,7 @@ anova_tab %>%
 
 --
 
-- If the block effect is significant, then a substantial amount is added to the denominator in the F-test, **decreasing power**  
+- If the block effect is significant, then a substantial amount is added to the denominator in the F-test, **increasing power**  
 
 ---
 # what if the block effect isn't significant?

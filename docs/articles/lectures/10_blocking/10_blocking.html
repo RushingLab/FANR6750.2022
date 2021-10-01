@@ -4,6 +4,7 @@
     <title>LECTURE 10: blocking and blocked designs</title>
     <meta charset="utf-8" />
     <meta name="author" content="   Fall 2021" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <script src="libs/kePrint/kePrint.js"></script>
     <link href="libs/lightable/lightable.css" rel="stylesheet" />
@@ -337,7 +338,7 @@ class: inverse, center, middle
 
 --
 
-- If the block effect is significant, then a substantial amount is added to the denominator in the F-test, **decreasing power**  
+- If the block effect is significant, then a substantial amount is added to the denominator in the F-test, **increasing power**  
 
 ---
 # what if the block effect isn't significant?
@@ -367,7 +368,7 @@ traps placed in the plots.
 &lt;table class="table table-condensed" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
  &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Location&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Region&lt;/div&gt;&lt;/th&gt;
 &lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment&lt;/div&gt;&lt;/th&gt;
 &lt;/tr&gt;
   &lt;tr&gt;
@@ -412,7 +413,7 @@ traps placed in the plots.
 
 
 ```r
-aov1 &lt;- aov(caterpillars ~ pesticide + location, gypsyData)
+aov1 &lt;- aov(caterpillar ~ Treatment + Region, mothData)
 summary(aov1)
 ```
 
@@ -429,26 +430,26 @@ summary(aov1)
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; pesticide &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Treatment &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5.830 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0392 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 223.16667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 111.58333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.7539953 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2335404 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; location &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 430.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 143.64 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.505 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0187 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Region &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36.81667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36.81667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5787267 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4686386 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 114.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 19.14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 508.93333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63.61667 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
    &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
   &lt;/tr&gt;
@@ -463,7 +464,7 @@ summary(aov1)
 
 
 ```r
-aov2 &lt;- aov(caterpillars ~ pesticide, gypsyData)
+aov2 &lt;- aov(caterpillar ~ Treatment, mothData)
 summary(aov2)
 ```
 
@@ -480,18 +481,18 @@ summary(aov2)
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; pesticide &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Treatment &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.84 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2138 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 223.1667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 111.58333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.840128 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2138036 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 545.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 60.64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 545.7500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 60.63889 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
    &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
   &lt;/tr&gt;
@@ -534,7 +535,10 @@ summary(aov2)
 
 --
 
-- The key issue is that blocking must be done as part of the design. You can't "*search for blocks*" in the data
+- The key issue is that blocking must be done as part of the design. You can't "*search for blocks*" in the data  
+
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
