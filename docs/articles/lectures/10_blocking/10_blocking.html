@@ -4,6 +4,7 @@
     <title>LECTURE 10: blocking and blocked designs</title>
     <meta charset="utf-8" />
     <meta name="author" content="   Fall 2021" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <script src="libs/kePrint/kePrint.js"></script>
     <link href="libs/lightable/lightable.css" rel="stylesheet" />
@@ -431,24 +432,32 @@ summary(aov1)
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Treatment &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5.830 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0392 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 223.16667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 111.58333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.7539953 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2335404 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Region &lt;/td&gt;
+<<<<<<< HEAD
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 430.9 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 143.64 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 7.505 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0187 &lt;/td&gt;
+=======
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36.81667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36.81667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5787267 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4686386 &lt;/td&gt;
+>>>>>>> 2e280d6437e67af215a15aac44c0790e272afe44
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 114.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 19.14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 508.93333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63.61667 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
    &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
   &lt;/tr&gt;
@@ -482,16 +491,16 @@ summary(aov2)
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Treatment &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.84 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2138 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 223.1667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 111.58333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.840128 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2138036 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 545.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 60.64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 545.7500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 60.63889 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
    &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
   &lt;/tr&gt;
@@ -534,7 +543,10 @@ summary(aov2)
 
 --
 
-- The key issue is that blocking must be done as part of the design. You can't "*search for blocks*" in the data
+- The key issue is that blocking must be done as part of the design. You can't "*search for blocks*" in the data  
+
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
