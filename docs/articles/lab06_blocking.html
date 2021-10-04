@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -210,7 +210,7 @@
 
       
 
-      </header><script src="lab06_blocking_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Lab 6: Randomized Complete Block Design</h1>
@@ -342,7 +342,6 @@
 <code class="sourceCode R"><span class="va">mothData</span><span class="op">$</span><span class="va">Treatment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">mothData</span><span class="op">$</span><span class="va">Treatment</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Bt"</span>, <span class="st">"Dimilin"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">mothData</span><span class="op">$</span><span class="va">Treatment</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Control" "Bt"      "Dimilin"</span>
-
 <span class="va">mothData</span><span class="op">$</span><span class="va">Region</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">mothData</span><span class="op">$</span><span class="va">Region</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">mothData</span><span class="op">$</span><span class="va">Region</span><span class="op">)</span>
 <span class="co">#&gt; [1] "1" "2" "3" "4"</span></code></pre></div>
@@ -357,19 +356,17 @@
 <span class="co"># Grand mean</span>
 <span class="op">(</span><span class="va">grand.mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mothData</span><span class="op">$</span><span class="va">caterpillar</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 14.42</span>
-
 <span class="co"># Treatment means</span>
 <span class="op">(</span><span class="va">treatment.means</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">mothData</span>, <span class="va">Treatment</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">caterpillar</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 3 x 2</span>
+<span class="co">#&gt; # A tibble: 3 × 2</span>
 <span class="co">#&gt;   Treatment    mu</span>
 <span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 Control    20.5</span>
 <span class="co">#&gt; 2 Bt         11.8</span>
 <span class="co">#&gt; 3 Dimilin    11</span>
-
 <span class="co"># Block means</span>
 <span class="op">(</span><span class="va">block.means</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">mothData</span>, <span class="va">Region</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">caterpillar</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 4 x 2</span>
+<span class="co">#&gt; # A tibble: 4 × 2</span>
 <span class="co">#&gt;   Region    mu</span>
 <span class="co">#&gt;   &lt;fct&gt;  &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 1       18.3</span>
@@ -443,9 +440,8 @@
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">qf</a></span><span class="op">(</span><span class="fl">0.95</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span> <span class="co"># 95% of the distribution is below this value of F</span>
 <span class="co">#&gt; [1] 5.143</span>
-
-<span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">pf</a></span><span class="op">(</span><span class="cn">F</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span> <span class="co"># Proportion of the distribution beyond this F value</span>
-<span class="co">#&gt; [1] 1</span></code></pre></div>
+<span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">pf</a></span><span class="op">(</span><span class="va">F.stat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span> <span class="co"># Proportion of the distribution beyond this F value</span>
+<span class="co">#&gt; [1] 0.03922</span></code></pre></div>
 <p>Be sure you understand what each of these functions is doing!</p>
 <hr>
 <p>And we’ll display the table using <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable()</a></code>, with a few options to make it look a little nicer:</p>
@@ -660,7 +656,7 @@
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Under the hood, <code>R</code> actually treats factors as integers - 1, 2, 3… - with character labels for each level<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Under the hood, <code>R</code> actually treats factors as integers - 1, 2, 3… - with character labels for each level<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
   </div>

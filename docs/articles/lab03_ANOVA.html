@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -210,7 +210,7 @@
 
       
 
-      </header><script src="lab03_ANOVA_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="lab03_ANOVA_files/kePrint-0.0.1/kePrint.js"></script><link href="lab03_ANOVA_files/lightable-0.0.1/lightable.css" rel="stylesheet">
+      </header><script src="lab03_ANOVA_files/kePrint-0.0.1/kePrint.js"></script><link href="lab03_ANOVA_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -377,7 +377,7 @@ No
 <p>The default output from <code>summary</code> is fine for viewing in the console but what if you want to include the ANOVA table in a report or paper? You could manually create a table and copy/paste the values, but that’s a pain. Luckily, there is a handy package called <code>broom</code> that turns the output from many model functions into cleaned-up data frames:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">aov.out1</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 6</span>
+<span class="co">#&gt; # A tibble: 2 × 6</span>
 <span class="co">#&gt;   term         df sumsq meansq statistic p.value</span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 Brand         3 1080.   360.      3.56  0.0382</span>
@@ -524,7 +524,7 @@ Residuals
 <span class="op">(</span><span class="va">ybar.i</span> <span class="op">&lt;-</span> <span class="va">sawData</span> <span class="op">%&gt;%</span> 
             <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Brand</span><span class="op">)</span> <span class="op">%&gt;%</span> 
              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 4 x 2</span>
+<span class="co">#&gt; # A tibble: 4 × 2</span>
 <span class="co">#&gt;   Brand    mu</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 A        33</span>

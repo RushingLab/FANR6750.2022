@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -210,7 +210,7 @@
 
       
 
-      </header><script src="lab10_repeated_measures_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Lab 10: Repeated measures</h1>
@@ -337,7 +337,7 @@
                                      names_prefix <span class="op">=</span> <span class="st">"week"</span>,
                                      values_from <span class="op">=</span> <span class="va">leaves</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">plantData_wide</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 x 7</span>
+<span class="co">#&gt; # A tibble: 6 × 7</span>
 <span class="co">#&gt;   plant fertilizer week1 week2 week3 week4 week5</span>
 <span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span>
 <span class="co">#&gt; 1 1     L              4     5     6     8    10</span>
@@ -460,7 +460,6 @@
 <span class="op">(</span><span class="va">lowFertilizer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="va">growthMat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; interval.1 interval.2 interval.3 interval.4 </span>
 <span class="co">#&gt;        1.2        1.4        1.2        2.2</span>
-
 <span class="op">(</span><span class="va">highFertilizer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="va">growthMat</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; interval.1 interval.2 interval.3 interval.4 </span>
 <span class="co">#&gt;        2.2        2.2        1.0        2.0</span></code></pre></div>
@@ -520,7 +519,7 @@
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>to run this function, we need to specify which column in the original data frame contains the column names (<code>names_from</code>) and which column contains the values that will go in the new columns (<code>values_from</code>). We can also (optionally) specify a prefix to add to each column name so that, as would the base here, we don’t end up with numeric column names. For more help, see <code>?pivot_wider</code><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>to run this function, we need to specify which column in the original data frame contains the column names (<code>names_from</code>) and which column contains the values that will go in the new columns (<code>values_from</code>). We can also (optionally) specify a prefix to add to each column name so that, as would the base here, we don’t end up with numeric column names. For more help, see <code>?pivot_wider</code><a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
   </div>

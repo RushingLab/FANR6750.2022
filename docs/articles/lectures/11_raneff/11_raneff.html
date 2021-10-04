@@ -230,7 +230,7 @@ OR
 
 
 ```r
-aov1 &lt;- aov(caterpillars ~ pesticide + location, gypsyData)
+aov1 &lt;- aov(caterpillar ~ Treatment + Region, mothData)
 summary(aov1)
 ```
 
@@ -247,7 +247,7 @@ summary(aov1)
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; pesticide &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Treatment &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
@@ -255,7 +255,7 @@ summary(aov1)
    &lt;td style="text-align:right;"&gt; 0.0392 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; location &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Region &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 430.9 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 143.64 &lt;/td&gt;
@@ -278,7 +278,7 @@ summary(aov1)
 
 
 ```r
-aov2 &lt;- aov(caterpillars ~ pesticide + Error(location), gypsyData)
+aov2 &lt;- aov(caterpillar ~ Treatment + Error(Region), mothData)
 summary(aov2)
 ```
 
@@ -296,7 +296,7 @@ summary(aov2)
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; location &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Region &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 430.9 &lt;/td&gt;
@@ -306,7 +306,7 @@ summary(aov2)
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Within &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; pesticide &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Treatment &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;

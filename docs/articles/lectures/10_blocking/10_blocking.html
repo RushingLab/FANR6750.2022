@@ -367,7 +367,7 @@ traps placed in the plots.
 &lt;table class="table table-condensed" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
  &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Location&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Region&lt;/div&gt;&lt;/th&gt;
 &lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment&lt;/div&gt;&lt;/th&gt;
 &lt;/tr&gt;
   &lt;tr&gt;
@@ -412,7 +412,7 @@ traps placed in the plots.
 
 
 ```r
-aov1 &lt;- aov(caterpillars ~ pesticide + location, gypsyData)
+aov1 &lt;- aov(caterpillar ~ Treatment + Region, mothData)
 summary(aov1)
 ```
 
@@ -429,7 +429,7 @@ summary(aov1)
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; pesticide &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Treatment &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
@@ -437,7 +437,7 @@ summary(aov1)
    &lt;td style="text-align:right;"&gt; 0.0392 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; location &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Region &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 430.9 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 143.64 &lt;/td&gt;
@@ -463,7 +463,7 @@ summary(aov1)
 
 
 ```r
-aov2 &lt;- aov(caterpillars ~ pesticide, gypsyData)
+aov2 &lt;- aov(caterpillar ~ Treatment, mothData)
 summary(aov2)
 ```
 
@@ -480,7 +480,7 @@ summary(aov2)
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; pesticide &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Treatment &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;

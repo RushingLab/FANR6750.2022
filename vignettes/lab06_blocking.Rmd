@@ -232,7 +232,7 @@ Quick reminder about calculating *p*-values
 ```{r}
 qf(0.95, 2, 6) # 95% of the distribution is below this value of F
 
-1-pf(F[1], 2, 6) # Proportion of the distribution beyond this F value
+1-pf(F.stat[1], 2, 6) # Proportion of the distribution beyond this F value
 ```
 
 Be sure you understand what each of these functions is doing!
