@@ -265,7 +265,7 @@ anova_tab %>%
 
 --
 
-- If the block effect is significant, then a substantial amount is added to the denominator in the F-test, **increasing power**  
+- If the block effect is significant, then a substantial amount is added to the denominator in the F-test, **decreasing power**  
 
 ---
 # what if the block effect isn't significant?
