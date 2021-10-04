@@ -16,13 +16,8 @@ output:
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
                       fig.retina = 2, fig.width = 9, fig.height = 7)
-<<<<<<< HEAD
-library(WILD3810)
 # library(emo)
-=======
 #library(WILD3810)
-#library(emo)
->>>>>>> 2e280d6437e67af215a15aac44c0790e272afe44
 library(kableExtra)
 library(dplyr)
 library(FANR6750)
