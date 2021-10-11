@@ -17,7 +17,7 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
                       fig.retina = 2, fig.width = 9, fig.height = 7)
 library(WILD3810)
-library(emo)
+# library(emo)
 library(kableExtra)
 library(dplyr)
 library(FANR6750)
@@ -293,6 +293,38 @@ microtus %>%
   kable(format = "html", col.names = c(" ", " ", "0", "1", "2")) %>%
   add_header_above(c("Replicate (k)" = 1, "Predation (j)" = 1, "Food supplementation (i)" = 3)) %>%
   kable_styling(font_size = 14)
+```
+
+---
+# analysis of (fake) *microtus* data
+
+
+```{r, echo = TRUE}
+data("microtusData")
+microtusData$food <- as.factor(microtusData$food)
+aov1 <- aov(voles ~ food*predators, data = microtusData)
+summary(aov1)
+```
+
+---
+# analysis of (fake) *microtus* data
+
+
+```{r}
+newDat <- data.frame(food = rep(unique(microtusData$food), 2),
+                     predators = rep(unique(microtusData$predators), 3))
+pred <- predict(aov1, newdata = newDat, se.fit = TRUE)
+newDat$pred <- pred$fit
+newDat$LCI <- pred$fit - pred$se.fit * 1.96
+newDat$UCI <- pred$fit + pred$se.fit * 1.96
+
+ggplot(newDat, aes(x = food, y = pred, color = predators)) + 
+  geom_errorbar(aes(ymin = LCI, ymax = UCI), width = 0) +
+  geom_line(aes(x = as.numeric(food), y = pred)) +
+  geom_point(color = "white", size = 3.5) +
+  geom_point(size = 2.5) +
+  scale_x_discrete("Food supplementation") +
+  scale_y_continuous("Mictrotus abundance")
 ```
 
 ---

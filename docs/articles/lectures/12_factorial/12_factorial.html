@@ -387,6 +387,34 @@ class: inverse, center, middle
 &lt;/table&gt;
 
 ---
+# analysis of (fake) *microtus* data
+
+
+
+```r
+data("microtusData")
+microtusData$food &lt;- as.factor(microtusData$food)
+aov1 &lt;- aov(voles ~ food*predators, data = microtusData)
+summary(aov1)
+```
+
+```
+##                Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## food            2   1337     669    40.6 2.1e-07 ***
+## predators       1    975     975    59.2 4.3e-07 ***
+## food:predators  2    518     259    15.7 0.00011 ***
+## Residuals      18    297      16                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+---
+# analysis of (fake) *microtus* data
+
+
+&lt;img src="12_factorial_files/figure-html/unnamed-chunk-7-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
 ## `\(\large a \times b \times c\)` DESIGN
 
 - The `\(\large a \times b\)` factorial design can be extended to three or more factors  
