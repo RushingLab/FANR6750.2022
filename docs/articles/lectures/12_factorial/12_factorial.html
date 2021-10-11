@@ -412,7 +412,30 @@ summary(aov1)
 # analysis of (fake) *microtus* data
 
 
-&lt;img src="12_factorial_files/figure-html/unnamed-chunk-7-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+```r
+newDat &lt;- data.frame(food = rep(c("0", "1", "2"), 2),
+                     predators = rep(c("Present", "Absent"), 3))
+pred &lt;- predict(aov1, newdata = newDat, se.fit = TRUE, 
+                interval = "confidence", level = 0.95)
+
+pred$fit
+```
+
+```
+##     fit    lwr   upr
+## 1 11.00  6.735 15.27
+## 2 31.50 27.235 35.77
+## 3 17.00 12.735 21.27
+## 4 13.50  9.235 17.77
+## 5 20.75 16.485 25.02
+## 6 42.00 37.735 46.27
+```
+
+---
+# analysis of (fake) *microtus* data
+
+&lt;img src="12_factorial_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /&gt;
 
 ---
 ## `\(\large a \times b \times c\)` DESIGN

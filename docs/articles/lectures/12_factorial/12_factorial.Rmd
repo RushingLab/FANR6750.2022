@@ -310,13 +310,27 @@ summary(aov1)
 # analysis of (fake) *microtus* data
 
 
-```{r}
+```{r echo = TRUE}
+newDat <- data.frame(food = rep(c("0", "1", "2"), 2),
+                     predators = rep(c("Present", "Absent"), 3))
+pred <- predict(aov1, newdata = newDat, se.fit = TRUE, 
+                interval = "confidence", level = 0.95)
+
+pred$fit
+
+```
+
+---
+# analysis of (fake) *microtus* data
+
+```{r fig.width=8, fig.height=6}
 newDat <- data.frame(food = rep(unique(microtusData$food), 2),
                      predators = rep(unique(microtusData$predators), 3))
-pred <- predict(aov1, newdata = newDat, se.fit = TRUE)
-newDat$pred <- pred$fit
-newDat$LCI <- pred$fit - pred$se.fit * 1.96
-newDat$UCI <- pred$fit + pred$se.fit * 1.96
+pred <- predict(aov1, newdata = newDat, se.fit = TRUE, 
+                interval = "confidence", level = 0.95)
+newDat$pred <- pred$fit[,1]
+newDat$LCI <- pred$fit[,2]
+newDat$UCI <- pred$fit[,3]
 
 ggplot(newDat, aes(x = food, y = pred, color = predators)) + 
   geom_errorbar(aes(ymin = LCI, ymax = UCI), width = 0) +
