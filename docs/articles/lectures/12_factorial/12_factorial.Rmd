@@ -312,7 +312,7 @@ summary(aov1)
 
 ```{r echo = TRUE}
 newDat <- data.frame(food = rep(c("0", "1", "2"), 2),
-                     predators = rep(c("Present", "Absent"), 3))
+                     predators = rep(c("Present", "Absent"), each = 3))
 pred <- predict(aov1, newdata = newDat, se.fit = TRUE, 
                 interval = "confidence", level = 0.95)
 

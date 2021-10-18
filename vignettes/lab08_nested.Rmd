@@ -206,7 +206,7 @@ The data can be accessed using:
 
 ```{r}
 library(FANR6750)
-data("fishData")
+data("salinityData")
 ```
 
 
