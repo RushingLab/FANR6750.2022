@@ -87,3 +87,6 @@ usethis::use_data(switzerland, overwrite = TRUE)
 
 vegData <- read.csv("data-raw/vegData.csv")
 usethis::use_data(vegData, overwrite = TRUE)
+
+salinityData <- read.csv("data-raw/salinityData.csv")
+usethis::use_data(salinityData, overwrite = TRUE)

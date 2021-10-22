@@ -17,7 +17,7 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
                       fig.retina = 2, fig.width = 9, fig.height = 7)
 source(here::here("R/zzz.R"))
-library(emo)
+# library(emo)
 library(kableExtra)
 library(dplyr)
 library(FANR6750)
@@ -306,7 +306,7 @@ $$\LARGE y_{i} \sim MVN(\mu_i, \Sigma)$$
 #### Sphericity, in the context of repeated measures, is the condition in which the variance-covariance matrix has zeros on the off-diagonals. This can be tested using Mauchly's test  
 --
 
-#### Technical details with accompanying `R` code can be found in Dalgaard (2006), on eLC  
+#### Technical details with accompanying `R` code can be found in Dalgaard (2006)  
 
 ---
 # profile analysis
