@@ -17,7 +17,7 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
                       fig.retina = 2, fig.width = 9, fig.height = 6)
 source(here::here("R/zzz.R"))
-library(emo)
+# library(emo)
 library(kableExtra)
 library(dplyr)
 library(FANR6750)
@@ -125,7 +125,7 @@ ggplot(df, aes(x = x, y = y)) +
   geom_abline(slope = beta1, intercept = beta0)
 ```
 
-The regression line $y = \beta_0 + \beta_1$ represents the mean $y$ response at a given $x$ value  
+The regression line $y = \beta_0 + \beta_1 \times x$ represents the mean $y$ response at a given $x$ value  
 
 ---
 # regression hypotheses
