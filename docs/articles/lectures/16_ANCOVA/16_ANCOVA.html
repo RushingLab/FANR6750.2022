@@ -4,6 +4,7 @@
     <title>LECTURE 16: ancova</title>
     <meta charset="utf-8" />
     <meta name="author" content="   Fall 2021" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="FANR6750.css" type="text/css" />
     <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
@@ -151,7 +152,7 @@ Note that we could test the hypothesis that the intercept is equal to zero, but 
 
 #### The intercept and slope parameters are usually estimated using the method of "*ordinary least squares*", which finds the estimates that minimize the residual sum of squares:
 
-`$$\Large SS_{res} = \sum_i \epsilon_i^2 = \sum_i (y_i - (\beta_0 - \beta_1 x_i))^2$$`
+`$$\Large SS_{res} = \sum_i \epsilon_i^2 = \sum_i (y_i - (\beta_0 + \beta_1 x_i))^2$$`
 ---
 # residuals
 
@@ -409,6 +410,7 @@ broom::glance(fm2)
 --
 
 - Including `\(x\)` in the model increases the power of testing the effect of the treatment factor
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
