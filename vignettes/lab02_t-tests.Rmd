@@ -131,7 +131,7 @@ par(op)
 
 ```
 library(FANR6750)
-data("treedata)
+data("treedata")
 ```
 
 4) Create 2 objects: `yL` is the tree density data for the first 10 experimental units (low elevation), and `yH` is the tree density data for the last 10 units (high elevation)

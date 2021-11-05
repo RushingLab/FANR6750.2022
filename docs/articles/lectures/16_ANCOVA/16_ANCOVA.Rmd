@@ -273,7 +273,7 @@ ggplot(dietData, aes(x = length, y = weight, color = diet)) +
 ---
 # model
 
-One way to write the model involves an intercept ( $\large \beta_0$ ) for one factor level and $\large \beta$'s that describe the difference between the intercepts of the other factors and the reference level  
+One way to write the model involves an intercept ( $\large \beta_0$ ) for one factor level and $\large \beta$'s that describe the difference between the intercepts of the other levels and the reference level  
 
 --
 
@@ -358,7 +358,6 @@ fm1 <- lm(weight ~ diet + length, dietData)
 summary.aov(fm1)
 ```
 
-<br/>
 
 --
 
