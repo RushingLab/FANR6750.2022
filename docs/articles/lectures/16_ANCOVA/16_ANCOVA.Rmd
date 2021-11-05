@@ -185,7 +185,7 @@ ggplot(df3, aes(x = x, y = y)) +
 
 #### The intercept and slope parameters are usually estimated using the method of "*ordinary least squares*", which finds the estimates that minimize the residual sum of squares:
 
-$$\Large SS_{res} = \sum_i \epsilon_i^2 = \sum_i (y_i - (\beta_0 - \beta_1 x_i))^2$$
+$$\Large SS_{res} = \sum_i \epsilon_i^2 = \sum_i (y_i - (\beta_0 + \beta_1 x_i))^2$$
 ---
 # residuals
 
