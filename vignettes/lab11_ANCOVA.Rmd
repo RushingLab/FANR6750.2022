@@ -123,13 +123,7 @@ Note that `summary()` will return an alternative output compared to `summary.aov
 summary(fm2)
 ```
 
-Because we:
-
-1) Set the contrast argument to `contrast="contr.sum"`, and
-
-2) centered the length covariate,
-
-the intercept is the grand mean ($\mu$) and the other estimates are the effect sizes ($\alpha_i$).
+Because we set the contrast argument to `contrast="contr.sum"`, the intercept is the grand mean ($\mu$) and the other estimates are the effect sizes ($\alpha_i$).
 
 Also note that you can set the behavior for all subsequent `lm()` or `aov()` calls, by setting `R`’s options:
 
@@ -206,7 +200,7 @@ Let's start by creating two new versions of the diet data frame. We'll also set 
 df <- df.orig <- dietData
 
 df$diet <- factor(df$diet, levels = unique(df$diet))
-df$length <- df$length- mean(df$length)       ###  Center df$girth
+df$length <- df$length- mean(df$length)       ###  Center df$length
 ```
 
 
@@ -214,7 +208,7 @@ Now, fit a linear model (first check the default contrasts):
 
 ```{r}
 options("contrasts") 
-mod1 <- lm(weight ~ length + diet, data = df)
+mod1 <- lm(weight ~ length + diet, data = df, contrasts = list(diet="contr.treatment"))
 ```
 
 And look at the estimated coefficients:
@@ -235,8 +229,10 @@ model.matrix(mod1)
 Remember that, in the model matrix, there is **one row for each observation** in the data and **one column for each parameter in the model**. In this case, the columns correspond to:
 
 1) the intercept (= 1 for all observations)
-2) the value of continuous covariate for each observation,
-3-5) the factor levels
+2) the value of continuous covariate for each observation,  
+3) low diet
+4) medium diet
+5) high diet
 
 At the bottom of print out, this function also tells you the contrasts used.
 
