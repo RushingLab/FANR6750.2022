@@ -236,8 +236,8 @@ $$\Large H_a : At\;least\;one\;inequality$$
 ```{r anova_tab}
 anova_tab <- data.frame(Source = c("Treatments", "Blocks", "Error"),
                         df = c('\\(a-1\\)', '\\(b-1\\)', '\\((a-1)(b-1)\\)'),
-                        SS = c('\\(\\sum_i b(\\bar{y}_i - \\bar{y}.)^2\\)', 
-                               '\\(\\sum_j a (\\bar{y}_{j} - \\bar{y}.)^2\\)',
+                        SS = c('\\(b\\sum_i (\\bar{y}_i - \\bar{y}.)^2\\)', 
+                               '\\(a\\sum_j  (\\bar{y}_{j} - \\bar{y}.)^2\\)',
                                '\\(\\sum_i \\sum_j (y_{ij} - \\bar{y}_i - \\bar{y}_{j} + \\bar{y}.)^2\\)'),
                         MS = c('\\(\\frac{SS_a}{a-1}\\)', '\\(\\frac{SS_b}{b-1}\\)', '\\(\\frac{SS_e}{df_e}\\)'),
                         F = c('\\(\\frac{MS_a}{MS_e}\\)', '\\(\\frac{MS_b}{MS_e}\\)', ""))
