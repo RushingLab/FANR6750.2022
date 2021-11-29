@@ -17,7 +17,7 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
                       fig.retina = 2, fig.width = 9, fig.height = 6)
 library(WILD3810)
-library(emo)
+#library(emo)
 library(kableExtra)
 library(dplyr)
 library(FANR6750)
@@ -188,7 +188,6 @@ ggplot(df, aes(x = x, y = y)) +
 # model selection approaches
 
 **Comparison of 2 models**  
-- *F* -test  
 - Likelihood-ratio test  
 
 --
@@ -222,7 +221,7 @@ class: middle, inverse, center
 
 #### Minus twice the (maximized) log-likelihood plus two times the number of parameters
 
-$$\Large AIC = -2L(\hat{\theta}; y) + 2K$$
+$$\Large AIC = -2L(\hat{\theta}, y) + 2K$$
 
 --
 
@@ -267,7 +266,7 @@ $$\large \Delta_i = AIC_i - AIC_{min}$$
 
 6) Compute the so-called Akaike weight of each model:
 
-$$\large w_i = \frac{exp(-1/2\Delta_i)}{\sum_i exp(-1/2 \Delta_i)}$$
+$$\large w_i = \frac{e^{-0.5\Delta_i}}{\sum_i e^{-0.5 \Delta_i}}$$
 
 --
 

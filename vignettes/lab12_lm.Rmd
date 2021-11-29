@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 )
 source(here::here("R/zzz.R"))
 library(kableExtra)
+sf::sf_use_s2(FALSE)
 ```
 
 # Linear model review
