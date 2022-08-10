@@ -22,7 +22,7 @@ All homework assignments for this course will be completed R Markdown files. To 
 
 ## Step 1: Create a new directory to store your homework files
 
-1) Create a new directory (or ideally a subdirectoy of your `FANR6750\` directory) and call it `LastNameFirstName-Homework#`, replacing `LastNameFirstName` with your last and first names and `#` with the appropriate homework number
+1) Create a new directory (or ideally a subdirectoy of your `FANR6750\homework` directory) and call it `LastNameFirstName-Homework#`, replacing `LastNameFirstName` with your last and first names and `#` with the appropriate homework number
 
 ## Step 2: Create a new R Markdown file
 

@@ -1,0 +1,901 @@
+---
+title: "LECTURE 4: t-tests and null hypothesis testing"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
+                      fig.retina = 2)
+library(FANR6750)
+source(here::here("R/zzz.R"))
+```
+
+class: inverse
+
+# outline
+
+<br/>
+#### 1) One-sample t-test
+
+<br/>  
+--
+
+#### 2) Null hypothesis testing
+
+<br/> 
+--
+
+#### 3) Two-sample t-test
+
+<br/> 
+--
+
+#### 4) Paired t-test
+
+---
+# one sample t-test
+
+#### Context
+
+- We want to know if a population mean ( $\mu$ ) differs from some value $\mu_0$    
+
+--
+
+- Examples  
+  + Is the average measurement error equal to zero?  
+  
+  + Is the average student taller than 5'?
+  
+--
+
+- Expressed as the *simplest* linear model:
+
+$$\Large y_i = \beta_0 + \epsilon_i$$
+
+$$\Large \epsilon_i \sim normal(0, \sigma)$$
+
+---
+# one sample t-test
+
+<br/>
+
+$$\Large y_i = \mu + \epsilon_i$$
+
+$$\Large \epsilon_i \sim normal(0, \sigma)$$
+
+--
+
+#### How can we express our question as a hypothesis?
+
+--
+
+- Is the average measurement error equal to zero?  
+
+--
+
+    + Is $\large \mu = 0$?
+
+--
+
+-  Is the average student taller than 5' (152.4cm)?
+  
+--
+
+    + Is $\large \mu = 152.4$?
+    
+---
+# one sample t-test
+
+#### How can we answer this question?
+
+--
+
+#### Sample!
+
+```{r, fig.height=3.75, fig.width=6}
+norm_df <- data.frame(z = seq(from = -10, to = 10, by = 0.1),
+                       pr_z = dnorm(x = seq(from = -10, to = 10, by = 0.1), 0, 3))
+set.seed(3406)
+samp <- data.frame(x = rnorm(25, 0, 3))
+
+ggplot() + 
+  geom_histogram(data = samp, aes(x = x, y = ..density..), 
+                 fill = "#999999", alpha = 0.75, color = "#999999") +
+  geom_rug(data = samp, aes(x = x), color = "#D47500") +
+  geom_vline(xintercept = 0, color = "grey25", size = 0.75, linetype = "dashed") +
+  # geom_vline(xintercept = mean(samp$x), color = "#D47500", size = 0.75, linetype = "longdash") +
+  # geom_path(norm_df, aes(x = z, y = pr_z), color = "#446E9B", size = 1) +
+  scale_y_continuous("") +
+  scale_x_continuous("", breaks = c(0), labels = c(expression(mu[0])),#, expression(hat(mu))),
+                     limits = c(-10, 10)) +
+  theme(axis.text.x = element_text(vjust = 0, color = "grey25"))
+```
+
+
+--
+
+1) What is our best estimate of $\mu$?
+
+---
+# one sample t-test
+
+#### How can we answer this question?
+
+
+#### Sample!
+
+```{r, fig.height=3.75, fig.width=6}
+norm_df <- data.frame(z = seq(from = -10, to = 10, by = 0.1),
+                       pr_z = dnorm(x = seq(from = -10, to = 10, by = 0.1), 0, 3))
+set.seed(3406)
+samp <- data.frame(x = rnorm(25, 0, 3))
+
+ggplot() + 
+  geom_histogram(data = samp, aes(x = x, y = ..density..), 
+                 fill = "#999999", alpha = 0.75, color = "#999999") +
+  geom_rug(data = samp, aes(x = x), color = "#D47500") +
+  geom_vline(xintercept = 0, color = "grey25", size = 0.75, linetype = "dashed") +
+  geom_vline(xintercept = mean(samp$x), color = "#D47500", size = 0.75, linetype = "longdash") +
+  # geom_path(norm_df, aes(x = z, y = pr_z), color = "#446E9B", size = 1) +
+  scale_y_continuous("") +
+  scale_x_continuous("", breaks = c(0, mean(samp$x)), labels = c(expression(mu[0]), expression(bar(y))),
+                     limits = c(-10, 10)) +
+  theme(axis.text.x = element_text(vjust = 0, color = "grey25"))
+```
+
+
+1) What is our best estimate of $\mu$?
+
+--
+
+2) How do we decide if $\mu = \mu_0$?
+
+---
+class: inverse, center, middle
+# null hypothesis testing
+
+---
+# null hypothesis testing
+
+> formal approach to deciding whether a statistical relationship in a sample reflects a real relationship in the population or is just due to chance 
+
+--
+
+#### Necessary because of **sampling error**
+
+--
+
+#### Long (and controversial)<sup>1</sup> history in statistics 
+
+.footnote[[1] We will discuss this more later in the semester ]
+
+--
+
+#### Requires two hypotheses
+
+- Null hypothesis $H_0$ (no difference/relationship/effect)
+
+- Alternative hypothesis $H_a$
+
+--
+
+- Note that these hypotheses refer to the **population(s)**!
+
+---
+# null hypothesis testing
+
+#### Example: Is measurement error 0?
+
+--
+
+- $\Large H_0$: $\Large \mu = 0$
+
+--
+
+- $\Large H_a$: $\Large \mu \neq 0$
+
+--
+
+- #### Collect sample of $\Large n = 25$ measurements
+
+--
+
+- $\Large \bar{y} = 0.15$, $\Large s = 0.7$
+
+--
+
+### What is our decision (accept or reject $\large H_0$)?
+
+---
+# null hypothesis testing
+
+#### NHT is based on the *expectation* of what our data should look like **if the null hypothesis is true**
+
+--
+
+- If our data look really different than what we expect **if the null hypothesis is true**, then it is unlikely that the null hypothesis is true and we reject $H_0$
+
+--
+
+- It's important to note that there is *always* a chance that our results are simply due to chance 
+
+--
+
+#### Type I error (i.e., false positive rate)
+
+- The probability that we will reject $H_0$ when it is actually true
+
+- Usually denoted $\alpha$
+
+- Generally, $\alpha = 0.05$ or $\alpha = 0.01$ are accepted Type I error rates
+
+---
+# null hypothesis testing
+
+#### One-sample t-test example
+
+- $\Large \bar{y} = 0.15$, $\Large s = 0.7$
+
+--
+
+- Define $\large t = \frac{\bar{y} - \mu_0}{SE_y} = \frac{0.15 - 0}{0.7/\sqrt{25}} = 1.07$
+
+--
+
+- If $\large H_0$ is true, what do we *expect* the value of $\large t$ to be?
+
+--
+
+    + 0
+
+--
+
+- If we accept that $\large t$ will never be exactly $\large 0$, how far from $\large 0$ does $\large t$ need to be for us to reject $\large H_0$?
+
+
+---
+# null hypothesis testing
+
+If we accept that $t$ will never be exactly $0$, how far from $0$ does $t$ need to be for us to reject $H_0$?
+
+
+--
+
+Reframe the question: **If the null hypothesis is true**, how much do we expect $t$ to vary? 
+
+--
+
+- We can answer that question using `R`!
+
+.pull-left[
+```{r, echo = TRUE}
+mu0 <- 0
+y.bar <- numeric(length = 2500)
+t <- numeric(length = 2500)
+
+for(i in 1:2500){
+  y <- rnorm(25, mu0, 1)
+  y.bar[i] <- mean(y)
+  SE <- sd(y)/sqrt(25)
+  t[i] <- (y.bar[i] - mu0)/SE
+}
+
+```
+]
+
+.pull-right[
+```{r fig.width=4.5, fig.height=3.5}
+df <- data.frame(t = t)
+
+ggplot() +
+  geom_histogram(data = df, aes(x = t), 
+                 alpha = 0.75, bins = 100) +
+  geom_vline(xintercept = mean(t), color = "black") +
+  scale_y_continuous("") + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+```
+All of this variation is due to sampling error!
+]
+
+---
+# null hypothesis testing
+
+If we accept that $t$ will never be exactly $0$, how far from $0$ does $t$ need to be for us to reject $H_0$?
+
+
+Reframe the question: **If the null hypothesis is true**, how much do we expect $t$ to vary? 
+
+
+- We can answer that question using `R`!
+
+.pull-left[
+```{r, eval = FALSE, echo = TRUE}
+mu0 <- 0
+y.bar <- numeric(length = 2500)
+t <- numeric(length = 2500)
+
+for(i in 1:2500){
+  y <- rnorm(25, mu0, 1)
+  y.bar[i] <- mean(y)
+  SE <- sd(y)/sqrt(25)
+  t[i] <- (y.bar[i] - mu0)/SE
+}
+
+```
+]
+
+.pull-right[
+```{r fig.width=4.5, fig.height=3.5}
+df <- data.frame(t = t)
+
+ggplot() +
+  geom_histogram(data = df, aes(x = t), 
+                 alpha = 0.75, bins = 100) +
+  geom_vline(xintercept = 1.05, color = "#D47500", linetype = "dashed", size = 1) +
+  geom_vline(xintercept = mean(t), color = "black") +
+  scale_y_continuous("") + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+```
+]
+
+---
+# null hypothesis testing
+
+#### Is there evidence to reject $\large H_0$?
+
+```{r fig.width=6, fig.height=4}
+df <- data.frame(t = t,
+                 group = ifelse(t > -1.07 & t < 1.07, "0", "1"))
+
+ggplot() +
+  geom_histogram(data = df, aes(x = t), 
+                 alpha = 0.75, bins = 100) +
+  geom_vline(xintercept = 1.05, color = "#D47500", linetype = "dashed", size = 1) +
+  geom_vline(xintercept = mean(t), color = "black") +
+  scale_y_continuous("") + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+```
+
+---
+# null hypothesis testing
+
+#### Is there evidence to reject $\large H_0$?
+
+```{r fig.width=6, fig.height=4}
+df <- data.frame(t = t,
+                 group = ifelse(t > -1.07 & t < 1.07, "0", "1"))
+
+ggplot() +
+  geom_histogram(data = df, aes(x = t, fill = as.factor(group)), 
+                 alpha = 0.75, bins = 100) +
+  geom_vline(xintercept = 1.05, color = "#D47500", linetype = "dashed", size = 1) +
+  geom_vline(xintercept = mean(t), color = "black") +
+  scale_y_continuous("") + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank()) +
+  guides(fill = "none")
+```
+
+Approximately 30% of the simulated values of $t$ are larger than 1.07 (or smaller than -1.07)
+
+- Put another way, **if the null hypothesis is true**, there is about a 1 in 3 chance of observing $t \geq 1.07$ 
+
+---
+# null hypothesis testing
+
+In reality, we don't need to simulate the distribution of $t$ every time we do an experiment
+
+--
+
+Theory says that the test statistic will follow a $t$-distribution with $n - 1$ degrees of freedom, **if the null hypothesis is true**
+
+.pull-left[
+```{r fig.width=6, fig.height=5.5}
+curve(dt(x, 1), -5, 5, ylim=c(0, 0.5),
+      xlab="t value", ylab="Probability density",
+      cex.lab=1.5, lwd=1.5)
+curve(dt(x, 5), -5, 5, add=TRUE, col="blue", lwd=1.5)
+curve(dnorm(x, 0, 1), -5, 5, add=TRUE,  lty=3, lwd=1.5)
+legend(-5, 0.5, c("Standard normal distribution", "t distribution (df=5)", "t distribution (df=1)"),
+       lty=c(3, 1, 1), col=c("black", "blue", "black"), lwd=1.5)
+```
+]
+
+.pull-right[
+- The expected distribution of $t$ **if the null hypothesis is true** and we repeated our experiment $\infty$ number of times 
+
+- Symmetrical around 0
+
+- Smaller sample sizes = wider $t$-distribution
+
+- Approximately normal for $n \geq 30$
+]
+
+---
+## $\large p$-values
+
+<br/>
+```{r p, fig.width=8, fig.height=6}
+op <- par(mai=c(0.8, 0.2, 0.2, 0.2))
+curve(dt(x, df=24), -4, 4, xlab="t value", ylab="", yaxt="n",
+      ylim=c(0,0.5),
+      frame=FALSE , main="t distribution with df=24", cex.main=1.5)
+xs1 <- seq(qt(.025, df=24), -4, by=-0.1)
+ys1 <- dt(xs1, df=19)
+xs2 <- seq(qt(.975, df=24), 4, by=0.1)
+ys2 <- dt(xs2, df=19)
+xs3 <- seq(qt(pt(-1.07,24), df=24), -4, by=-0.1)
+ys3 <- dt(xs3, df=19)
+xs4 <- seq(qt(pt(1.07,24), df=24), 4, by=0.1)
+ys4 <- dt(xs4, df=24)
+polygon(c(xs3, rev(xs3)), c(rep(0, length(xs3)), rev(ys3)), col=gray(0.7))
+polygon(c(xs4, rev(xs4)), c(rep(0, length(xs4)), rev(ys4)), col=gray(0.7))
+polygon(c(xs1, rev(xs1)), c(rep(0, length(xs1)), rev(ys1)), col="red")
+polygon(c(xs2, rev(xs2)), c(rep(0, length(xs2)), rev(ys2)), col="red")
+text(-1.07, dt(0,24), "t=-1.07\np=0.15", pos=3)
+text(1.07, dt(0,24), "t=1.07\np=0.15", pos=3)
+#text(-3, dt(0,18), "t=-3", pos=3)
+#text(3, dt(0,18), "t=3", pos=3)
+arrows(-1.07, dt(0,24), -1.07, dt(-1.07,24), length=0.1)
+arrows(1.07, dt(0,24), 1.07, dt(1.07,24), length=0.1)
+par(op)
+```
+
+---
+# critical values
+
+<br/>
+```{r cv, fig.width=8, fig.height=6}
+op <- par(mai=c(0.8, 0.2, 0.2, 0.2))
+curve(dt(x, df=24), -4, 4, xlab="t value", ylab="", yaxt="n",
+      ylim=c(0,0.5),
+      frame=FALSE , main="t distribution with df=24", cex.main=1.5)
+xs1 <- seq(qt(.025, df=24), -4, by=-0.1)
+ys1 <- dt(xs1, df=19)
+xs2 <- seq(qt(.975, df=24), 4, by=0.1)
+ys2 <- dt(xs2, df=25)
+polygon(c(xs1, rev(xs1)), c(rep(0, length(xs1)), rev(ys1)), col="red")
+polygon(c(xs2, rev(xs2)), c(rep(0, length(xs2)), rev(ys2)), col="red")
+text(xs1[1], dt(0,24)/1.5, "critical value\nt=-2.06", pos=3)
+text(xs2[1], dt(0,24)/1.5, "critical value\nt=2.06", pos=3)
+arrows(xs1[1], dt(0,24)/1.5, xs1[1], ys1[1], length=0.1)
+arrows(xs2[1], dt(0,24)/1.5, xs2[1], ys2[1], length=0.1)
+#text(-3, dt(0,18), "t=-3", pos=3)
+#text(3, dt(0,18), "t=3", pos=3)
+#arrows(-3, dt(0,18), -3, dt(-3,18), length=0.1)
+#arrows(3, dt(0,18), 3, dt(3,18), length=0.1)
+par(op)
+
+```
+
+
+---
+# null hypothesis testing
+
+#### Recap (one sample t-test)
+
+1) Draw a random sample from a population (assumed to be normally distributed)  
+
+--
+
+2) Compute the standard error of the mean:
+
+$$\large SEM = \frac{s}{\sqrt{n}} = \frac{\sqrt{\frac{1}{n-1}\sum^n_{i=1}(y_i-\bar{y})^2}}{\sqrt{n}}$$
+
+--
+
+3) Compute the t statistic:  
+
+$$\large t = \frac{\bar{y} - \mu_0}{SEM}$$
+
+--
+
+4) If the $p$-value is $< \alpha$ (or if $t$ is more extreme than the critical value), reject the null  
+
+---
+## MORE ON $\large p$-VALUES
+
+<br/>
+#### A $\large p$-value tells you how likely your observations (or more extreme) would be **if the null hypothesis is true**  
+
+--
+
+#### Our conclusion must be to either reject or "fail to reject" the null hypothesis  
+
+--
+
+#### A $\large p$-value does not tell us how much evidence there is in favor of a particular difference in means
+
+--
+
+
+#### What factors result in a small $\large p$-value?
+
+--
+
+- The sample mean is far from 0
+
+- And/or the SE is small
+    
+---
+# one-tailed vs. two-tailed tests
+
+<br/>
+```{r one-tail, fig.width=8, fig.height=6}
+op <- par(mai=c(0.8, 0.2, 0.2, 0.2))
+curve(dt(x, df=24), -4, 4, xlab="t value", ylab="", yaxt="n",
+      ylim=c(0,0.5),
+      frame=FALSE , main="t distribution with df=24", cex.main=1.5)
+#xs1 <- seq(qt(.025, df=18), -4, by=-0.1)
+#ys1 <- dt(xs1, df=19)
+xs2 <- seq(qt(.95, df=24), 4, by=0.1)
+ys2 <- dt(xs2, df=25)
+text(xs2[1], dt(0,24)/1.5, "critical value\nt=1.71", pos=3)
+arrows(xs2[1], dt(0,24)/1.5, xs2[1], ys2[1], length=0.1)
+#polygon(c(xs1, rev(xs1)), c(rep(0, length(xs1)), rev(ys1)), col=gray(0.7))
+polygon(c(xs2, rev(xs2)), c(rep(0, length(xs2)), rev(ys2)), col=gray(0.7))
+par(op)
+```
+
+---
+# more on degrees of freedom
+
+<br/>
+> The degrees of freedom for a calculation on a set of numbers is the number of elements in the set (i.e., how many numbers there are) minus the number of different things you must know about the set
+in order to complete the calculation  
+
+<br/>
+
+--
+#### Example:
+
+> Consider a set of n = 5 numbers. In the absence of any information about them, all are free to be any value. However, if you are also told that the sum of the set is 20, then only 4 of the numbers are free to be anything, but the fifth is constrained by your knowledge that the sum must be 20.
+Hence, $df = n - 1 = 4$
+
+---
+class: inverse, center, middle
+
+## TWO-SAMPLE t-TEST
+
+---
+### TWO-SAMPLE t-TEST
+
+#### Concept  
+- We want to determine if two population means differ  
+
+--
+
+- The null hypothesis is: $\large H_0 : \mu_1 = \mu_2$  
+
+--
+
+- The alternative hypothesis is either:  
+  + $\large H_a : \mu_1 \neq \mu_2$ for a two-tailed test, or  
+  + $\large H_a :  \mu_1 > \mu_2$ for a one-tailed test  
+
+--
+
+- Appropriate when:  
+  + The two samples, one from each population, are independent  
+  + Both populations are (approximately) normally distributed  
+  + The population variances are unknown but are the same for both populations  
+
+---
+# procedure
+
+1) Draw two random samples from two populations  
+
+--
+<br/>
+2) Compute the standard error of the difference in means:  
+
+$$\large SEDM = \sqrt{SEM_1^2 + SEM^2_2}$$
+
+--
+<br/>
+3) Compute the t statistic:
+
+$$\large t = \frac{\bar{y}_1 -\bar{y}_2}{SEDM}$$
+
+--
+<br/>
+4) Calculate the $p$-value  
+
+--
+<br/>
+5) If $p < \alpha$, reject the null hypothesis
+
+
+---
+# worked example
+
+#### Question: 
+
+- Is there a difference in the density of trees at low and high elevations?
+
+
+--
+
+#### Hypothesis: 
+
+- Trees are more numerous at low elevations  
+
+--
+
+#### Field procedure:
+
+- $\large n=10$ plots are sampled using randomly located belt transects 100m long $\times$ 10m wide at both high and low elevations
+
+--
+
+#### Data:
+
+.pull-left[
+`Low elevation: 16, 14, 18, 17, 29, 31, 14, 16, 22, 15`
+]
+
+.pull-right[
+`High elevation: 2, 11, 6, 8, 0, 3, 19, 1, 6, 5`
+]
+
+---
+# worked example
+
+```{r box, fig.height=7, fig.width=7}
+df <- data.frame(Trees = c(16, 14, 18, 17, 29, 31, 14, 16, 22, 15,
+                           2, 11, 6, 8, 0, 3, 19, 1, 6, 5),
+                 Elevation = factor(rep(c("Low", "High"), each = 10), levels = c("Low", "High")))
+ggplot(df, aes(x = Elevation, y = Trees)) + geom_boxplot()
+```
+
+---
+# worked example
+
+.pull-left[
+`Low elevation`  
+
+`16, 14, 18, 17, 29,`  
+`31, 14, 16, 22, 15`  
+]
+
+.pull-right[
+`High elevation`   
+
+`2, 11, 6, 8, 0,`  
+`3, 19, 1, 6, 5`  
+]  
+
+--
+
+- Mean of low group: $\large \bar{y}_L = 20.2$  
+
+- Mean of high group: $\large \bar{y}_H = 6.1$  
+
+--
+
+- Standard deviation of low group: $\large s_L = 6.03$  
+
+- Standard deviation of high group: $\large s_H = 5.63$  
+
+--
+
+- Standard error of difference in means $\large SEDM_1 = 2.61$  
+
+--
+
+- Test statistic: $\large t = (20.2 - 6.1)/2.61 = 5.4$  
+
+--
+
+- $\large p$-value: $< 0.001$ (critical value: $\large t_{0.95,df=10+10-2} = 1.73$)  
+
+--
+
+#### Is this a one- or two-tailed test? Why?  
+
+---
+#  equal variance assumption
+
+#### Are the variances of the two populations equal?
+
+--
+
+- This is an assumption of the two-sample t-test  
+
+--
+
+- Again, we use samples to make inferences about populations  
+
+--
+
+- Hypotheses:
+  + $\large H_0 : \sigma^2_1 = \sigma^2_2$  
+  + $\large H_a : \sigma^2_1 \neq \sigma^2_2$  
+
+--
+
+- Tested using a ratio of sample variances: $\large F = s^2_1/s^2_2$  
+
+--
+
+- This is always a two-tailed test  
+
+#### Note: It makes life easier to place the larger variance in the numerator of this ratio
+
+---
+# f-distribution
+
+#### A ratio of variances follows an $\large F$-distribution
+
+.pull-left[
+#### Properties:  
+
+- $F > 0$  
+
+- $F$-distribution is not symmetrical  
+
+- Shape of distribution depends on an ordered pair of degrees of freedom, $df_1$
+and $df_2$
+]
+
+.pull-right[
+```{r f, fig.height=4, fig.width=4}
+curve(df(x, 9, 9), 0, 5, xlab="F value", ylab="Probability density",
+      main="F distribution with df=9,9")
+```
+]
+
+
+---
+# f-distribution
+
+<br/>
+```{r f2, fig.width=8, fig.height=6}
+op <- par(mai=c(0.8, 0.2, 0.2, 0.2))
+curve(df(x, 9, 9), 0, 5, xlab="F value", ylab="", yaxt="n",
+      ylim=c(0,1),
+      frame=FALSE , main="F distribution with df1=9 and df2=9", cex.main=1.5)
+xs1 <- seq(qf(.025, 9, 9), 0, by=-0.01)
+ys1 <- df(xs1, 9, 9)
+xs2 <- seq(qf(.975, 9, 9), 5, by=0.01)
+ys2 <- df(xs2, 9, 9)
+polygon(c(xs1, rev(xs1)), c(rep(0, length(xs1)), rev(ys1)), col=gray(0.7))
+polygon(c(xs2, rev(xs2)), c(rep(0, length(xs2)), rev(ys2)), col=gray(0.7))
+text(xs1[1], 0.9, "critical value\nF=0.25", pos=3)
+text(xs2[1], 0.9, "critical value\nF=4.1", pos=3)
+arrows(xs1[1], 0.9, xs1[1], ys1[1], length=0.1)
+arrows(xs2[1], 0.9, xs2[1], ys2[1], length=0.1)
+par(op)
+```
+
+---
+# continuing with tree example
+
+#### Test statistic: $\large F = 6.032/5.632 = 1.07$
+
+--
+
+#### Degrees of freedom: $\large df = 9, 9$  
+
+--
+
+#### $\large p$-value: $\large 0.54$  
+
+--
+
+#### Critical value: $\large F_{0.975,df=9,9} = 4.03$  
+
+--
+
+#### Decision: $\large p > \alpha$ (or observed $F$ is lower than critical value). Fail to reject the null. No strong evidence that variances are different.
+
+---
+class: inverse, middle, center
+
+## PAIRED *t*-TEST
+
+---
+### PAIRED *t*-TEST
+
+#### Context
+
+- Used when two measurements are taken on each experimental unit  
+
+--
+
+- Problem can be analyzed by taking differences of each pair and then conducting a one-sample *t*-test  
+
+--
+
+- Examples:  
+  + Are right feet usually longer than left feet?  
+  + Is small mammal density higher before or after the use of prescribedfire?  
+  + Do two methods of measuring tree height yield similar results?  
+
+---
+# motivation
+
+<br/>
+<br/>
+
+> Matching is done in a variety of ways, but the object is always to remove extraneous variability from the experiment
+
+---
+# worked example
+
+> Plots were arranged in pairs at 12 different locations. One plot in each pair was randomly selected for treatment with the microbial pesticide *Bacillus thuringiensis* (Bt). The other plot was untreated. Surveys of nontarget caterpillars were performed by counting caterpillars on samples of 10,000 leaves on each plot. Data below are caterpillar counts on each plot, paired by location.  
+
+```{r tab}
+library(kableExtra)
+tab <- data.frame(Location = 1:12,
+                  Untreated = c(23, 18, 29, 22, 33, 20, 17, 25, 27, 30, 25, 27),
+                  Treated = c(19, 18, 24, 23, 31, 22, 16, 23, 24, 26, 24, 28),
+                  Difference = c(4, 0, 5, -1, 2, -2, 1, 2, 3, 4, 1, -1))
+
+tab %>%
+  kable("html", align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+                full_width = F, font_size = 10) %>%
+  scroll_box(height = "300px")
+```
+
+---
+# worked example
+
+```{r box2, fig.height=7, fig.width=7}
+untreated <- c(23, 18, 29, 22, 33, 20, 17, 25, 27, 30, 25, 27)
+treated <- c(19, 18, 24, 23, 31, 22, 16, 23, 24, 26, 24, 28)
+#diffs <- c(4,0,5,-1,2,-2,1,2,3,-6,1,-1)
+diffs <- untreated - treated
+#boxplot(untreated, treated)
+#hist(diffs)
+#plot(untreated, treated, asp=1)
+#abline(1, 1)
+boxplot(diffs, #names="Difference between untreated and treated",
+        main="Boxplot of differences", col="tan", cex.lab=1.5,
+        ylab="Caterpillers (Untreated - Treated)")
+#abline(h=0, lty=2, col=4)
+```
+
+---
+# worked example
+
+#### Hypotheses ( $\large \mu_d$ is the mean difference )
+
+- $\large H_0 :\mu_d = 0$
+
+- $\large H_a :\mu_d > 0$
+
+--
+
+#### Calculations
+
+- Mean differences: $\large\bar{y}_d = 1.5$  
+
+- Standard deviation of differences: $\large s_d = 2.24$  
+
+- Standard error of mean differences: $\large SEM_d = 0.65$  
+
+- Test statistic: $\large t = 1.5/0.65 = 2.32$, Critical value: $\large t_{0.95,11} = 1.80$
+
+--
+
+### Decision?
+
+
+---
+# looking ahead
+
+<br/>
+
+#### **Next time:** Completely randomized ANOVA
+
+<br/>
+
+#### **Reading:** Quinn chp. 8
+

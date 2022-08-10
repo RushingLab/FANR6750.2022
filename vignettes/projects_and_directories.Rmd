@@ -1,7 +1,7 @@
 ---
 title: "Improving your workflow through projects"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2021"
+author: "Fall 2022"
 output: 
   rmarkdown::html_vignette:
     keep_md: yes
@@ -176,6 +176,31 @@ data <- read.csv("data-raw/data.csv")
 
 If you prefer, you can have as many layers of subdirectories as you want. The important thing is that as long as you move the entire project directory, these relative paths will still work.  
 
+## A suggested structure for this class
+
+```
+FANR6750/
+|─── scripts/
+      |─── lab1.R
+      |─── lab2.R
+|─── homework/
+      |─── LastnameFirstname-homework1/
+            |─── LastnameFirstname-homework1.Rmd
+            |─── LastnameFirstname-homework1.html
+      |─── LastnameFirstname-homework2/
+            |─── LastnameFirstname-homework2.Rmd
+            |─── LastnameFirstname-homework2.html
+|─── exams/
+      |─── exam1.Rmd
+      |─── exam2.Rmd
+```
+
+
+* `scripts/` contains `R` scripts created during lab.  
+
+* `homework/` contains sub-directories for files associated with each homework.  
+
+* `exams/` contains RMarkdown files for each exam (yes, exams will be completed in RMarkdown).  
 
 ## A note on handling raw data  
 

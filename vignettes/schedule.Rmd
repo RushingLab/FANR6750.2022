@@ -1,7 +1,7 @@
 ---
 title: "Schedule (subject to change)"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2021"
+author: "Fall 2022"
 output: 
   rmarkdown::html_vignette:
     keep_md: yes
@@ -25,7 +25,12 @@ source(here::here("R/MWF.R"))
 ```{r schedule, echo = FALSE}
 library(kableExtra)
 
-schedule <- data.frame(Week = MWF(first.day = "2021/08/17", last.day = "2021/12/07"),
+schedule <- data.frame(WK = c("1", "", "", "2", "", "", "", "3", "", "", "", "4", "", "", "",
+                              "5", "", "", "", "6", "", "", "", "7", "", "", "", "8", "", "", "",
+                              "9", "", "", "", "10", "", "", "", "11", "", "", "", "12", "", "", "",
+                              "13", "", "", "", "14", "", "", "", "15", "", "", "", "16", "", "", "", "17"),
+                       Day = c("W", "F", "", rep(c("M", "W", "F", ""), 15), "M"),
+                       Week = MWF(first.day = "2022/08/17", last.day = "2022/12/06"),
                        Lecture = c("Course introduction", "Basic concepts in statistics", "",
                                     "t-tests",  "t-tests", "t-tests",  "",
                                    "Randomized ANOVA", "Randomized ANOVA", "Randomized ANOVA",  "",
@@ -79,7 +84,7 @@ schedule <- data.frame(Week = MWF(first.day = "2021/08/17", last.day = "2021/12/
                                ""))
 
 schedule %>%
-  kable("html", col.names = c("Date", "Lecture topic", "Lab topic", "Reading"), align = 'c') %>%
+  kable("html", col.names = c("Week", "", "Date", "Lecture topic", "Lab topic", "Reading"), align = 'c') %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = TRUE)
 
 ```

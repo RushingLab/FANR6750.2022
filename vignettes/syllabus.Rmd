@@ -1,7 +1,7 @@
 ---
 title: "Syllabus"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2021"
+author: "Fall 2022"
 output: 
   rmarkdown::html_vignette:
     keep_md: yes
@@ -38,12 +38,12 @@ Office hours: By appointment
 Michael Baker  
 michael.baker2@uga.edu  
 Office: 1-102A  
-Office hours: Tu/Th 10-11:30 or by appointment  
+Office hours: W 9:30-11:00 or by appointment  
   
-Sameen Raut  
-sameen.raut@uga.edu  
-Office: 4-219  
-Office hours: W 1-3:30 or by appointment
+Nancy Raginski  
+nancy.raginski@uga.edu  
+Office: 3-402  
+Office hours: Th 10-11:30 or by appointment  
 
 
 # COURSE OBJECTIVES
@@ -52,7 +52,7 @@ To understand: (1) the logical structure of experiments, especially the design o
 
 # PREREQUISITES
 
-All lab activities for this course will rely heavily on the statistical programming language `R`. During the first few weeks, each lab session will begin with a tutorial on these tools so students are not expected to be experts prior to the course. However, we will quickly move into activities that require some degree of R proficiency so I highly recommend that you have a basic understanding of programming in R (e.g., importing/exporting & manipulating data objects, visualizing data) prior to this course. If you find yourself struggling with any aspects of using `R`, please seek individual help during office hours. The earlier we can get you up to speed, the more painless the remainder of the semester will be.  
+All lab activities for this course will rely heavily on the statistical programming language `R`. During the first few weeks, each lab session will begin with a tutorial on these tools so students are not expected to be experts prior to the course. However, we will quickly move into activities that require some degree of `R` proficiency so I highly recommend that you have a basic understanding of programming in `R` (e.g., importing/exporting & manipulating data objects, visualizing data) prior to this course. If you find yourself struggling with any aspects of using `R`, please seek individual help during office hours. The earlier we can get you up to speed, the more painless the remainder of the semester will be.  
 
 
 # COURSE FORMAT
@@ -63,17 +63,11 @@ The components of a scientific study need to be considered together rather than 
 
 ## Textbooks
 
-Lecture readings will be assigned from:  
+Lecture material will largely be based on:  
 
-**Dowdy, S., S. Weardon and D. Chilko. 2004. Statistics for Research, 3rd ed. John Wiley & Sons**  
+**Quinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press**  
 
-eBook available for free through the [UGA library](http://dx.doi.org.proxy-remote.galib.uga.edu/10.1002/0471477435)  
-
-
-Lab readings will be assigned from:  
-**Dalgaard, P. 2008. Introductory Statistics with R. 2nd edition. Springer.**  
-
-eBook available for free through the [UGA library](http://preproxy.galib.uga.edu/login?url=http://dx.doi.org/10.1007/978-0-387-79054-1)  
+Purchasing the textbook is not required but may be helpful for clarifying some concepts. An eBook version is available for free through the [UGA library](http://dx.doi.org.proxy-remote.galib.uga.edu/10.1002/0471477435)  
 
 Additional readings will come from a variety of sources, including other textbooks and scientific journals, and will be posted on eLC.
 
@@ -83,15 +77,15 @@ Materials for labs will be provided as HTML and R Markdown files on the course w
 
 ## Software
 
-All lab computers will have R and RStudio installed on them so students are not required to install software on their own computers. However, students are free to use their own laptops during lab and having R and RStudio installed will make it easier to complete lab assignments outside of class. Any students wishing to use their own computers **should have R and RStudio installed and running prior to the first lab**. Detailed instructions for installing R and RStudio can be found [here](http://stat545.com/block000_r-rstudio-install.html).  
+All lab computers will have `R` and `RStudio` installed on them so students are not required to install software on their own computers. However, students are free to use their own laptops during lab and having `R` and `RStudio` installed will make it easier to complete lab assignments outside of class. Any students wishing to use their own computers **should have R and RStudio installed and running prior to the first lab**. Detailed instructions for installing `R` and `RStudio` can be found [here](http://stat545.com/block000_r-rstudio-install.html).  
 
-If you plan to use your own computer, **be sure you have the most recent versions of both software programs installed**. This will greatly decrease the chances of running into issues running the code I will provide in lab. Prior to the start of the semester, test that you have R and RStudio installed correctly by doing the following: 
+If you plan to use your own computer, **be sure you have the most recent versions of both software programs installed**. This will greatly decrease the chances of running into issues running the code I will provide in lab. Prior to the start of the semester, test that you have `R` and `RStudio` installed correctly by doing the following: 
 
-1) Launch RStudio
+1) Launch `RStudio`
 
-2) Put the cursor in the window labeled `Console`. Type the following code followed by enter or return: `x <- 2 * 4`. Next type `x` followed by enter or return. You should see the value 8 print to screen. If yes, you’ve succeeded in installing R and RStudio.
+2) Put the cursor in the window labeled `Console`. Type the following code followed by enter or return: `x <- 2 * 4`. Next type `x` followed by enter or return. You should see the value `8` print to screen. If yes, you’ve succeeded in installing R and RStudio.
 
-### Course R package
+### Course `R` package
 
 Materials for the course will be distributed through an `R` package called *FANR6750*. The main purpose of the package is to distribute code and data that will used for labs, though eventually additional materials may be included, including lectures and reference documents. You can install the most current version of *FANR6750* with:
 
@@ -113,9 +107,15 @@ I realize that many students have field work obligations during the semester. If
 
 # GRADING
 
-Three take-home exams, 25% each. Exam dates in the [schedule](https://rushinglab.github.io/FANR6750/articles/schedule.html) are approximate days when the exam will be provided. The last exam will largely (~60%) take the form of a scientific paper - more details later. The remaining 25% of the grade will come from weekly lab and lecture assignments.  
+200 total points.  
 
-Homework assignments will build on concepts and skills that we cover in lecture and lab. Specific objectives and tasks for each assignment, along with any necessary data, will be provided at the end of each lab activity.  Each assignment will be due before class the week after the assignment is posted. All assignments must be prepared as R Markdown files that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). See [here](https://rushinglab.github.io/FANR6750/articles/homework.html) for instructions on submitting assignments.  
+Three take-home exams, 50 points (25%) each. Exam dates in the [schedule](https://rushinglab.github.io/FANR6750/articles/schedule.html) are approximate days when the exam will be provided. 
+
+The remaining 50 points (25%) of the grade will come from lab homework assignments. Homework assignments will build on concepts and skills that we cover in lecture and lab. Specific objectives and tasks for each assignment, along with any necessary data, will be provided at the end of each lab activity. These assignments are meant to ensure that you understand lecture and lab concepts, provide additional practice implementing relevant statistical methods in `R`, and provide experience interpreting and presenting model output. 
+
+Over the course of semester, there will be **5** of these assignments worth **10 points each**. Each assignment will be due before class the week after the assignment is posted and must be prepared as an R Markdown file that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). You will automatically recieve 6 points for turning in a completed lab assignment by the assigned due date. Late assignments will recieve a 1-point deduction for each day late and incomplete assignments will have points deducted in proportion to the degree of incompleteness (e.g., if 1/3 of the assignment is incomplete, 2-point deduction). 
+
+At the time each assignment is due, we will post a answer key on eLC. You will recieve 2 points for reviewing your answers and correcting any incorrect answers based on the key. You will also recieve 2 points for completing a self-assessment form describing your performance on the assignment and things you had trouble with. Self-assessment forms for each assignment will be posted on eLC. To recieve full credit, corrections and self-assessments must be completed within one week.  
 
 All academic work must meet the standards contained in the University's academic [honesty policy](https://honesty.uga.edu/). All students are responsible for informing themselves about those standards before performing any academic work. The penalties for academic dishonesty are [severe](https://honesty.uga.edu/Academic-Honesty-Policy/Consequences_for_Honesty_Violations/), and ignorance is not an acceptable defense.  
 

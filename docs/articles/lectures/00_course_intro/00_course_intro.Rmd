@@ -1,7 +1,7 @@
 ---
-title: "lecture 0: Course overview"
+title: "LECTURE 0: Course overview"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2021"
+author: "<br/><br/><br/>Fall 2022"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -20,186 +20,148 @@ source(here::here("R/zzz.R"))
 
 # logistics
 
-**Lecture**: Monday, Wednesday, Friday 11:15-12:05, ENLAB 248  
-**Lab**: Monday or Tuesday
+**Lecture**: Monday, Wednesday, Friday 11:30-12:20, 1-304  
+**Lab**: Monday or Tuesday  
 **Credits**: 3  
 
 ---
 # instructors
 
 #### Dr. Clark Rushing  
-[crushing@uga.edu](crushing@uga.edu)   
-**Office**: TBD  
+[clark.rushing@uga.edu](clark.rushing@uga.edu)   
+**Office**: 3-409  
 **Office hours**: Monday and Wednesday 1:00-2:30 (or by appointment)
 
+#### Michael Baker  
+[michael.baker2@uga.edu](michael.baker2@uga.edu)  
+**Office**: 1-102A  
+**Office hours**: W 9:30-11:00 or by appointment  
+  
+#### Nancy Raginski  
+[nancy.raginski@uga.edu](nancy.raginski@uga.edu)  
+**Office**: 3-402  
+**Office hours**: Th 10-11:30 or by appointment
 
 ---
-# course format
+# course schedule and materials
 
-Refer to [syllabus](https://rushinglab.github.io/WILD6900/articles/syllabus.html)
+Lectures and labs: [rushinglab.github.io/FANR6750](https://rushinglab.github.io/FANR6750)<sup>1</sup>
 
+--
+
+.pull-left[
+**Primary text** (not required):
+
+Quinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press
+]
+
+.pull-right[
+```{r, echo = FALSE, out.height=350, out.width=262}
+knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologists-1.jpg")
+```
+]
+.footnote[[1] Bookmark this page!]
 
 ---
-## course objectives
+# labs
 
-**To understand:**  
-<br/>
-
---
-1) the logical structure of experiments, especially the design of manipulative experiments,  
-<br/>
+**Meet weekly**
 
 --
-2) the analysis of such experiments, focusing on analysis of variance procedures,  
-<br/>
+
+- You should have registered for either Monday **or** Tuesday
 
 --
-3) the use of models in ecological studies (experimental and observational)  
-<br/>
+
+- Always attend your assigned lab section unless both TA's have provided prior approval to attend the other section
+
+--
+
+**Taught in R**
+
+--
+
+- No prior experience required
+
+--
+
+- But those without prior experience may need to spend time learning outside of class
+
+--
+
+- You can use your own laptop but make sure you have R and RStudio installed prior the first lab<sup>1</sup>
+
+
+
+.footnote[[1] See [here](https://rushinglab.github.io/FANR6750/articles/syllabus.html#course-resources-1) for instructions]
 
 ---
-## Why Bayesian?
-
-**Practical advantages**  
-<br/>
---
-1) Ability to develop custom/complex models to suite your needs  
-<br/>
+# lab assignments
 
 --
-2) Many statistical concepts (e.g., random effects) make more sense (no blackbox)  
-<br/>
+
+- 5 throughout semester (approximately bi-weekly)
 
 --
-3) Expanded "toolkit" for quantitative analysis  
-<br/>
 
+- Meant to help with:
+    + Understanding lecture/lab concepts
+    + Implementing models in R
+    + Interpreting and presenting results
+    
 --
-4) Ability to keep up with the literature  
-<br/>
 
---
-5) Ability to review manuscripts/proposals that use Bayesian methods
-
+- Worth 10 points each
+    + 6 points for turning in **complete** assignment **on time**
+    + 2 points for correcting assignment (using a key)
+    + 2 points for completed self-assessment form
 
 ---
-## Why Bayesian
+# grading
 
-**Disadvantages**   
-<br/>
---
-1) Computationally intensive  
-<br/>
+#### 200 points total
 
 --
-2) Few "canned" software
+
+- 3 lecture exams, 50 points (25%) each
+
+    + Take-home, open-note format
+    + Not (explicitly) cummulative<sup>1</sup>
+    + See schedule for approximate dates (subject to change)
+
+--
+
+- 5 lab assignments, 10 points (5%) each
+
+.footnote[[1] Material is somewhat cummalative by nature & some important concepts will be repeated]  
 
 ---
-## Bayesian methods in ecology
-
-The use of Bayesian methods is growing rapidly in ecology, largely due to:  
-
---
-- powerful computers and the development of accessible software   
-
---
-- large amount of code online and in books that be used as the starting point for analyses  
+# basic structure
 
 --
 
-These developments have led to many people adopting Bayesian methods even if they don't fully understand what they're doing. They also led to some ecologists becoming full-on Bayesians and then a predictable backlash from those that view these methods as needlessly complex and overly trendy (i.e., statistical machismo)    
+1) Foundational concepts for statistical inference
 
-The methods you'll learn about in this class, just like all statistical methods, are *tools* to help you answer questions  
+--
 
-Your job as a researcher is to choose the tools that best suite your question and your data. The goal of this course is to **expand your toolbox**  
+2) Linear model basics
+
+--
+
+3) Null hypothesis significance testing
+
+--
+
+4) Linear model variations for experiments (t-tests, ANCOVA)
+
+--
+
+5) Generalized linear models and model selection
 
 ---
-class: inverse, center, middle
+# looking ahead
 
-## Why are you interested in learning Bayesian methods?
+### Next time: Basic Concepts in Statistics
 
-
----
-class: inverse, center, middle
-
-# REPRODUCIBLE RESEARCH 
-
----
-## Reproducible research
-
-**What makes research "reproducible"?**  
-
-Many definitions (Goodman et al. 2016) but for the purposes of this class, we will define it as:  
-
-> The ability of independent researchers to reproduce scientific results using the original data and methods (adapted from Markwick et al. 2018)  
-
-<br/>
-
---
-- Reproducibility is a gradient from unreproducible (no data, no methods, etc.) to completely reproducible (the ability to start with raw data and reproduce all results, figures, tables, etc) $^1$.  
-<br/>
-
---
-- At a minimum, reproducibility means someone could re-run your analyses and come up with exactly the same answer  
-
-
-???
-
-Goodman, S. N., Fanelli, D., and Ioannidis, J. P. A. (2016) *What Does Research Reproducibility Mean?* Science Translational Medicine, 8, 341ps12–341ps12.
-
-Marwick, B., Boettiger, C. & Mullen, L. (2018) *Packaging Data Analytical Work Reproducibly Using R (and Friends)*, The American Statistician, 72:1, 80-88, DOI: 10.1080/00031305.2017.1375986 
-
-$^1$ Stricly speaking, reproducing results could also include the ability to recreate figures, tables, and even text as it appears in the original report or paper.  Fully reproducible research is *very* hard but that does not mean we shouldn't strive for moving our work closer to to that end of the spectrum. 
-
----
-## Why make your research reproducible?
-
-Making your work reproducible involves extra work. Why bother?  
-<br/>
---
-1) To help advance science - if your work can't be reproduced, it's not science  
-<br/>
-
---
-2) To meet requirements of journals/granting orgs  
-<br/>
-
---
-3) To make it easier to share your work with collaborators  
-<br/>
-
---
-4) To make it easier to revise your analysis later
-
----
-class: inverse, center, middle
-> You always have at least one collaborator on every project - you future self. And your past self doesn't respond to email
-
----
-## Course philosophy
-
-- Stats courses are the primary source of experience for learning to work with data   
-<br/>
-
---
-- But in-class examples often ignore the fact that **most** time will be spent wrangling raw data to get it ready for analysis   
-<br/>
-
---
-- Because data wrangling skills aren't taught, students (often) develop bad habits  
-<br/>
-
---
-- In the "lab" activities in this course, we will emphasize the tasks of cleaning and processing raw data to prepare it for analysis  
-
-
---
-### Additional resources
-
-* Cooper, N. & Hsing, P. (2017) [*A guide to reproducible code*](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf) British Ecological Society
-
-* WILD6900: Computational Tools for Reproducible Science (Dr. Simona Picardi)
-
-
-
+### Reading: Quinn chp. 1
 

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>lecture 0: Course overview</title>
+    <title>LECTURE 0: Course overview</title>
     <meta charset="utf-8" />
-    <meta name="author" content="   Fall 2021" />
+    <meta name="author" content="   Fall 2022" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="FANR6750.css" type="text/css" />
     <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
@@ -12,9 +13,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# lecture 0: Course overview
+.title[
+# LECTURE 0: Course overview
+]
+.subtitle[
 ## FANR 6750 (Experimental design)
-### <br/><br/><br/>Fall 2021
+]
+.author[
+### <br/><br/><br/>Fall 2022
+]
 
 ---
 
@@ -23,185 +30,142 @@ class: center, middle, inverse, title-slide
 
 # logistics
 
-**Lecture**: Monday, Wednesday, Friday 11:15-12:05, ENLAB 248  
-**Lab**: Monday or Tuesday
+**Lecture**: Monday, Wednesday, Friday 11:30-12:20, 1-304  
+**Lab**: Monday or Tuesday  
 **Credits**: 3  
 
 ---
 # instructors
 
 #### Dr. Clark Rushing  
-[crushing@uga.edu](crushing@uga.edu)   
-**Office**: TBD  
+[clark.rushing@uga.edu](clark.rushing@uga.edu)   
+**Office**: 3-409  
 **Office hours**: Monday and Wednesday 1:00-2:30 (or by appointment)
 
+#### Michael Baker  
+[michael.baker2@uga.edu](michael.baker2@uga.edu)  
+**Office**: 1-102A  
+**Office hours**: Tu/Th 10-11:30 or by appointment  
+  
+#### Nancy Raginski  
+[nancy.raginski@uga.edu](nancy.raginski@uga.edu)  
+**Office**: 4-219  
+**Office hours**: W 1-3:30 or by appointment
 
 ---
-# course format
+# course schedule and materials
 
-Refer to [syllabus](https://rushinglab.github.io/WILD6900/articles/syllabus.html)
+Lectures and labs: [rushinglab.github.io/FANR6750](https://rushinglab.github.io/FANR6750)&lt;sup&gt;1&lt;/sup&gt;
 
+--
+
+.pull-left[
+**Primary text** (not required):
+
+Quinn, G.P. &amp; Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press
+]
+
+.pull-right[
+&lt;img src="fig/experimental-design-and-data-analysis-for-biologists-1.jpg" width="262" height="350" style="display: block; margin: auto;" /&gt;
+]
+.footnote[[1] Bookmark this page!]
 
 ---
-## course objectives
+# labs
 
-**To understand:**  
-&lt;br/&gt;
-
---
-1) the logical structure of experiments, especially the design of manipulative experiments,  
-&lt;br/&gt;
+**Meet weekly**
 
 --
-2) the analysis of such experiments, focusing on analysis of variance procedures,  
-&lt;br/&gt;
+
+- You should have registered for either Monday **or** Tuesday
 
 --
-3) the use of models in ecological studies (experimental and observational)  
-&lt;br/&gt;
+
+- Always attend your assigned lab section unless both TA's have provided prior approval to attend the other section
+
+--
+
+**Taught in R**
+
+--
+
+- No prior experience required
+
+--
+
+- But those without prior experience may need to spend time learning outside of class
+
+--
+
+- You can use your own laptop but make sure you have R and RStudio installed prior the first lab&lt;sup&gt;1&lt;/sup&gt;
+
+
+
+.footnote[[1] See [here](https://rushinglab.github.io/FANR6750/articles/syllabus.html#course-resources-1) for instructions]
 
 ---
-## Why Bayesian?
-
-**Practical advantages**  
-&lt;br/&gt;
---
-1) Ability to develop custom/complex models to suite your needs  
-&lt;br/&gt;
+# lab assignments
 
 --
-2) Many statistical concepts (e.g., random effects) make more sense (no blackbox)  
-&lt;br/&gt;
+
+- 5 throughout semester (approximately bi-weekly)
 
 --
-3) Expanded "toolkit" for quantitative analysis  
-&lt;br/&gt;
 
+- Meant to help with:
+    + Understanding lecture/lab concepts
+    + Implementing models in R
+    + Interpreting and presenting results
+    
 --
-4) Ability to keep up with the literature  
-&lt;br/&gt;
 
---
-5) Ability to review manuscripts/proposals that use Bayesian methods
-
+- Worth 10 points each
+    + 6 points for turning in **complete** assignment **on time**
+    + 2 points for correcting assignment (using a key)
+    + 2 points for completed self-assessment form
 
 ---
-## Why Bayesian
+# grading
 
-**Disadvantages**   
-&lt;br/&gt;
---
-1) Computationally intensive  
-&lt;br/&gt;
+#### 200 points total
 
 --
-2) Few "canned" software
+
+- 3 lecture exams, 50 points (25%) each
+
+    + Take-home, open-note format
+    + Not (explicitly) cummulative&lt;sup&gt;1&lt;/sup&gt;
+    + See schedule for approximate dates (subject to change)
+
+--
+
+- 5 lab assignments, 10 points (5%) each
+
+.footnote[[1] Material is somewhat cummalative by nature &amp; some important concepts will be repeated]  
 
 ---
-## Bayesian methods in ecology
-
-The use of Bayesian methods is growing rapidly in ecology, largely due to:  
-
---
-- powerful computers and the development of accessible software   
-
---
-- large amount of code online and in books that be used as the starting point for analyses  
+# basic structure
 
 --
 
-These developments have led to many people adopting Bayesian methods even if they don't fully understand what they're doing. They also led to some ecologists becoming full-on Bayesians and then a predictable backlash from those that view these methods as needlessly complex and overly trendy (i.e., statistical machismo)    
-
-The methods you'll learn about in this class, just like all statistical methods, are *tools* to help you answer questions  
-
-Your job as a researcher is to choose the tools that best suite your question and your data. The goal of this course is to **expand your toolbox**  
-
----
-class: inverse, center, middle
-
-## Why are you interested in learning Bayesian methods?
-
-
----
-class: inverse, center, middle
-
-# REPRODUCIBLE RESEARCH 
-
----
-## Reproducible research
-
-**What makes research "reproducible"?**  
-
-Many definitions (Goodman et al. 2016) but for the purposes of this class, we will define it as:  
-
-&gt; The ability of independent researchers to reproduce scientific results using the original data and methods (adapted from Markwick et al. 2018)  
-
-&lt;br/&gt;
+1) Foundational concepts for statistical inference
 
 --
-- Reproducibility is a gradient from unreproducible (no data, no methods, etc.) to completely reproducible (the ability to start with raw data and reproduce all results, figures, tables, etc) `\(^1\)`.  
-&lt;br/&gt;
+
+2) Linear model basics
 
 --
-- At a minimum, reproducibility means someone could re-run your analyses and come up with exactly the same answer  
 
-
-???
-
-Goodman, S. N., Fanelli, D., and Ioannidis, J. P. A. (2016) *What Does Research Reproducibility Mean?* Science Translational Medicine, 8, 341ps12–341ps12.
-
-Marwick, B., Boettiger, C. &amp; Mullen, L. (2018) *Packaging Data Analytical Work Reproducibly Using R (and Friends)*, The American Statistician, 72:1, 80-88, DOI: 10.1080/00031305.2017.1375986 
-
-`\(^1\)` Stricly speaking, reproducing results could also include the ability to recreate figures, tables, and even text as it appears in the original report or paper.  Fully reproducible research is *very* hard but that does not mean we shouldn't strive for moving our work closer to to that end of the spectrum. 
-
----
-## Why make your research reproducible?
-
-Making your work reproducible involves extra work. Why bother?  
-&lt;br/&gt;
---
-1) To help advance science - if your work can't be reproduced, it's not science  
-&lt;br/&gt;
+3) Null hypothesis significance testing
 
 --
-2) To meet requirements of journals/granting orgs  
-&lt;br/&gt;
+
+4) Linear model variations for experiments (t-tests, ANCOVA)
 
 --
-3) To make it easier to share your work with collaborators  
-&lt;br/&gt;
 
---
-4) To make it easier to revise your analysis later
+5) Generalized linear models and modele selection
 
----
-class: inverse, center, middle
-&gt; You always have at least one collaborator on every project - you future self. And your past self doesn't respond to email
-
----
-## Course philosophy
-
-- Stats courses are the primary source of experience for learning to work with data   
-&lt;br/&gt;
-
---
-- But in-class examples often ignore the fact that **most** time will be spent wrangling raw data to get it ready for analysis   
-&lt;br/&gt;
-
---
-- Because data wrangling skills aren't taught, students (often) develop bad habits  
-&lt;br/&gt;
-
---
-- In the "lab" activities in this course, we will emphasize the tasks of cleaning and processing raw data to prepare it for analysis  
-
-
---
-### Additional resources
-
-* Cooper, N. &amp; Hsing, P. (2017) [*A guide to reproducible code*](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf) British Ecological Society
-
-* WILD6900: Computational Tools for Reproducible Science (Dr. Simona Picardi)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -249,6 +213,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

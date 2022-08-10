@@ -46,7 +46,7 @@ source(here::here("R/zzz.R"))
 
 3) *t*-tests
 
-    + Two-sample t test  
+    + Two-sample t-xtest  
 
     + Equality of variance test  
 

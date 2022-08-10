@@ -1,7 +1,7 @@
 ---
 title: "Lab 1: Introduction to R"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2021"
+author: "Fall 2022"
 output: 
   rmarkdown::html_vignette:
     keep_md: yes
@@ -341,9 +341,37 @@ or to rearrange the order of a vector
 y[c(5,4,3,2,1)]
 ```
 
+# Packages
+
+One of `R`'s primary strengths is the large number of *packages* available to users. Packages are units of shareable code and data that have been created by other `R` users. We have already seen the built-in functions that `R` comes with. Packages allow users to share lots and lots of other functions that serve specific purposes. Packages also allow users to share [data sets](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html). There are packages for cleaning data, visualizing data, making maps, fitting specialized models, and basically anything else you can think of. 
+
+Accessing the code in a package first requires installing the package. This only needs to be done once per computer and is usually done using the `install.packages()` function:
+
+```{r}
+install.packages("devtools")
+```
+
+Note that the name of the package (in this case `devtools`) must be in quotation marks. Packages installed using `install.packages()` are stored in a centralized repository called CRAN (Comprehensive R Archive Network). Once `devtools` (or any package) is installed on your computer, you do not need to re-run the `install.packages()` function unless you re-install/update `R` or need to update the package to a newer version. 
+
+Installing a package does not automatically make the functions from that package available in a given `R` session. To tell `R` where the functions come from, you must *load* the package using the `library()` function:
+
+```{r}
+library(devtools)
+```
+
+Unlike `install.packages()`, `library()` must be re-run each time you open `R`. Most people include a few calls to `library()` at the beginning of each script so that all packages needed to run the code are loaded at the beginning of the script. 
+
+Occasionally, some packages are stored in other places (e.g., github). These packages can be installed using different functions. For example, I created a package for this course that contains small data sets we will use in labs throughout the semester. The package is stored on github and can be installed by running:
+
+```{r}
+install_github("RushingLab/FANR6750")
+```
+
+Note that the `install_github()` function is from the `devtools` package so you need to run `library(devtools)` before you install the package. Make sure you install the `FANR6750` package now so you have access to the data sets. 
+
 # Data frames
 
-So  far, we have only discussed one particular class of `R` object - vectors. Vectors hold a string of values as a single object. Although useful for many applications, vectors are limited in their ability to store multiple types of data (numeric and character).  
+So far, we have only discussed one particular class of `R` object - vectors. Vectors hold a string of values as a single object. Although useful for many applications, vectors are limited in their ability to store multiple types of data (numeric and character).  
 
 This is where data frames become useful. Perhaps the most common type data object you will use in `R` is the data frame. Data frames are tabular objects (rows and columns) similar in structure to spreadsheets (think Excel or GoogleSheets). In effect, data frames store multiple vectors - each column of the data frame is a vector. As such, each column can be a different class (numeric, character, etc.) but all values within a column must be the same class. Just as the first row of an Excel spreadsheet can be a list of column names, each column in a data frame has a name that (hopefully) provides information about what the values in that column represent.  
 
@@ -351,7 +379,7 @@ To see how data frames work, let's load a data frame called `jayData` that comes
 
 ***
 
-Note - In general, if you want to access function or data sets that come with packages, you first need to *load* the package in your current working environment. To do that, use the `library()` function, with the unquoted package name as the argument. Once loaded, all of the package's functions are available to use. 
+Note - As discussed above, if you want to access function or data sets that come with packages, you first need to *load* the package in your current working environment. To do that, use the `library()` function, with the unquoted package name as the argument. Once loaded, all of the package's functions are available to use. 
 
 Alternatively, you can access functions from a given package without loading the package using `package.name::function.name()`. For example, if you want to use the `filter()` function from the `dplyr` package, you could type `dplyr::filter()`. Although less commonly used, this method has a few advantages:
 
@@ -474,10 +502,4 @@ or a slightly more complicated example:
 head(filter(jayData, elevation < 1000 & habitat == "Oak"))
 ```
 
-# Projects and directories
 
-Click [here](https://rushinglab.github.io/FANR6750/articles/projects_and_directories.html)
-
-# Introduction to R Markdown
-
-Click [here](https://rushinglab.github.io/FANR6750/articles/RMarkdown.html)

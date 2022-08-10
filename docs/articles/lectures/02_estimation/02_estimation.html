@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 2: principles of estimation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2022" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# LECTURE 2: principles of estimation
+## FANR 6750 (Experimental design)
+### <br/><br/><br/>Fall 2022
+
+---
+
+
+
+
+class: inverse
+
+# outline
+
+--
+
+#### 1) Probability and parameters
+
+&lt;br/&gt;
+
+--
+#### 2) Populations vs samples
+
+&lt;br/&gt;  
+--
+
+#### 3) Common "statistics"
+
+&lt;br/&gt; 
+--
+
+#### 4) Sampling distributions
+
+&lt;br/&gt; 
+--
+
+#### 5) Uncertainty: Standard errors and confidence intervals
+
+---
+class: inverse, center, middle
+
+# probability
+
+---
+# probability 
+
+#### The dynamics of biological systems are inherently uncertain due to *stochasticity*  
+
+--
+
+#### Stochastic processes:  
+
+--
+
++ Given an input, the process will not always return the same output
+
+--
+
++ The output of stochastic processes are therefore *uncertain*
+
+--
+
++ Even though stochastic processes are inherently uncertain, they are not *unpredictable* 
+
+---
+# probability
+
+#### *Random variables* can take on different values due to chance (i.e., stochastic)  
+
+--
+#### *Probability* allows us to summarize how likely each possible value of a random variable is to occur  
+
+--
+
+- Usually quantified using a *probability distribution*
+
+---
+# probability distributions
+
+#### Mathematical function that tells us how likely each possible value of a random variable is to occur
+
+--
+
+- Characterized by a *sample space*, i.e., all possible values (real or integer? negative?)
+
+--
+
+- Area under the curve must sum to 1 
+
+--
+
+- Many available (normal, Poisson, gamma, beta, Direchlet, binomial, Bernoulli, etc.)
+
+--
+
+- Shape of each distribution is governed by *parameters*
+
+---
+# the normal distributioin
+
+&lt;img src="02_estimation_files/figure-html/unnamed-chunk-1-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+
+--
+ 
+- Two parameters: `\(\large \mu\)` and `\(\large \sigma\)`
+
+    + `\(\mu\)` is the mean, i.e., the most probable value
+    
+    + `\(\sigma\)` is the standard deviation, i.e., how far (on average) are values from the mean
+
+---
+# the normal distributioin
+
+&lt;img src="02_estimation_files/figure-html/unnamed-chunk-2-1.png" width="432" style="display: block; margin: auto;" /&gt;
+ 
+- Two parameters: `\(\large \mu\)` and `\(\large \sigma\)`
+
+- Very common in nature. Why?
+
+    + Hint: [Central limit theorem](https://seeing-theory.brown.edu/probability-distributions/index.html)
+    
+---
+# the normal distributioin
+
+&lt;img src="02_estimation_files/figure-html/unnamed-chunk-3-1.png" width="432" style="display: block; margin: auto;" /&gt;
+ 
+- Two parameters: `\(\large \mu\)` and `\(\large \sigma\)`
+
+- Very common in nature. Why?
+
+#### Much of what we'll do this semester comes down to determining whether different normal distributions have the same mean (or standard deviation)!
+
+
+---
+# populations vs samples
+
+#### Population  
+- A collection of subjects of interest  
+
+- Often, a biologically meaningful unit  
+
+- Sometimes a process of interest  
+
+--
+
+#### Sample
+
+- A finite subset of the population of interest, i.e. the data we collect  
+
+- Samples allow us to draw inferences about the population  
+
+- Good samples are:
+    + Random  
+    + Representative  
+    + Sufficiently large  
+
+---
+# normal distribution
+
+&lt;img src="02_estimation_files/figure-html/normal-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+--
+
+**Remember: This is the population!**
+
+---
+# normal distribution
+
+&lt;img src="02_estimation_files/figure-html/normal_samp-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+
+---
+# parameters vs statistics
+
+### Parameters 
+
+- Attributes of the population  
+  + Mean ( `\(\mu\)` )  
+  + Variance ( `\(\sigma^2\)` )  
+  + Standard deviation ( `\(\sigma\)` )  
+
+--
+- Usually unknown  
+
+--
+- Parameters are the quantities of interest  
+
+--
+
+### Statistics
+
+- Attributes of the sample  
+  + Mean ( `\(\bar{y}\)` or `\(\hat{\mu}\)` )  
+  + Variance ( `\(s^2\)` or `\(\hat{\sigma}^2\)` )  
+  + Standard deviation ( `\(s\)` or `\(\hat{\sigma}\)` )  
+
+--
+- Often treated as estimates of parameters
+
+---
+# summary statistics
+
+### Measures of central tendency
+
+- Sample mean
+
+`$$\large \bar{y} = \frac{\sum_{i=1}^n y_i}{n}$$`
+
+&lt;br/&gt;
+
+--
+- Median  
+
+&lt;br/&gt;
+--
+
+- Mode
+
+---
+# summary statistics
+
+&lt;img src="02_estimation_files/figure-html/mu_samp-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+# summary statistics
+
+### Measures of dispersion
+
+- Sample variance
+
+`$$\large s^2 = \frac{\sum_{i=1}^n (y_i - \bar{y})^2}{n-1}$$`
+
+&lt;br/&gt;
+
+--
+- Sample standard deviation
+
+`$$\large s = \sqrt{s^2}$$`
+
+&lt;br/&gt;
+
+--
+- Range  
+
+---
+# summary statistics
+
+
+&lt;img src="02_estimation_files/figure-html/s_samp-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+# sampling error
+
+#### Question: What is the probablity that `\(\large \bar{y} = \mu\)`?
+
+--
+
+- Answer: 0 (why?)
+
+--
+
+#### Fact: The sample mean will never equal the population mean
+
+--
+
+- The difference between `\(\large \bar{y}\)` and `\(\large \mu\)` is **sampling error** 
+
+--
+
+- Sampling error can be reduced but it cannot be eliminated
+
+--
+
+#### Problem: If we don't know `\(\large \mu\)`, how do we know how far our estimate is from the true value?
+
+--
+- Answer: We don't (for any specific sample)
+
+--
+- BUT...we do know how far, on average, a sample of size `\(n\)` will be from the true value
+
+---
+# descriptive vs inferential statistics 
+
+&gt; The sample standard deviation ( `\(s\)` ) is a descriptive statistic  
+
+`$$\Large s = \sqrt{s^2}$$`
+
+- `\(s\)` tells us how far, on average, each observation `\(y\)` is from the sample mean `\(\bar{y}\)`
+
+&lt;br/&gt;
+--
+
+&gt; The standard error (SE) is an inferential statistic  
+
+`$$\Large SE = \frac{s}{\sqrt{n}}$$`
+- `\(SE\)` tells us how far, on average, each sample mean `\(\bar{y}\)` is from the population mean `\(\mu\)`
+
+???
+
+What do we mean by "each sample"? After all, we generally only have one sample. 
+
+Standard error is based on the idea that we could collect (or, more likely simulate) lots and lots and lots of samples (ideally infinite), all from the same population and with the same sample size `\(n\)`?
+
+---
+class:inverse, center, middle
+
+#the sampling distribution
+
+---
+# a single sample (n = 25)
+
+&lt;br/&gt;
+
+&lt;img src="02_estimation_files/figure-html/sampling-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# standard deviation
+
+&lt;br/&gt;
+
+&lt;img src="02_estimation_files/figure-html/sampling_sd-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+--
+
+**Remember** - this error bar is the standard deviation **of our sample**!  
+
+
+---
+# standard error
+
+But remember, what we really want to know is, how far is the sample mean from the true parameter value?
+
+--
+
+&lt;img src="02_estimation_files/figure-html/sample_se-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+
+---
+# standard error
+
+Imagine we could repeat our experiment 100 times
+
+&lt;img src="samples.gif" style="display: block; margin: auto;" /&gt;
+
+---
+# standard error
+
+The 100 sample means is referred to as the **sampling distribution**  
+
+&lt;img src="02_estimation_files/figure-html/sampling_dist, -1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# standard error
+
+The 100 sample means is referred to as the **sampling distribution**  
+
+&lt;img src="02_estimation_files/figure-html/sampling_dist2, -1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# standard error
+
+&gt; The standard error is the standard deviation **of the sampling distribution**, i.e., how far, on average, is a sample mean from the true population value
+
+&lt;img src="02_estimation_files/figure-html/sampling_se, -1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+???
+
+The standard error of the sample mean is an estimate of how far the sample mean is likely to be from the population mean, whereas the standard deviation of the sample is the degree to which individuals within the sample differ from the sample mean
+
+---
+# standard error
+
+#### We rarely repeat experiments
+
+&lt;br/&gt;
+--
+
+#### But we can estimate properties of the sampling distribution from a single sample!
+&lt;br/&gt;
+
+`$$\Large SE = \frac{s}{\sqrt{n}}$$`
+
+--
+
+#### This is very useful for constructing confidence intervals
+&lt;br/&gt;
+
+---
+# confidence intervals
+
+&gt; If we calculated a `\(x\)`% confidence interval from `\(n\)` samples of the population, about `\(x\)`% of those confidence intervals would contain the true population mean  
+
+--
+
+&lt;img src="02_estimation_files/figure-html/ci-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+???
+
+It's worth remembering that 1 - `\(x\)`% of the time, the confidence interval we calculate from our sample **will not** include the true population mean. Of course, with our real data, we have no way of knowing if our sample is one of the black points on this graph 😀 or one of the red dots 😢
+
+---
+# for thought
+
+#### If our goal is generally to decrease uncertainty in parameter estimates:
+
+--
+- What factors determine the magnitude of our uncertainty estimates (SE or confidence intervals)?
+
+&lt;br/&gt;
+
+--
+- What can we, as researchers, control when we design experiments to minimize uncertainty? What can we not control?
+
+---
+# looking ahead
+
+&lt;br/&gt;
+
+#### **Next time:** Completely randomized ANOVA
+
+&lt;br/&gt;
+
+#### **Reading:** Chapter 8 from Dowdy et al.
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

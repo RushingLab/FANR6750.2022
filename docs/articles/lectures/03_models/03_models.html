@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 3: introduction to statistical modeling</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  FANR 6750 (Experimental design)" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# LECTURE 3: introduction to statistical modeling
+## (or, everything is a linear model)
+### <br/><br/>FANR 6750 (Experimental design)
+### <br/><br/><br/>Fall 2022
+
+---
+
+
+
+
+class: inverse
+
+# outline
+
+&lt;br/&gt;
+#### 1) What is a model?
+
+&lt;br/&gt;  
+--
+
+#### 2) What is a linear model?
+
+&lt;br/&gt; 
+
+--
+
+#### 3) Linear model assumptions
+
+---
+# what is a model?
+
+![](https://media.giphy.com/media/12npFVlmZoXN4Y/giphy.gif)
+
+---
+# what is a model?
+
+&gt; "an informative representation of an object, person or system"
+
+--
+
+#### Many types (conceptual, graphical, mathematical)
+
+--
+
+#### In this class, we will deal with mathematical models
+
+--
+
+- Mathematical representation of our hypothesis
+
+--
+
+- By necessity, models will be simplifications of reality  
+
+--
+
+- Do not have to be complex
+
+---
+# but i don't want to be a modeler!
+
+&lt;img src="puffy_shirt.png" width="50%" height="75%" style="display: block; margin: auto;" /&gt;
+
+--
+- Inference **requires** models  
+
+--
+- Models link **observations** to **processes**  
+
+--
+- Models are tools that allow us understand processes that we **cannot directly observe** based on quantities that we **can** observe  
+
+---
+# a simple model
+
+&lt;/br&gt;
+&lt;/br&gt;
+
+`$$\Huge y = a + bx$$`
+
+--
+
+&lt;img src="03_models_files/figure-html/unnamed-chunk-2-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+--
+It may not be obvious, but this is essentially the only model we will use this semester&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] With some minor variations, mainly in `\(x\)`]
+
+---
+# a simple model
+
+&lt;/br&gt;
+&lt;/br&gt;
+
+`$$\Huge y = a + bx$$`
+
+
+&lt;img src="03_models_files/figure-html/unnamed-chunk-3-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+If we want to use this as a statistical model, what's missing?
+
+---
+# a simple model
+
+&lt;/br&gt;
+&lt;/br&gt;
+
+`$$\Huge y = a + bx$$`
+
+
+&lt;img src="03_models_files/figure-html/unnamed-chunk-4-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+If we want to use this as a statistical model, what's missing?
+
+#### **Stochasticity!**
+
+---
+# a simple model
+
+&lt;/br&gt;
+&lt;/br&gt;
+
+`$$\Huge y = a + bx$$`
+
+
+&lt;img src="03_models_files/figure-html/unnamed-chunk-5-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+If we want to use this as a statistical model, what's missing?
+
+#### **Stochasticity!**
+
+---
+class:inverse, middle, center
+
+# the linear model
+
+---
+# Statistics cookbook
+
+&lt;img src="stats_flow_chart.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+# the linear model
+
+&lt;br/&gt;
+&lt;br/&gt;
+`$$\Large response = deterministic\; part+stochastic\; part$$` 
+&lt;br/&gt;
+&lt;br/&gt;
+
+--
+`$$\underbrace{\LARGE E[y_i] = \beta_0 + \beta_1 \times x_i}_{Deterministic}$$`
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+--
+`$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma)}_{Stochastic}$$`  
+
+???
+
+Note that the deterministic portion of the model has the same form as the equation for a line: `\(y = a + b \times x\)`, which is why we call these linear models
+
+---
+# the linear model
+
+#### A "simple" example
+
+`$$\underbrace{\LARGE E[y_i] = -2 + 0.5 \times x_i}_{Deterministic}$$`
+
+--
+&lt;img src="03_models_files/figure-html/unnamed-chunk-7-1.png" width="288" style="display: block; margin: auto;" /&gt;
+
+---
+# the linear model
+
+#### A "simple" example
+
+`$$\underbrace{\LARGE E[y_i] = -2 + 0.5 \times x_i}_{Deterministic}$$`
+
+`$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$`
+
+--
+&lt;img src="03_models_files/figure-html/unnamed-chunk-8-1.png" width="288" style="display: block; margin: auto;" /&gt;
+
+---
+# the linear model
+
+#### Same model, different `\(\Large x\)`
+
+`$$\underbrace{\LARGE E[y_i] = -2 + 0.5 \times x_i}_{Deterministic}$$`
+
+`$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$`
+
+--
+&lt;img src="03_models_files/figure-html/unnamed-chunk-9-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+---
+# residuals
+
+#### One concept we will talk about a lot is *residuals*
+
+--
+
+- Residuals are the difference between the observed values `\(y_i\)` and the predicted values `\(E[y_i]\)`
+
+&lt;img src="03_models_files/figure-html/unnamed-chunk-10-1.png" width="396" style="display: block; margin: auto;" /&gt;
+
+---
+# residuals
+
+#### One concept we will talk about a lot is *residuals*
+
+- Residuals are the difference between the observed values `\(y_i\)` and the predicted values `\(E[y_i]\)`
+
+&lt;img src="03_models_files/figure-html/unnamed-chunk-11-1.png" width="396" style="display: block; margin: auto;" /&gt;
+
+--
+
+- How much variation in `\(y\)` is explained by `\(x\)`?
+
+--
+
+- Useful for assessing whether data violate model assumptions
+
+
+
+---
+class:inverse, center, middle
+
+# assumptions
+
+---
+# assumptions
+
+#### **EVERY** model has assumptions
+
+--
+
+- Assumptions are necessary to simplify real world to workable model
+
+--
+
+- If your data violate the assumptions of your model, inferences *may* be invalid
+
+--
+
+- **Always** know (and test) the assumptions of your model&lt;sup&gt;1&lt;/sup&gt; 
+
+.footnote[[1] You know what happens when you assume...]
+
+---
+# linear model assumptions
+
+&lt;/br&gt;
+
+`$$\Large y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$`
+
+`$$\Large \epsilon_i \sim normal(0, \sigma)$$`
+
+
+&lt;/br&gt;
+
+--
+
+1) **Linearity**: The relationship between `\(x\)` and `\(y\)` is linear
+
+--
+
+2) **Normality**: The residuals are normally distributed&lt;sup&gt;2&lt;/sup&gt;
+
+.footnote[[2] Note that these assumptions apply to the residuals, not the data!]
+
+--
+
+3) **Homoscedasticity**: The residuals have a constant variance at every level of `\(x\)`
+
+--
+
+4) **Independence**: The residuals are independent (i.e., uncorrelated with each other)
+
+
+
+---
+# linear models
+
+#### Very flexible
+
+--
+
+- Predictor(s) can take different forms (binary, continuous, factor)
+
+--
+
+- Can contain many predictors
+
+--
+
+- Can model non-linear relationships
+
+--
+
+#### Link different "tests" (e.g., t-tests, ANOVA, ANCOVA, linear regression)
+
+--
+
+#### Can be used for different statistical goals
+
+- Estimating unknown parameters  
+
+- Testing hypotheses  
+
+- Describing stochastic systems  
+
+- Making predictions that account for uncertainty  
+
+---
+# looking ahead
+
+&lt;br/&gt;
+
+#### **Next time:** Null hypothesis testing
+
+&lt;br/&gt;
+
+#### **Reading:** Quinn chp. 3
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

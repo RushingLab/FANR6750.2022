@@ -17,7 +17,7 @@
         debug = FALSE
       ),
       axis.text = element_text(size = rel(0.8), color = "#999999"),
-      axis.title = element_text(size = rel(0.8), color = "grey30", vjust = 0.35),
+      axis.title = element_text(size = rel(0.8), color = "grey40", vjust = 0.35),
       strip.text = element_text(size = rel(0.8)),
 
       axis.line = element_line(size = 0.8, color = "#999999"),
@@ -94,8 +94,8 @@
       plot.tag.position = 'topleft',
 
       plot.background = element_rect(colour = NA),
-      plot.title = element_text(color = "#999999",
-        size = base_size * 2, hjust = 0, face = "bold",
+      plot.title = element_text(color = "grey30",
+        size = base_size * 2, hjust = 0, #face = "bold",
         vjust = 2, margin = margin(b = half_line * 1.2)
       ),
       plot.subtitle = element_text(color = "#999999",

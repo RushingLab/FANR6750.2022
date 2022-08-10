@@ -1,0 +1,88 @@
+---
+title: "Lab 2: RMarkdown and RStudio projects"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2022"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab02_t-tests}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.retina = 2,
+                      fig.align = "c",
+  collapse = TRUE,
+  comment = "#>"
+)
+library(dplyr)
+library(knitr)
+library(FANR6750)
+source(here::here("R/zzz.R"))
+```
+
+# Introduction to R Markdown
+
+Click [here](https://rushinglab.github.io/FANR6750/articles/RMarkdown.html)
+
+# Projects and directories
+
+Click [here](https://rushinglab.github.io/FANR6750/articles/projects_and_directories.html)
+
+# Homeworks
+
+Click [here](https://rushinglab.github.io/FANR6750/articles/homework.html)
+
+
+# Assignment (not for a grade)
+
+Create an R Markdown file to do the following:
+
+1) Do the following: 
+
+> 1a) Change the `author` field in the YAML header to your name;
+
+> 1b) Click `Knit` to check that you can create a html document from the .Rmd file;
+
+> 1c) Save the .Rmd file as `LastnameFirstname-homework0.Rmd` in a directory named `LastNameFirstName-homework0`
+
+2) The YAML header allows to control many "high level" options for our document. For example, there are many [HTML themes](https://bootswatch.com/cerulean/) that you can use change the font, colors, etc. of your document. To do this, change the `output` line of the YAML header to:
+
+```
+output: 
+  html_document:
+    theme: "cosmo"
+```
+
+> 2a) Click on the link above to look at the various themes available. Choose a theme you like and change the YAML header accordingly. Knit the document using this new theme 
+
+3) Create a level 1 header and call it "My goals for the semester". Add several bullet points with objectives for the semester (these can be related to FANR6750 or not)
+
+4) Create a level 2 header titled "My favorite animals". Then create a numbered list, ranking your top three favorite animals  
+
+5) In [lecture 3](https://rushinglab.github.io/FANR6750/articles/lectures/03_models/03_models.html), we learned about the basic linear model. Create a level 1 header titled "The basic linear model" and under that header write two block equations with the linear model we discussed
+
+6) Create a code chunk and set the chunk options to ensure that the code runs but is not shown in the html document. Inside of the chunk, copy the following line of code: `date <- Sys.Date()`
+
+7) Below the code chunk created above, type "I completed this assignment on " and then include inline code that prints the `date` object you created in the chunk above
+
+> Bonus: What did the code inside the chunk do? What did the inline code do? What will happen if you re-knit the document tomorrow?
+
+A few things to remember when creating the assignment:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Title the document: `title: "Homework 0"`
+
+- Be sure to include your first and last name in the `author` section 
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
+- Regularly knit the document as you work to check for errors
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+
+### Let your TA know if you have any questions or errors   
+
+
