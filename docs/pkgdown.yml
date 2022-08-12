@@ -3,13 +3,14 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   RMarkdown: RMarkdown.html
+  graphics: graphics.html
   homework: homework.html
   lab01_Intro_to_R: lab01_Intro_to_R.html
   lab02_Intro_project_and_Rmd: lab02_Intro_project_and_Rmd.html
   lab03_t-tests: lab03_t-tests.html
   lab04_ANOVA: lab04_ANOVA.html
-  lab04_contrasts: lab04_contrasts.html
   lab05_assump_nonpar: lab05_assump_nonpar.html
+  lab05_contrasts: lab05_contrasts.html
   lab06_blocking: lab06_blocking.html
   lab07_factorial: lab07_factorial.html
   lab08_nested: lab08_nested.html
@@ -22,5 +23,5 @@ articles:
   projects_and_directories: projects_and_directories.html
   schedule: schedule.html
   syllabus: syllabus.html
-last_built: 2022-08-12T13:58Z
+last_built: 2022-08-12T20:02Z
 

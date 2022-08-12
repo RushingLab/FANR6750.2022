@@ -199,7 +199,7 @@ ggplot(data = treedata, aes(x = elevation, y = density)) +
   geom_point()
 ```
 
-This is reasonable figure showing tree densitys as a function of elevation. But `ggplot2` makes it very easy to tweak the way the data is visualized (maybe too easy, you can spend *a lot* of time tweaking minor details). For example, maybe we want to color the points based on the elevation. Because we want to map an *attribute* (color) to a *variable* (elevation), we make this change inside of `aes`:
+This is reasonable figure showing tree densities as a function of elevation. But `ggplot2` makes it very easy to tweak the way the data is visualized (maybe too easy, you can spend *a lot* of time tweaking minor details). For example, maybe we want to color the points based on the elevation. Because we want to map an *attribute* (color) to a *variable* (elevation), we make this change inside of `aes`:
 
 ```{r fig.width=5, fig.height=4, fig.align='center'}
 ggplot(data = treedata, aes(x = elevation, y = density, color = elevation)) + 
@@ -309,6 +309,8 @@ t.stat
 
 #### Step 2: Compare $t$ statistic to critical values (two-tailed)
 
+## Option 1: Calculate critical values by hand
+
 ```{r echo = TRUE}
 alpha <- 0.05
 
@@ -328,7 +330,7 @@ Make sure you set `var.equal=TRUE`. Otherwise, `R` will assume that the variance
 
 ***
 
-## Option 1: Let R do all the work (alternate syntax)
+## Option 2: Let R do all the work (alternate syntax)
 
 ```{r echo = TRUE}
 t.test(density ~ elevation, data = treedata, 
@@ -392,7 +394,7 @@ $$\large t = \frac{\bar{y}-0}{s_d/\sqrt{n}}$$
 
 #### Step 3. Compare to critical value
 
-# Assignment
+# Excercise (**not for a grade!**)
 
 Create an R Markdown file to do the following:
 
@@ -419,21 +421,13 @@ data("caterpillar")
 
 7) Add a section at the end of your file called "Discussion" and explain why the results differ between the paired and unpaired analysis  
 
-A few things to remember when creating the assignment:
+A few things to remember when creating the document:
 
 - Be sure the output type is set to: `output: html_document`
 
-- Title the document: `title: "Lab 2 assignment"`
-
-- Be sure to include your first and last name in the `author` section 
-
-- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+- Be sure to set `echo = TRUE` in all `R` chunks so that all code and output is visible in the knitted document
 
 - Regularly knit the document as you work to check for errors
 
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
 
-
-### Upload the `.Rmd` and  `.html` files to ELC before next week’s lab  
-
-## Read pp. 127–131 in “Introductory Statistics with R”

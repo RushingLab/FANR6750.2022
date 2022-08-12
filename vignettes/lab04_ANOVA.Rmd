@@ -1,7 +1,7 @@
 ---
-title: "Lab 3: Completely randomized ANOVA"
+title: "Lab 4: Completely randomized ANOVA"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2021"
+author: "Fall 2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab03_ANOVA}
@@ -309,7 +309,7 @@ A few things to remember when creating the assignment:
 
 - Be sure the output type is set to: `output: html_document`
 
-- Title the document: `title: "Lab 3 assignment"`
+- Title the document: `title: "Homework 1"`
 
 - Be sure to include your first and last name in the `author` section 
 

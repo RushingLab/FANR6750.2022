@@ -1,7 +1,7 @@
 ---
-title: "Lab 4: Contrasts, Estimation, and Power Analysis"
+title: "Lab 5: Contrasts, Estimation, and Power Analysis"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2021"
+author: "Fall 2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab04_contrasts}
@@ -379,19 +379,12 @@ data("warblerWeight")
 
 5) Suppose you wanted to replicate the study with a smaller sample size of $n = 2$ per treatment group. In a new section called "Power analysis", calculate and report your power for this new experiment. This section should include both the `R` code you used to conduct the power analysis, and a brief (1-3 sentence) description of the result **and interpretation**. 
 
-A few things to remember when creating the assignment:
+A few things to remember when creating the document:
 
 - Be sure the output type is set to: `output: html_document`
 
-- Title the document: `title: "Lab 4 assignment"`
+- Be sure to set `echo = TRUE` in all `R` chunks so that all code and output is visible in the knitted document
 
-- Be sure to include your first and last name in the `author` section 
-
-- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
-
-- Please upload both the `html` and `.Rmd` files when you submit your assignment  
+- Regularly knit the document as you work to check for errors
 
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
-
-
-

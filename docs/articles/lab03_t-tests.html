@@ -160,7 +160,7 @@ Methods in Forestry and Natural Resources Research</h3>
     
     
 <div class="section level3">
-<h3 id="last-week">Last week<a class="anchor" aria-label="anchor" href="#last-week"></a>
+<h3 id="lab-1">Lab 1<a class="anchor" aria-label="anchor" href="#lab-1"></a>
 </h3>
 <ul>
 <li><p>Using <code>R</code> as calculator</p></li>
@@ -331,7 +331,7 @@ many others. Once we add a geometry, we can see the data:</p>
 <span>  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;"></p>
-<p>This is reasonable figure showing tree densitys as a function of
+<p>This is reasonable figure showing tree densities as a function of
 elevation. But <code>ggplot2</code> makes it very easy to tweak the way
 the data is visualized (maybe too easy, you can spend <em>a lot</em> of
 time tweaking minor details). For example, maybe we want to color the
@@ -476,6 +476,11 @@ statistic:<a class="anchor" aria-label="anchor" href="#step-1-compute-the-t-stat
 <h5 id="step-2-compare-t-statistic-to-critical-values-two-tailed">Step 2: Compare <span class="math inline">\(t\)</span> statistic to
 critical values (two-tailed)<a class="anchor" aria-label="anchor" href="#step-2-compare-t-statistic-to-critical-values-two-tailed"></a>
 </h5>
+</div>
+</div>
+<div class="section level3">
+<h3 id="option-1-calculate-critical-values-by-hand">Option 1: Calculate critical values by hand<a class="anchor" aria-label="anchor" href="#option-1-calculate-critical-values-by-hand"></a>
+</h3>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">0.05</span></span>
 <span></span>
@@ -483,7 +488,6 @@ critical values (two-tailed)<a class="anchor" aria-label="anchor" href="#step-2-
 <span><span class="va">critical.vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html" class="external-link">qt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">alpha</span><span class="op">/</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">-</span><span class="va">alpha</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>, df<span class="op">=</span><span class="va">n.L</span><span class="op">+</span><span class="va">n.H</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">critical.vals</span></span>
 <span><span class="co">#&gt; [1] -2.101  2.101</span></span></code></pre></div>
-</div>
 </div>
 <div class="section level3">
 <h3 id="option-2-let-r-do-all-the-work">Option 2: Let R do all the work<a class="anchor" aria-label="anchor" href="#option-2-let-r-do-all-the-work"></a>
@@ -508,7 +512,7 @@ unequal</p>
 <hr>
 </div>
 <div class="section level3">
-<h3 id="option-1-let-r-do-all-the-work-alternate-syntax">Option 1: Let R do all the work (alternate syntax)<a class="anchor" aria-label="anchor" href="#option-1-let-r-do-all-the-work-alternate-syntax"></a>
+<h3 id="option-2-let-r-do-all-the-work-alternate-syntax">Option 2: Let R do all the work (alternate syntax)<a class="anchor" aria-label="anchor" href="#option-2-let-r-do-all-the-work-alternate-syntax"></a>
 </h3>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">density</span> <span class="op">~</span> <span class="va">elevation</span>, data <span class="op">=</span> <span class="va">treedata</span>, </span>
@@ -612,7 +616,7 @@ example is one-tailed:</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="assignment">Assignment<a class="anchor" aria-label="anchor" href="#assignment"></a>
+<h2 id="excercise-not-for-a-grade">Excercise (<strong>not for a grade!</strong>)<a class="anchor" aria-label="anchor" href="#excercise-not-for-a-grade"></a>
 </h2>
 <p>Create an R Markdown file to do the following:</p>
 <ol style="list-style-type: decimal">
@@ -657,30 +661,18 @@ the <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.
 explain why the results differ between the paired and unpaired
 analysis</p></li>
 </ol>
-<p>A few things to remember when creating the assignment:</p>
+<p>A few things to remember when creating the document:</p>
 <ul>
 <li><p>Be sure the output type is set to:
 <code>output: html_document</code></p></li>
-<li><p>Title the document:
-<code>title: "Lab 2 assignment"</code></p></li>
-<li><p>Be sure to include your first and last name in the
-<code>author</code> section</p></li>
 <li><p>Be sure to set <code>echo = TRUE</code> in all <code>R</code>
-chunks so we can see both your code and the output</p></li>
+chunks so that all code and output is visible in the knitted
+document</p></li>
 <li><p>Regularly knit the document as you work to check for
 errors</p></li>
 <li><p>See the R Markdown reference sheet for help with creating
 <code>R</code> chunks, equations, tables, etc.</p></li>
 </ul>
-<div class="section level4">
-<h4 id="upload-the--rmd-and--html-files-to-elc-before-next-weeks-lab">Upload the <code>.Rmd</code> and <code>.html</code> files to ELC
-before next week’s lab<a class="anchor" aria-label="anchor" href="#upload-the--rmd-and--html-files-to-elc-before-next-weeks-lab"></a>
-</h4>
-</div>
-<div class="section level3">
-<h3 id="read-pp--127131-in-introductory-statistics-with-r">Read pp. 127–131 in “Introductory Statistics with R”<a class="anchor" aria-label="anchor" href="#read-pp--127131-in-introductory-statistics-with-r"></a>
-</h3>
-</div>
 </div>
   </div>
 
