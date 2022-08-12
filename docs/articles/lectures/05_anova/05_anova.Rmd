@@ -1,0 +1,671 @@
+---
+title: "LECTURE 5: One-way ANOVA"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
+                      fig.retina = 2)
+library(FANR6750)
+#library(emo)
+library(kableExtra)
+source(here::here("R/zzz.R"))
+# library(gganimate)
+```
+
+class: inverse
+
+# outline
+
+<br/>
+#### 1) Overview
+
+<br/>  
+--
+
+#### 2) ANOVA as a linear model
+
+<br/> 
+--
+
+#### 3) ANOVA table
+
+<br/> 
+--
+
+#### 4) Example
+
+---
+# general idea
+
+<br/>
+<br/>
+<br/>
+
+### Extension of the *t*-test for comparing > 2 populations
+
+---
+# motivating example
+
+Foresters are studying the effect of 4 different fertilizers (treatments) on the growth of loblolly pine, which are grown on 3 plots (replicates) receiving each treatment. Data are average height per plot after 5 years:
+
+.pull-left[
+<br/>
+```{r echo = FALSE}
+pine <- data.frame(Replicate = 1:3,
+                   A = c(11, 9, 10),
+                   B = c(7, 9, 8),
+                   C = c(6, 5, 7),
+                   D = c(5, 3, 4))
+
+pine %>%
+  kable("html", align = 'c') %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 18) %>%
+  add_header_above(c(" " = 1, "Treatment" = 4))
+```
+]
+
+--
+
+.pull-right[
+#### Notation
+
+- The number of groups (treatments) is $\large a=4$
+
+- The number of observations within each group (replicates) is $\large n=3$
+
+- $\large y_{ij}$ denotes the $\large j$th observation from the $\large i$th group
+]
+
+---
+# motivating example
+
+**Question:** Is there a difference in growth among the four treatment groups?
+
+--
+```{r pine1, fig.width=8, fig.height=6}
+pine_long <- tidyr::pivot_longer(pine, cols = c(A, B, C, D), names_to = "Treatment")
+pine_long <- dplyr::arrange(pine_long, Treatment, -value)
+pine_long$x <- c(0.8, 1, 1.2, 1.8, 2, 2.2, 2.8, 3, 3.2, 3.8, 4, 4.2)
+ggplot(pine_long, aes(x = x, y = value)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE)
+```
+
+---
+# motivating example
+
+#### Hypotheses
+- $\large H_0 : \mu_A = \mu_B = \mu_C = \mu_D$
+
+- $\large H_a :$ At least one inequality
+
+--
+
+#### How should we test the null?
+
+--
+We could do this using 6 *t*-tests  
+
+<br/>
+--
+But this would alter the overall (experiment-wise) $\large \alpha$ level because each individual test has a chance (usually  $\large \alpha = 0.05$) of incorrectly rejecting a true null hypothesis, and this is multiplied when multiple tests are used  
+
+<br/>
+--
+An alternative procedure involves comparing the variation among the groups with the variation within the groups. If $H_0$ is false, then the variance among is greater than the variance within groups.
+
+---
+# toward the additive model
+
+#### To understand why the test is based on variance, it is helpful to consider several types of means:
+
+--
+- Grand mean
+
+$$\large \bar{y}. = \frac{\sum_i\sum_j y_{ij}}{a \times n}$$
+
+---
+# motivating example
+
+**Question:** Is there a difference in growth among the four treatment groups?
+
+```{r pine_grm, fig.width=8, fig.height=6}
+ggplot(pine_long, aes(x = x, y = value)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mean(pine_long$value)) +
+  annotate("text", label = "bar(y)[.]", x = 4.25, y = mean(pine_long$value) + 0.45, 
+           parse = TRUE, size = 12)
+```
+
+---
+# toward the additive model
+
+#### To understand why the test is based on variance, it is helpful to consider several types of means:
+
+
+- Grand mean
+
+$$\large \bar{y}. = \frac{\sum_i\sum_j y_{ij}}{a \times n}$$
+
+- Group means
+
+$$\large \bar{y}_i = \frac{\sum_j y_{ij}}{n}$$
+
+---
+# motivating example
+
+**Question:** Is there a difference in growth among the four treatment groups?
+
+```{r pine_gm, fig.width=8, fig.height=6}
+library(dplyr)
+ybari <- pine_long %>%
+  group_by(Treatment) %>%
+  summarise(y = mean(value)) %>%
+  mutate(x = 1:4, 
+         label = c("bar(y)[A]", "bar(y)[B]", "bar(y)[C]", "bar(y)[D]"))
+
+ggplot(pine_long, aes(x = x, y = value)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mean(pine_long$value)) +
+  annotate("text", label = "bar(y)[.]", x = 4.25, y = mean(pine_long$value) + 0.45, 
+           parse = TRUE, size = 12) +
+  geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
+  geom_text(data = ybari, aes(x = x + 0.4, y = y, label = label), 
+            parse = TRUE, size = 8)
+```
+
+---
+# toward the additive model
+
+#### To understand why the test is based on variance, it is helpful to consider several types of means:
+
+
+- Grand mean
+
+$$\large \bar{y}. = \frac{\sum_i\sum_j y_{ij}}{a \times n}$$
+
+- Group means
+
+$$\large \bar{y}_i = \frac{\sum_j y_{ij}}{n}$$
+
+We can now decompose the observations as
+
+$$\large y_{ij} = \color{#446E9B}{\bar{y}.} + \color{#D47500}{(\bar{y}_i - \bar{y}.)} + \color{#3CB521}{(y_{ij} - \bar{y}_i)}$$
+
+---
+# the additive model
+
+#### The decomposition
+
+$$\Large y_{ij} = \color{#446E9B}{\bar{y}.} + \color{#D47500}{(\bar{y}_i - \bar{y}.)} + \color{#3CB521}{(y_{ij} - \bar{y}_i)}$$
+--
+
+#### The additive model
+
+$$\Large y_{ij} = \color{#446E9B}{\mu} + \color{#D47500}{\alpha_i} + \color{#3CB521}{\epsilon_{ij}}$$
+
+--
+
+#### where
+
+$$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$
+
+---
+# the additive model
+
+$$\large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$
+
+$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$
+
+#### Notes
+
+- $\large \mu$ is the grand mean of the population, estimated by $\large \bar{y}.$  
+  
+--
+
+- $\large \alpha_i$ is the effect of treatment *i*, estimated by $\large\bar{y}_i - \bar{y}.$  
+
+--
+  + It is the deviation of the group mean from the grand mean  
+
+  + If all $\large\alpha_i = 0$, there is no treatment effect  
+
+  + Thus, we can write either  
+    - $H_0 : \mu_1 = \mu_2=... =\mu_a$, or  
+    - $H_0 : \alpha_1 = \alpha_2=... =\alpha_a = 0$  
+
+--
+
+- $\large \epsilon_{ij}$ is the residual error, estimated by $\large y_{ij} - \bar{y}_i$  
+
+  + It is the unexplained (random) deviation of the observation from the group mean
+  
+---
+# anova as a linear model
+
+$$\large y_{j} = \beta_0 + \beta_1 x^1_j + \beta_2x^2_j + \beta_ax^a_j + \epsilon_{j}$$
+
+$$\large \epsilon_{j} \sim normal(0, \sigma^2)$$
+
+#### Notes
+
+- $\large \mu$ is the grand mean of the population, estimated by $\large \bar{y}.$  
+  
+--
+
+- $\large \alpha_i$ is the effect of treatment *i*, estimated by $\large\bar{y}_i - \bar{y}.$  
+
+--
+  + It is the deviation of the group mean from the grand mean  
+
+  + If all $\large\alpha_i = 0$, there is no treatment effect  
+
+  + Thus, we can write either  
+    - $H_0 : \mu_1 = \mu_2=... =\mu_a$, or  
+    - $H_0 : \alpha_1 = \alpha_2=... =\alpha_a = 0$  
+
+--
+
+- $\large \epsilon_{ij}$ is the residual error, estimated by $\large y_{ij} - \bar{y}_i$  
+
+  + It is the unexplained (random) deviation of the observation from the group mean
+  
+  
+---
+# sums of squares
+
+#### Variation among groups 
+
+$$\Large SS_A = n \sum_i (\bar{y}_i - \bar{y}.)^2$$
+
+---
+# motivating example
+
+**Question:** Is there a difference in growth among the four treatment groups?
+
+```{r pine_ssa, fig.width=8, fig.height=6}
+ggplot(pine_long, aes(x = x, y = value)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mean(pine_long$value)) +
+  geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
+  geom_segment(data = ybari, aes(x = x, xend = x, y= mean(pine_long$value), yend = y))
+```
+
+---
+# sums of squares
+
+#### Variation among groups 
+
+$$\Large SS_A = n \sum_i (\bar{y}_i - \bar{y}.)^2$$
+
+
+#### Variation within groups
+
+$$\Large SS_W = \sum_i \sum_j (y_{ij} - \bar{y}_i)^2$$
+---
+# motivating example
+
+**Question:** Is there a difference in growth among the four treatment groups?
+
+```{r pine_ssw, fig.width=8, fig.height=6}
+pine_long$ybari <- rep(ybari$y, each = 3)
+ggplot(pine_long, aes(x = x, y = value)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mean(pine_long$value)) +
+  geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
+  geom_segment(data = pine_long, 
+               aes(x = x, xend = x, y = ybari, yend = value))
+```
+
+---
+# sums of squares
+
+#### Variation among groups 
+
+$$\Large SS_A = n \sum_i (\bar{y}_i - \bar{y}.)^2$$
+
+
+#### Variation within groups
+
+$$\Large SS_W = \sum_i \sum_j (y_{ij} - \bar{y}_i)^2$$
+
+#### Total variation
+
+$$\Large SS_T = SS_A + SS_W = \sum_i \sum_j (y_{ij} - \bar{y}.)^2$$
+---
+# motivating example
+
+**Question:** Is there a difference in growth among the four treatment groups?
+
+```{r pine_sst, fig.width=8, fig.height=6}
+ggplot(pine_long, aes(x = x, y = value)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mean(pine_long$value)) +
+  geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
+  geom_segment(data = pine_long, 
+               aes(x = x, xend = x, y = mean(pine_long$value), yend = value))
+```
+
+---
+# mean squares
+
+### To covert the sums of squares to variances, divide by the degrees of freedom
+
+--
+#### Mean squares among
+
+$$\Large MS_A = \frac{SS_A}{a-1}$$
+
+--
+#### Mean squares within
+
+$$\Large MS_W = \frac{SS_W}{a(n-1)}$$
+
+---
+# F-statistic
+
+<br/>
+<br/>
+
+$$\LARGE F = \frac{MS_A}{MS_W}$$
+
+--
+
+### To test the null hypothesis
+
+- Compare the F statistic to the critical value: $\large F_{a-1,a(n-1)}$  
+
+- This is always a one-tailed test. Why?
+
+---
+class: inverse, center, middle
+
+# anova table
+
+---
+# anova table
+
+<br/>
+
+```{r anova_tab}
+anova_tab <- data.frame(Source = c("Among groups", "Within groups", "Total"),
+                        df = c('\\(a-1\\)', '\\(a(n-1)\\)', '\\(an-1\\)'),
+                        SS = c('\\(n \\sum_i (\\bar{y}_i - \\bar{y}.)^2\\)', 
+                               '\\(\\sum_i \\sum_j (y_{ij} - \\bar{y}_i)^2\\)',
+                               '\\(\\sum_i \\sum_j (y_{ij} - \\bar{y}.)^2\\)'),
+                        MS = c('\\(\\frac{SS_A}{a-1}\\)', '\\(\\frac{SS_W}{a(n-1)}\\)', ""),
+                        F = c('\\(\\frac{MS_A}{MS_W}\\)', "", ""))
+
+anova_tab %>%
+  kable(align = 'c', booktabs = TRUE, escape = FALSE, format = "html") %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 18) 
+```
+
+---
+# worked example
+
+#### Suppose we are interested in the effect of elevation on the abundance of Canada Warblers
+
+.pull-left[
+
+```{r cawa_pic, out.width="80%", fig.align="c"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/b/b1/8G7D5475-Canada.jpg")
+```
+
+]
+
+--
+.pull-right[
+```{r cawa1, echo = FALSE}
+cawa <- data.frame(Replicate = c("1", "2", "3", "4"),
+                   Low = as.character(c(1, 3, 0, 2)),
+                   Medium = as.character(c(2, 0, 4, 3)),
+                   High = as.character(c(4, 7, 5, 5)))
+
+cawa %>%
+  kable("html", align = 'c') %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 14) %>%
+  add_header_above(c(" " = 1, "Elevation" = 3))
+```
+]
+
+???
+
+Image courtesy of William H. Majoros via Wikicommons
+--
+
+#### Hypotheses
+- $H_0 : \mu_L = \mu_M = \mu_H$ or $H_0 : \alpha_L = \alpha_M = \alpha_H = 0$ 
+
+--
+
+- $H_a$ : At least one inequality 
+
+---
+# worked example
+
+```{r cawa2, fig.width=8, fig.height=6}
+cawa_long <- tidyr::pivot_longer(cawa, cols = c("Low", "Medium", "High"), names_to = "Elevation")
+cawa_long$value <- as.numeric(cawa_long$value)
+cawa_long$Elevation <- factor(cawa_long$Elevation, levels = c("Low", "Medium", "High"))
+p <- ggplot(cawa_long, aes(x = Elevation, y = value, color = Elevation)) + 
+  geom_jitter(width = 0.2, height = 0, size = 5) +
+  scale_x_discrete("Elevation") +
+  scale_y_continuous("Abundance") +
+  guides(color = "none")
+p
+```
+
+---
+# worked example
+
+```{r cawa_grm, fig.width=8, fig.height=6}
+p +
+  geom_hline(yintercept = 3) +
+  annotate("text", label = "bar(y)[.] == 3", x = 3.25, y = 3 - 0.45, 
+           parse = TRUE, size = 12)
+```
+
+---
+# worked example
+
+```{r cawa_gm, fig.width=8, fig.height=6}
+cawa_ybari <- data.frame(Elevation = factor(c("Low", "Medium", "High"), 
+                                            levels = c("Low", "Medium", "High")),
+                         x = 1:3,
+                         x.lab = c(1.55, 2.6, 2.4),
+                         y = c(1.5, 2.25, 5.25),
+                         label = c("bar(y)[L] == 1.5", 
+                                   "bar(y)[M] == 2.25", 
+                                   "bar(y)[H] == 5.25"))
+
+p +
+  geom_hline(yintercept = 3) +
+  geom_segment(data = cawa_ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, 
+                                 color = Elevation)) +
+    geom_text(data = cawa_ybari, aes(x = x.lab, y = y, label = label), 
+            parse = TRUE, size = 8)
+```
+
+---
+# procedure
+
+.pull-left[
+```{r cawa5, echo = FALSE}
+gm <- data.frame(Replicate = "Group means",
+                 Low = "1.50",
+                 Medium = "2.25",
+                 High = "5.25")
+cawa <- dplyr::bind_rows(cawa, gm)
+
+grm <- data.frame(Replicate = "Grand mean",
+                 Low = "",
+                 Medium = "3.00",
+                 High = "")
+cawa <- dplyr::bind_rows(cawa, grm)
+
+cawa %>%
+  kable("html", align = 'c') %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 14) %>%
+  add_header_above(c(" " = 1, "Elevation" = 3))
+```
+]
+
+--
+
+.pull-right[
+#### Calculate sums of squares **among** groups ( $SS_A$ )
+
+$= n \sum_i (\bar{y}_i - \bar{y}.)^2$  
+
+$\small = 4 \times ((1.5 - 3)^2 + (2.25 - 3)^2 + (5.25-3)^2)$  
+
+$= 31.5$
+]
+
+---
+# procedure
+
+.pull-left[
+```{r cawa6, echo = FALSE}
+cawa %>%
+  kable("html", align = 'c') %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 14) %>%
+  add_header_above(c(" " = 1, "Elevation" = 3))
+```
+]
+
+
+.pull-right[
+#### Calculate sums of squares **within** groups ( $SS_W$ )
+
+$= \sum_i \sum_j (y_{ij} - \bar{y}_i)^2$  
+
+]
+
+---
+# procedure
+
+.pull-left[
+```{r cawa7, echo = FALSE}
+cawa %>%
+  kable("html", align = 'c') %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 14) %>%
+  add_header_above(c(" " = 1, "Elevation" = 3))
+```
+]
+
+
+
+.pull-right[
+#### Calculate sums of squares **within** groups ( $SS_W$ )
+
+$= \sum_i \sum_j (y_{ij} - \bar{y}_i)^2$  
+
+$\scriptsize = (1 - 1.50)^2 + (3 - 1.50)^2 + (0 - 1.50)^2 + (2 - 1.50)^2 +$  
+$\scriptsize \;\;\; (2 - 2.25)^2 + (0 - 2.25)^2 + (4 - 2.25)^2 + (3 - 2.25)^2 +$  
+$\scriptsize \;\;\; (4 - 5.25)^2 + (7 - 5.25)^2 + (5 - 5.25)^2 + (5 - 5.25)^2 +$  
+
+]
+
+---
+# procedure
+
+.pull-left[
+```{r cawa8, echo = FALSE}
+cawa %>%
+  kable("html", align = 'c') %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 14) %>%
+  add_header_above(c(" " = 1, "Elevation" = 3))
+```
+]
+
+
+.pull-right[
+#### Calculate sums of squares **within** groups ( $SS_W$ )
+
+$= \sum_i \sum_j (y_{ij} - \bar{y}_i)^2$  
+
+$\scriptsize = (1 - 1.50)^2 + (3 - 1.50)^2 + (0 - 1.50)^2 + (2 - 1.50)^2 +$  
+$\scriptsize \;\;\; (2 - 2.25)^2 + (0 - 2.25)^2 + (4 - 2.25)^2 + (3 - 2.25)^2 +$  
+$\scriptsize \;\;\; (4 - 5.25)^2 + (7 - 5.25)^2 + (5 - 5.25)^2 + (5 - 5.25)^2 +$  
+
+$= 18.5$  
+
+]
+
+---
+# procedure
+
+<br/>
+
+```{r cawa_anova_tab}
+anova_tab <- data.frame(Source = c("Among groups", "Within groups"),
+                        df = c(2, 9),
+                        SS = c(31.5, 18.5),
+                        MS = c(15.7, 2.1),
+                        F = c("7.7", ""))
+
+anova_tab %>%
+  kable("html", align = 'c', booktabs = TRUE, escape = FALSE) %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 18) 
+```
+
+--
+
+#### Critical value: $F_{\alpha=0.05,2,9} = 4.26$
+
+--
+
+### Decision?
+
+---
+# can we make causal inference?
+
+<br/>
+
+--
+
+### **Answer**: Definitely not.
+
+<br/>
+
+--
+
+### **What was missing?**

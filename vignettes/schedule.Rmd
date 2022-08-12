@@ -25,45 +25,59 @@ source(here::here("R/MWF.R"))
 ```{r schedule, echo = FALSE}
 library(kableExtra)
 
-schedule <- data.frame(WK = c("1", "", "", "2", "", "", "", "3", "", "", "", "4", "", "", "",
-                              "5", "", "", "", "6", "", "", "", "7", "", "", "", "8", "", "", "",
-                              "9", "", "", "", "10", "", "", "", "11", "", "", "", "12", "", "", "",
-                              "13", "", "", "", "14", "", "", "", "15", "", "", "", "16", "", "", "", "17"),
+schedule <- data.frame(WK = c("1", "", "", 
+                              "2", "", "", "",
+                              "3", "", "", "", 
+                              "4", "", "", "",
+                              "5", "", "", "", 
+                              "6", "", "", "", 
+                              "7", "", "", "", 
+                              "8", "", "", "",
+                              "9", "", "", "", 
+                              "10", "", "", "", 
+                              "11", "", "", "", 
+                              "12", "", "", "",
+                              "13", "", "", "", 
+                              "14", "", "", "", 
+                              "15", "", "", "", 
+                              "16", "", "", "", 
+                              "17"),
                        Day = c("W", "F", "", rep(c("M", "W", "F", ""), 15), "M"),
                        Week = MWF(first.day = "2022/08/17", last.day = "2022/12/06"),
-                       Lecture = c("Course introduction", "Basic concepts in statistics", "",
-                                    "t-tests",  "t-tests", "t-tests",  "",
-                                   "Randomized ANOVA", "Randomized ANOVA", "Randomized ANOVA",  "",
-                                   "Labor Day", "Multiple comparisons", "Multiple comparisons", "",
-                                   "Statistical power", "Paper discussion: hypothesis testing and statistical power", "Contrasts", "",
-                                   "Contrasts", "Assumptions and transformations", "Nonparametrics", "",
-                                   "Nonparametrics", "Random and fixed effects", "Blocking and blocked designs",  "",
-                                    "Blocking and blocked designs", "Paper discussion: Pseudoreplication and experimental design","AB factorial designs",  "",
-                                    "AB factorial designs", "ABC factorial designs", "Nested designs", "",
-                                    "Nested designs", "Paper discussion", "Split-plot designs", "",
-                                    "Split-plot designs", "Split-plot designs", "Fall break", "",
-                                    "Repeated measures ANOVA", "Repeated measures ANOVA", "Regression review", "",
-                                    "Analysis of covariance", "Review of linear models", "Generalized linear models", "",
-                                    "Logistic regression", "Poisson regression", "GLMMs", "",
-                                   "Thanksgiving break", "", "", "",
-                                    "Model selection", "Goodness-of-fit", "Multi-model inference", "",
+                       Lecture = c("Course introduction", "Basic concepts in statistics", "", #1
+      "Principles of estimation",  "Principles of estimation", "Intro to statistical modeling", "",#2
+      "Intro to statistical modeling", "t-tests and null hypothesis testing", "t-tests and null hypothesis testing", "", #3
+      "Labor Day", "t-tests and null hypothesis testing", "Paper discussion: hypothesis testing", "", # 4
+      "Randomized ANOVA", "Randomized ANOVA", "Multiple comparisons",   "", #5
+       "Statistical power", "Contrasts", "Contrasts", "", #6
+      "Transformations", "Nonparametrics", "Nonparametrics", "", #7
+       "Random and fixed effects", "Blocking and blocked designs",  "Blocking and blocked designs", "", #8 
+      "AB factorial designs", "AB factorial designs", "Paper discussion: Pseudoreplication", "", # 9
+       "ABC factorial designs", "Nested designs", "Nested designs", "", #10
+          "Split-plot designs", "Split-plot designs", "Fall break", "", #11
+      "Repeated measures", "Repeated measures", "Buffer", "",
+         "Regression review", "Analysis of covariance", "Analysis of covariance", "", #13
+          "Generalized linear models", "Logistic regression", "Poisson regression", "", #14
+          "Thanksgiving break", "", "", "", #15
+           "GLMMs", "Model selection", "Paper discussion: Model selection",  "", #16
                                    "Course wrap up"),
                        Lab = c("", "", "",
                                "Introduction to R", "", "", "",
-                               "R graphics and t-tests", "", "", "",
+                               "Introduction to RMarkdown", "", "", "",
                                "No lab", "", "", "",
-                               "ANOVA", "", "", "",
-                               "Multiple comparisons and power", "", "", "",
-                               "Transformations and nonparametrics", "", "", "",
+                               "R graphics and t-tests", "", "", "",
+                               "ANOVA*", "", "", "",
+                               "Contrasts and power", "", "", "",
+                               "Transformations and nonparametrics*", "", "", "",
                                "Blocking", "", "", "",
-                               "Factorial designs", "", "", "",
+                               "Factorial designs*", "", "", "",
                                "Nested designs", "", "", "",
-                               "Split-plot designs", "", "", "",
+                               "Split-plot designs*", "", "", "",
                                "Repeated measures", "", "", "",
-                               "ANCOVA", "", "", "",
+                               "ANCOVA*", "", "", "",
                                "Linear models", "", "", "",
                                "GLMs", "", "", "",
-                               "Model selection", "", "", "",
+                               # "Model selection", "", "", "",
                                "No lab"),
                        Reading = c("", "Chapter 1", "",
                                "Chapter 8", "", "", "",
@@ -88,3 +102,5 @@ schedule %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = TRUE)
 
 ```
+
+\* = Graded assignment

@@ -4,7 +4,7 @@ subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Res
 author: "Fall 2022"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{lab02_t-tests}
+  %\VignetteIndexEntry{lab02_Rmd}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,6 +17,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.retina = 2,
 )
 library(dplyr)
 library(knitr)
+library(rmarkdown)
 library(FANR6750)
 source(here::here("R/zzz.R"))
 ```

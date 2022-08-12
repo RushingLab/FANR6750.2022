@@ -57,7 +57,7 @@ class: inverse
 
 --
 
-#### In this class, we will deal with mathematical models
+#### In this class, we will deal with *statistical* models
 
 --
 
@@ -65,7 +65,7 @@ class: inverse
 
 --
 
-- By necessity, models will be simplifications of reality  
+- By necessity, models will be simplifications of reality ("all models are wrong...") 
 
 --
 
@@ -212,6 +212,28 @@ Note that the deterministic portion of the model has the same form as the equati
 &lt;img src="03_models_files/figure-html/unnamed-chunk-9-1.png" width="432" style="display: block; margin: auto;" /&gt;
 
 ---
+# the linear model
+
+#### A more complex model
+
+`$$\large y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ... + \beta_px_{ip} + \epsilon_i$$`
+
+--
+
+- Each `\(\beta\)` coefficient is the effect of a specific predictor variables `\(x\)`
+
+- Predictor variables may be continuous, binary, factors, or a combination
+
+- We will cover more complex models (and interpretation) later
+
+---
+# is this a linear model?
+
+`$$\Large y = 20 + 0.5x - 0.3x^2$$`
+
+&lt;img src="03_models_files/figure-html/unnamed-chunk-10-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+---
 # residuals
 
 #### One concept we will talk about a lot is *residuals*
@@ -220,7 +242,7 @@ Note that the deterministic portion of the model has the same form as the equati
 
 - Residuals are the difference between the observed values `\(y_i\)` and the predicted values `\(E[y_i]\)`
 
-&lt;img src="03_models_files/figure-html/unnamed-chunk-10-1.png" width="396" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_models_files/figure-html/unnamed-chunk-11-1.png" width="396" style="display: block; margin: auto;" /&gt;
 
 ---
 # residuals
@@ -229,7 +251,7 @@ Note that the deterministic portion of the model has the same form as the equati
 
 - Residuals are the difference between the observed values `\(y_i\)` and the predicted values `\(E[y_i]\)`
 
-&lt;img src="03_models_files/figure-html/unnamed-chunk-11-1.png" width="396" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_models_files/figure-html/unnamed-chunk-12-1.png" width="396" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -295,7 +317,9 @@ class:inverse, center, middle
 
 4) **Independence**: The residuals are independent (i.e., uncorrelated with each other)
 
+???
 
+Because virtually every model we will use this semester is a linear model, these assumptions apply to everything we will discuss from here out
 
 ---
 # linear models
@@ -335,7 +359,7 @@ class:inverse, center, middle
 
 &lt;br/&gt;
 
-#### **Next time:** Null hypothesis testing
+#### **Next time:** t-tests and Null Hypothesis Testing
 
 &lt;br/&gt;
 

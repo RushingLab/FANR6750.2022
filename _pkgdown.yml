@@ -20,75 +20,29 @@ navbar:
     - text: "Lectures"
       icon: fas fa-file-pdf-o
       menu:
+        - text: "Lecture 0: Course introduction"
+          href: articles/lectures/00_course_intro/00_course_intro.html
         - text: "Lecture 1: Basic concepts in statistics"
           href: articles/lectures/01_basic_stats/01_basic_stats.html
-        - text: "Lecture 2: t-tests"
-          href: articles/lectures/02_t-tests/02_t-tests.html
-        - text: "Lecture 3: ANOVA"
-          href: articles/lectures/03_anova/03_anova.html
-        - text: "Lecture 4: Multiple comparisons"
-          href: articles/lectures/04_mult_comparisons/04_mult_comparisons.html
-        - text: "Lecture 5: Contrasts"
-          href: articles/lectures/05_contrasts/05_contrasts.html
-        - text: "Lecture 6: Power analysis"
-          href: articles/lectures/06_power-analysis/06_power-analysis.html
-        - text: "Lecture 7: Estimation"
-          href: articles/lectures/07_estimation/07_estimation.html
-        - text: "Lecture 8: ANOVA assumptions"
-          href: articles/lectures/08_assumptions/08_assumptions.html
-        - text: "Lecture 9: Non-parametric statistics"
-          href: articles/lectures/09_nonparametrics/09_nonparametrics.html
-        - text: "Lecture 10: Blocking"
-          href: articles/lectures/10_blocking/10_blocking.html
-        - text: "Lecture 11: Random effects"
-          href: articles/lectures/11_raneff/11_raneff.html
-        - text: "Lecture 12: Factorial designs"
-          href: articles/lectures/12_factorial/12_factorial.html
-        - text: "Lecture 13: Nested designs"
-          href: articles/lectures/13_nesting/13_nesting.html
-        - text: "Lecture 14: Split plot designs"
-          href: articles/lectures/14_splitplot/14_splitplot.html
-        - text: "Lecture 15: Repeated measures"
-          href: articles/lectures/15_repeated_measures/15_repeated_measures.html
-        - text: "Lecture 16: ANCOVA"
-          href: articles/lectures/16_ANCOVA/16_ANCOVA.html
-        - text: "Lecture 17: Linear models"
-          href: articles/lectures/17_lm/17_lm.html
-        - text: "Lecture 18: Generalized linear models"
-          href: articles/lectures/18_glm/18_glm.html
-        - text: "Lecture 19: Model selection"
-          href: articles/lectures/19_model_selection/19_model_selection.html
+        - text: "Lecture 2: Principles of Estimation"
+          href: articles/lectures/02_estimation/02_estimation.html
+        - text: "Lecture 3: Introduction to Statistical Modeling"
+          href: articles/lectures/03_models/03_models.html
+        - text: "Lecture 4: t-tests and Null Hypothesis Testing"
+          href: articles/lectures/04_NHST/04_NHST.html
+        - text: "Lecture 5: One-way ANOVA"
+          href: articles/lectures/05_anova/05_anova.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:
         - text: "Lab 1: Introduction to R"
           href: articles/lab01_Intro_to_R.html
-        - text: "Lab 2: t-tests"
-          href: articles/lab02_t-tests.html
-        - text: "Lab 3: ANOVA"
-          href: articles/lab03_ANOVA.html
-        - text: "Lab 4: Contrasts, estimation, and power analysis"
-          href: articles/lab04_contrasts.html
-        - text: "Lab 5: Assumptions of ANOVA, tranformations, and non-parametric tests"
-          href: articles/lab05_assump_nonpar.html
-        - text: "Lab 6: Randomized Complete Block Design"
-          href: articles/lab06_blocking.html
-        - text: "Lab 7: Factorial designs"
-          href: articles/lab07_factorial.html
-        - text: "Lab 8: Nested ANOVA"
-          href: articles/lab08_nested.html
-        - text: "Lab 9: Split plot designs"
-          href: articles/lab09_splitplot.html
-        - text: "Lab 10: Repeated measures"
-          href: articles/lab10_repeated_measures.html
-        - text: "Lab 11: ANCOVA"
-          href: articles/lab11_ANCOVA.html
-        - text: "Lab 12: Linear models"
-          href: articles/lab12_lm.html
-        - text: "Lab 13: Generalized linear models"
-          href: articles/lab13_glm.html
-        - text: "Lab 14: Model selection and multi-model inference"
-          href: articles/lab14_model_selection.html
+        - text: "Lab 2: Introduction to RMarkdown and Projects"
+          href: articles/lab02_Intro_project_and_Rmd.html
+        - text: "Lab 3: t-tests"
+          href: articles/lab03_t-tests.html
+        - text: "Lab 4: ANOVA"
+          href: articles/lab04_ANOVA.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

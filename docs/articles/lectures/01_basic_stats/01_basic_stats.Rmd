@@ -86,7 +86,7 @@ class: inverse
 
 - Problem: "confirmatory" observations can't disprove theory
 
-- Example: I've only seen white swans :: all swans are white
+- Example: I've only seen birds that fly :: all birds can fly
 ]
 
 --
@@ -100,7 +100,7 @@ class: inverse
 
 - Based on *falsification*
 
-- Example: All swans are white :: black swan!
+- Example: All swans can fly :: penguins are birds :: penguins can fly
 ]
 
 ---
@@ -224,25 +224,6 @@ class: inverse, middle, center
 --
 
     + Well-designed experiments ensure that "treatment assignment is independent of the potential outcomes" (Gelman et al. 2021)
-
-
----
-# course objectives
-
-**To understand:**  
-<br/>
-
---
-1) the logical structure of experiments, especially the design of manipulative experiments;  
-<br/>
-
---
-2) the analysis of such experiments, focusing on linear models;  
-<br/>
-
---
-3) the use of models in ecological studies (experimental and observational);  
-<br/>
 
 
 ---

@@ -112,7 +112,7 @@ Can you spot the difference? What calculations changed between these two analyse
 What happens if we analyze plot-level means? The `aggregate()` function is similar to `tapply()` but it works on entire data frames. Here we get averages for each whole plot:
 
 ```{r}
-plotData <- aggregate(formula = larvae ~ Treatment + Plot, 
+plotData <- aggregate(larvae ~ Treatment + Plot, 
                       data = mothData2, FUN = mean)
 plotData
 ```

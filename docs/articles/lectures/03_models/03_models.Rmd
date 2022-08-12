@@ -58,7 +58,7 @@ class: inverse
 
 --
 
-#### In this class, we will deal with mathematical models
+#### In this class, we will deal with *statistical* models
 
 --
 
@@ -66,7 +66,7 @@ class: inverse
 
 --
 
-- By necessity, models will be simplifications of reality  
+- By necessity, models will be simplifications of reality ("all models are wrong...") 
 
 --
 
@@ -266,6 +266,35 @@ ggplot(df, aes(x, y)) +
 ```
 
 ---
+# the linear model
+
+#### A more complex model
+
+$$\large y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ... + \beta_px_{ip} + \epsilon_i$$
+
+--
+
+- Each $\beta$ coefficient is the effect of a specific predictor variables $x$
+
+- Predictor variables may be continuous, binary, factors, or a combination
+
+- We will cover more complex models (and interpretation) later
+
+---
+# is this a linear model?
+
+$$\Large y = 20 + 0.5x - 0.3x^2$$
+
+```{r, fig.height=3.5, fig.width=5.5}
+x <- seq(from = 0, to = 10, 0.1)
+lm2 <- data.frame(x = x,
+                 y = 20 + 0.5 * x - 0.3 * x^2)
+
+ggplot(lm2, aes(x = x, y = y)) +
+  geom_line() 
+```
+
+---
 # residuals
 
 #### One concept we will talk about a lot is *residuals*
@@ -359,7 +388,9 @@ $$\Large \epsilon_i \sim normal(0, \sigma)$$
 
 4) **Independence**: The residuals are independent (i.e., uncorrelated with each other)
 
+???
 
+Because virtually every model we will use this semester is a linear model, these assumptions apply to everything we will discuss from here out
 
 ---
 # linear models
@@ -399,7 +430,7 @@ $$\Large \epsilon_i \sim normal(0, \sigma)$$
 
 <br/>
 
-#### **Next time:** Null hypothesis testing
+#### **Next time:** t-tests and Null Hypothesis Testing
 
 <br/>
 

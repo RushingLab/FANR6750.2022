@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FANR6750</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2021.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2022.1.0</span>
       </span>
     </div>
 
@@ -60,7 +62,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fas fa-file-pdf-o"></span>
      
     Lectures
@@ -69,19 +71,22 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/lectures/00_course_intro/00_course_intro.html">Lecture 0: Course introduction</a>
+    </li>
+    <li>
       <a href="../articles/lectures/01_basic_stats/01_basic_stats.html">Lecture 1: Basic concepts in statistics</a>
     </li>
     <li>
-      <a href="../articles/lectures/02_t-tests/02_t-tests.html">Lecture 2: t-tests</a>
+      <a href="../articles/lectures/02_estimation/02_estimation.html">Lecture 2: Principles of Estimation</a>
     </li>
     <li>
-      <a href="../articles/lectures/03_anova/03_anova.html">Lecture 3: ANOVA</a>
+      <a href="../articles/lectures/03_models/03_models.html">Lecture 3: Introduction to Statistical Modeling</a>
     </li>
     <li>
-      <a href="../articles/lectures/04_mult_comparisons/04_mult_comparisons.html">Lecture 4: Multiple comparisons</a>
+      <a href="../articles/lectures/04_NHST/04_NHST.html">Lecture 4: t-tests and null hypothesis testing</a>
     </li>
     <li>
-      <a href="../articles/lectures/05_contrasts/05_contrasts.html">Lecture 5: Contrasts</a>
+      <a href="../articles/lectures/05_anova/05_anova.html">Lecture 5: Completely randomized ANOVA</a>
     </li>
     <li>
       <a href="../articles/lectures/06_power-analysis/06_power-analysis.html">Lecture 6: Power analysis</a>
@@ -128,7 +133,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fas fa-desktop"></span>
      
     Labs
@@ -181,7 +186,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fas fa-pencil-square-o"></span>
      
     References
@@ -215,8 +220,9 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Lab 3: Completely randomized ANOVA</h1>
-            <h3 class="subtitle">FANR 6750: Experimental Methods in Forestry and Natural Resources Research</h3>
-                        <h4 class="author">Fall 2021</h4>
+            <h3 data-toc-skip class="subtitle">FANR 6750: Experimental
+Methods in Forestry and Natural Resources Research</h3>
+                        <h4 data-toc-skip class="author">Fall 2021</h4>
             
       
       
@@ -226,86 +232,89 @@
 
     
     
-<div id="todays-topics" class="section level1">
-<h1 class="hasAnchor">
-<a href="#todays-topics" class="anchor"></a>Today’s topics</h1>
+<div class="section level2">
+<h2 id="todays-topics">Today’s topics<a class="anchor" aria-label="anchor" href="#todays-topics"></a>
+</h2>
 <ol style="list-style-type: decimal">
 <li><p>Brief overview of ANOVA</p></li>
 <li><p>ANOVA in <code>R</code></p></li>
 <li><p>Multiple comparisons</p></li>
 </ol>
 </div>
-<div id="brief-overview-of-anova" class="section level1">
-<h1 class="hasAnchor">
-<a href="#brief-overview-of-anova" class="anchor"></a>Brief overview of ANOVA</h1>
-<div id="one-way-anova" class="section level2">
-<h2 class="hasAnchor">
-<a href="#one-way-anova" class="anchor"></a>One-way ANOVA</h2>
-<div id="scenario" class="section level4">
-<h4 class="hasAnchor">
-<a href="#scenario" class="anchor"></a>Scenario</h4>
+<div class="section level2">
+<h2 id="brief-overview-of-anova">Brief overview of ANOVA<a class="anchor" aria-label="anchor" href="#brief-overview-of-anova"></a>
+</h2>
+<div class="section level3">
+<h3 id="one-way-anova">One-way ANOVA<a class="anchor" aria-label="anchor" href="#one-way-anova"></a>
+</h3>
+<div class="section level5">
+<h5 id="scenario">Scenario<a class="anchor" aria-label="anchor" href="#scenario"></a>
+</h5>
 <ul>
-<li><p>We have independent samples from <span class="math inline">\(a &gt; 2\)</span> groups</p></li>
+<li><p>We have independent samples from <span class="math inline">\(a
+&gt; 2\)</span> groups</p></li>
 <li><p>We assume a common variance</p></li>
 </ul>
 </div>
-<div id="questions" class="section level4">
-<h4 class="hasAnchor">
-<a href="#questions" class="anchor"></a>Questions</h4>
+<div class="section level5">
+<h5 id="questions">Questions<a class="anchor" aria-label="anchor" href="#questions"></a>
+</h5>
 <ul>
 <li><p>Do the means differ?</p></li>
 <li><p>By how much? (What are the effect sizes?)</p></li>
 </ul>
 </div>
-<div id="null-hypothesis" class="section level4">
-<h4 class="hasAnchor">
-<a href="#null-hypothesis" class="anchor"></a>Null hypothesis</h4>
+<div class="section level5">
+<h5 id="null-hypothesis">Null hypothesis<a class="anchor" aria-label="anchor" href="#null-hypothesis"></a>
+</h5>
 <ul>
-<li><p><span class="math inline">\(H_0 : \mu_1 = \mu_2 = \mu_3 = . . . = \mu_a\)</span></p></li>
-<li><p><span class="math inline">\(H_0 : \alpha_1 = \alpha_2 = \alpha_3 = . . . = \alpha_a = 0\)</span></p></li>
+<li><p><span class="math inline">\(H_0 : \mu_1 = \mu_2 = \mu_3 = . . . =
+\mu_a\)</span></p></li>
+<li><p><span class="math inline">\(H_0 : \alpha_1 = \alpha_2 = \alpha_3
+= . . . = \alpha_a = 0\)</span></p></li>
 </ul>
 </div>
 </div>
-<div id="anova-in-r" class="section level2">
-<h2 class="hasAnchor">
-<a href="#anova-in-r" class="anchor"></a>ANOVA in <code>R</code>
-</h2>
-<div id="chainshaw-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#chainshaw-data" class="anchor"></a>Chainshaw data</h4>
+<div class="section level3">
+<h3 id="anova-in-r">ANOVA in <code>R</code><a class="anchor" aria-label="anchor" href="#anova-in-r"></a>
+</h3>
+<div class="section level5">
+<h5 id="chainshaw-data">Chainshaw data<a class="anchor" aria-label="anchor" href="#chainshaw-data"></a>
+</h5>
 <p>The kick angle measurements for the 4 brands of chainsaw:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">FANR6750</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"sawData"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sawData</span><span class="op">)</span>
-<span class="co">#&gt;    y Brand</span>
-<span class="co">#&gt; 1 42     A</span>
-<span class="co">#&gt; 2 17     A</span>
-<span class="co">#&gt; 3 24     A</span>
-<span class="co">#&gt; 4 39     A</span>
-<span class="co">#&gt; 5 43     A</span>
-<span class="co">#&gt; 6 28     B</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">FANR6750</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"sawData"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sawData</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    y Brand</span></span>
+<span><span class="co">#&gt; 1 42     A</span></span>
+<span><span class="co">#&gt; 2 17     A</span></span>
+<span><span class="co">#&gt; 3 24     A</span></span>
+<span><span class="co">#&gt; 4 39     A</span></span>
+<span><span class="co">#&gt; 5 43     A</span></span>
+<span><span class="co">#&gt; 6 28     B</span></span></code></pre></div>
 <p>Visualize the data:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">sawData</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Brand</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_y_continuous</span><span class="op">(</span><span class="st">"Kickback angle"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">sawData</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Brand</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span><span class="st">"Kickback angle"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="lab03_ANOVA_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="two-anova-function-in-r-aov-and-lm" class="section level2">
-<h2 class="hasAnchor">
-<a href="#two-anova-function-in-r-aov-and-lm" class="anchor"></a>Two ANOVA function: in <code>R</code>: <code>aov()</code> and <code>lm()</code>
-</h2>
+<div class="section level3">
+<h3 id="two-anova-function-in-r-aov-and-lm">Two ANOVA function: in <code>R</code>: <code>aov()</code> and
+<code>lm()</code><a class="anchor" aria-label="anchor" href="#two-anova-function-in-r-aov-and-lm"></a>
+</h3>
 <ul>
-<li><p><code>R</code> has 2 common functions for doing ANOVA: <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> and <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code></p></li>
-<li><p>We will primarily use <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> in this class</p></li>
+<li><p><code>R</code> has 2 common functions for doing ANOVA:
+<code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> and <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code></p></li>
+<li><p>We will primarily use <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> in this class</p></li>
 </ul>
-<div id="crude-characterization" class="section level4">
-<h4 class="hasAnchor">
-<a href="#crude-characterization" class="anchor"></a>Crude characterization</h4>
-<table class="table table table-striped table-hover table-condensed table-responsive">
+<div class="section level5">
+<h5 id="crude-characterization">Crude characterization<a class="anchor" aria-label="anchor" href="#crude-characterization"></a>
+</h5>
+<table class="table table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:center;">
 </th>
@@ -354,42 +363,47 @@ No
 </table>
 </div>
 </div>
-<div id="using-aov" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-aov" class="anchor"></a>Using <code>aov()</code>
-</h2>
-<div id="do-the-analysis" class="section level4">
-<h4 class="hasAnchor">
-<a href="#do-the-analysis" class="anchor"></a>Do the analysis</h4>
+<div class="section level3">
+<h3 id="using-aov">Using <code>aov()</code><a class="anchor" aria-label="anchor" href="#using-aov"></a>
+</h3>
+<div class="section level5">
+<h5 id="do-the-analysis">Do the analysis<a class="anchor" aria-label="anchor" href="#do-the-analysis"></a>
+</h5>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">aov.out1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">Brand</span>, data <span class="op">=</span> <span class="va">sawData</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">aov.out1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">Brand</span>, data <span class="op">=</span> <span class="va">sawData</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="view-the-anova-table" class="section level4">
-<h4 class="hasAnchor">
-<a href="#view-the-anova-table" class="anchor"></a>View the ANOVA table</h4>
+<div class="section level5">
+<h5 id="view-the-anova-table">View the ANOVA table<a class="anchor" aria-label="anchor" href="#view-the-anova-table"></a>
+</h5>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">aov.out1</span><span class="op">)</span>
-<span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)  </span>
-<span class="co">#&gt; Brand        3   1080     360    3.56  0.038 *</span>
-<span class="co">#&gt; Residuals   16   1620     101                 </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
-<p>The default output from <code>summary</code> is fine for viewing in the console but what if you want to include the ANOVA table in a report or paper? You could manually create a table and copy/paste the values, but that’s a pain. Luckily, there is a handy package called <code>broom</code> that turns the output from many model functions into cleaned-up data frames:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">aov.out1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)  </span></span>
+<span><span class="co">#&gt; Brand        3   1080     360    3.56  0.038 *</span></span>
+<span><span class="co">#&gt; Residuals   16   1620     101                 </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
+<p>The default output from <code>summary</code> is fine for viewing in
+the console but what if you want to include the ANOVA table in a report
+or paper? You could manually create a table and copy/paste the values,
+but that’s a pain. Luckily, there is a handy package called
+<code>broom</code> that turns the output from many model functions into
+cleaned-up data frames:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">aov.out1</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 × 6</span>
-<span class="co">#&gt;   term         df sumsq meansq statistic p.value</span>
-<span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Brand         3 1080.   360.      3.56  0.0382</span>
-<span class="co">#&gt; 2 Residuals    16 1620    101.     NA    NA</span></code></pre></div>
-<p>In R Markdown, we can even include that data frame as a nicely formatted table directly in the knitted document:</p>
+<code class="sourceCode R"><span><span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">aov.out1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 6</span></span></span>
+<span><span class="co">#&gt;   term         df sumsq meansq statistic p.value</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Brand         3 <span style="text-decoration: underline;">1</span>080.   360.      3.56  0.038<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Residuals    16 <span style="text-decoration: underline;">1</span>620    101.     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
+<p>In R Markdown, we can even include that data frame as a nicely
+formatted table directly in the knitted document:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">aov_df</span> <span class="op">&lt;-</span> <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">aov.out1</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>knitr.kable.NA <span class="op">=</span> <span class="st">''</span><span class="op">)</span> <span class="co"># don't print NA's in table</span>
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">aov_df</span>, 
-      col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Source"</span>, <span class="st">"df"</span>, <span class="st">"SS"</span>, <span class="st">"MS"</span>, <span class="st">"F"</span>, <span class="st">"p"</span><span class="op">)</span>,
-      align <span class="op">=</span> <span class="st">'c'</span>, format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span><span class="va">aov_df</span> <span class="op">&lt;-</span> <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">aov.out1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>knitr.kable.NA <span class="op">=</span> <span class="st">''</span><span class="op">)</span> <span class="co"># don't print NA's in table</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">aov_df</span>, </span>
+<span>      col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Source"</span>, <span class="st">"df"</span>, <span class="st">"SS"</span>, <span class="st">"MS"</span>, <span class="st">"F"</span>, <span class="st">"p"</span><span class="op">)</span>,</span>
+<span>      align <span class="op">=</span> <span class="st">'c'</span>, format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span> </span></code></pre></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:center;">
@@ -453,228 +467,260 @@ Residuals
 </tbody>
 </table>
 </div>
-<div id="estimates-of-means-mus-and-ses" class="section level4">
-<h4 class="hasAnchor">
-<a href="#estimates-of-means-mus-and-ses" class="anchor"></a>Estimates of means ( <span class="math inline">\(\mu\)</span>’s) and SE’s</h4>
+<div class="section level5">
+<h5 id="estimates-of-means-mus-and-ses">Estimates of means ( <span class="math inline">\(\mu\)</span>’s) and
+SE’s<a class="anchor" aria-label="anchor" href="#estimates-of-means-mus-and-ses"></a>
+</h5>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/model.tables.html">model.tables</a></span><span class="op">(</span><span class="va">aov.out1</span>, type <span class="op">=</span> <span class="st">"means"</span>, se <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; Tables of means</span>
-<span class="co">#&gt; Grand mean</span>
-<span class="co">#&gt;    </span>
-<span class="co">#&gt; 39 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  Brand </span>
-<span class="co">#&gt; Brand</span>
-<span class="co">#&gt;  A  B  C  D </span>
-<span class="co">#&gt; 33 43 49 31 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Standard errors for differences of means</span>
-<span class="co">#&gt;         Brand</span>
-<span class="co">#&gt;         6.364</span>
-<span class="co">#&gt; replic.     5</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/model.tables.html" class="external-link">model.tables</a></span><span class="op">(</span><span class="va">aov.out1</span>, type <span class="op">=</span> <span class="st">"means"</span>, se <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Tables of means</span></span>
+<span><span class="co">#&gt; Grand mean</span></span>
+<span><span class="co">#&gt;    </span></span>
+<span><span class="co">#&gt; 39 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Brand </span></span>
+<span><span class="co">#&gt; Brand</span></span>
+<span><span class="co">#&gt;  A  B  C  D </span></span>
+<span><span class="co">#&gt; 33 43 49 31 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Standard errors for differences of means</span></span>
+<span><span class="co">#&gt;         Brand</span></span>
+<span><span class="co">#&gt;         6.364</span></span>
+<span><span class="co">#&gt; replic.     5</span></span></code></pre></div>
 </div>
-<div id="estimates-of-effect-sizes-alphas-and-ses" class="section level4">
-<h4 class="hasAnchor">
-<a href="#estimates-of-effect-sizes-alphas-and-ses" class="anchor"></a>Estimates of effect sizes ( <span class="math inline">\(\alpha\)</span>’s) and SE’s</h4>
+<div class="section level5">
+<h5 id="estimates-of-effect-sizes-alphas-and-ses">Estimates of effect sizes ( <span class="math inline">\(\alpha\)</span>’s) and SE’s<a class="anchor" aria-label="anchor" href="#estimates-of-effect-sizes-alphas-and-ses"></a>
+</h5>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/model.tables.html">model.tables</a></span><span class="op">(</span><span class="va">aov.out1</span>, type <span class="op">=</span> <span class="st">"effects"</span>, se <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; Tables of effects</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  Brand </span>
-<span class="co">#&gt; Brand</span>
-<span class="co">#&gt;  A  B  C  D </span>
-<span class="co">#&gt; -6  4 10 -8 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Standard errors of effects</span>
-<span class="co">#&gt;         Brand</span>
-<span class="co">#&gt;           4.5</span>
-<span class="co">#&gt; replic.     5</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/model.tables.html" class="external-link">model.tables</a></span><span class="op">(</span><span class="va">aov.out1</span>, type <span class="op">=</span> <span class="st">"effects"</span>, se <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Tables of effects</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Brand </span></span>
+<span><span class="co">#&gt; Brand</span></span>
+<span><span class="co">#&gt;  A  B  C  D </span></span>
+<span><span class="co">#&gt; -6  4 10 -8 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Standard errors of effects</span></span>
+<span><span class="co">#&gt;         Brand</span></span>
+<span><span class="co">#&gt;           4.5</span></span>
+<span><span class="co">#&gt; replic.     5</span></span></code></pre></div>
 </div>
 </div>
-<div id="anova-by-hand" class="section level2">
-<h2 class="hasAnchor">
-<a href="#anova-by-hand" class="anchor"></a>ANOVA by hand</h2>
-<div id="grand-mean" class="section level4">
-<h4 class="hasAnchor">
-<a href="#grand-mean" class="anchor"></a>Grand mean</h4>
+<div class="section level3">
+<h3 id="anova-by-hand">ANOVA by hand<a class="anchor" aria-label="anchor" href="#anova-by-hand"></a>
+</h3>
+<div class="section level5">
+<h5 id="grand-mean">Grand mean<a class="anchor" aria-label="anchor" href="#grand-mean"></a>
+</h5>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">ybar.</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">sawData</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 39</span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">ybar.</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sawData</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 39</span></span></code></pre></div>
 </div>
-<div id="group-means" class="section level4">
-<h4 class="hasAnchor">
-<a href="#group-means" class="anchor"></a>Group means</h4>
-<p>As with most things in <code>R</code>, there are several ways to calculate the group means. First, find the group means, the hard way:</p>
+<div class="section level5">
+<h5 id="group-means">Group means<a class="anchor" aria-label="anchor" href="#group-means"></a>
+</h5>
+<p>As with most things in <code>R</code>, there are several ways to
+calculate the group means. First, find the group means, the hard
+way:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op">&lt;-</span> <span class="va">sawData</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">]</span>
-<span class="va">B</span> <span class="op">&lt;-</span> <span class="va">sawData</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">]</span>
-<span class="va">C</span> <span class="op">&lt;-</span> <span class="va">sawData</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span> <span class="op">==</span> <span class="st">"C"</span><span class="op">]</span>
-<span class="va">D</span> <span class="op">&lt;-</span> <span class="va">sawData</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span> <span class="op">==</span> <span class="st">"D"</span><span class="op">]</span>
-
-<span class="op">(</span><span class="va">ybar.i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">C</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">D</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 33 43 49 31</span></code></pre></div>
-<p>Better yet, use <code>tapply</code> to find the group means (the base <code>R</code> way):</p>
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="va">sawData</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">]</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va">sawData</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">]</span></span>
+<span><span class="va">C</span> <span class="op">&lt;-</span> <span class="va">sawData</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span> <span class="op">==</span> <span class="st">"C"</span><span class="op">]</span></span>
+<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="va">sawData</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span> <span class="op">==</span> <span class="st">"D"</span><span class="op">]</span></span>
+<span></span>
+<span><span class="op">(</span><span class="va">ybar.i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">C</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">D</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 33 43 49 31</span></span></code></pre></div>
+<p>Better yet, use <code>tapply</code> to find the group means (the base
+<code>R</code> way):</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">ybar.i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">sawData</span><span class="op">$</span><span class="va">y</span>, INDEX <span class="op">=</span> <span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span>, FUN <span class="op">=</span> <span class="va">mean</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;  A  B  C  D </span>
-<span class="co">#&gt; 33 43 49 31</span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">ybar.i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply</a></span><span class="op">(</span><span class="va">sawData</span><span class="op">$</span><span class="va">y</span>, INDEX <span class="op">=</span> <span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span>, FUN <span class="op">=</span> <span class="va">mean</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  A  B  C  D </span></span>
+<span><span class="co">#&gt; 33 43 49 31</span></span></code></pre></div>
 <p>Finally, find the group means, the tidyverse way:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="op">(</span><span class="va">ybar.i</span> <span class="op">&lt;-</span> <span class="va">sawData</span> <span class="op">%&gt;%</span> 
-            <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Brand</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-             <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 4 × 2</span>
-<span class="co">#&gt;   Brand    mu</span>
-<span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 A        33</span>
-<span class="co">#&gt; 2 B        43</span>
-<span class="co">#&gt; 3 C        49</span>
-<span class="co">#&gt; 4 D        31</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">ybar.i</span> <span class="op">&lt;-</span> <span class="va">sawData</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>            <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Brand</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>             <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
+<span><span class="co">#&gt;   Brand    mu</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A        33</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> B        43</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C        49</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> D        31</span></span></code></pre></div>
 <hr>
-<p>Although each of these methods does what we want - return the mean kickback angle for each group - note that they do not return the same type of object.</p>
-<p>Use the <code><a href="https://rdrr.io/r/base/class.html">class()</a></code> function to see what type of object each one returns.</p>
+<p>Although each of these methods does what we want - return the mean
+kickback angle for each group - note that they do not return the same
+type of object.</p>
+<p>Use the <code><a href="https://rdrr.io/r/base/class.html" class="external-link">class()</a></code> function to see what type of object each
+one returns.</p>
 <p>When might the output from each method be useful?</p>
 <hr>
 </div>
-<div id="sum-of-squares" class="section level4">
-<h4 class="hasAnchor">
-<a href="#sum-of-squares" class="anchor"></a>Sum of squares</h4>
+<div class="section level5">
+<h5 id="sum-of-squares">Sum of squares<a class="anchor" aria-label="anchor" href="#sum-of-squares"></a>
+</h5>
 <p>Sums of squares among</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Number of saw brands</span>
-<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># Number of measurements of each brand (note, this assumes balanced design)</span>
-<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">sawData</span><span class="op">)</span><span class="op">/</span><span class="va">a</span>
-
-<span class="va">SSa</span> <span class="op">&lt;-</span> <span class="va">n</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">ybar.i</span><span class="op">$</span><span class="va">mu</span> <span class="op">-</span> <span class="va">ybar.</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>
-<span class="va">SSa</span>
-<span class="co">#&gt; [1] 1080</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Number of saw brands</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sawData</span><span class="op">$</span><span class="va">Brand</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Number of measurements of each brand (note, this assumes balanced design)</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sawData</span><span class="op">)</span><span class="op">/</span><span class="va">a</span></span>
+<span></span>
+<span><span class="va">SSa</span> <span class="op">&lt;-</span> <span class="va">n</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">ybar.i</span><span class="op">$</span><span class="va">mu</span> <span class="op">-</span> <span class="va">ybar.</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">SSa</span></span>
+<span><span class="co">#&gt; [1] 1080</span></span></code></pre></div>
 <p>Sums of squares within</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># individual saw data</span>
-<span class="va">y.ij</span> <span class="op">&lt;-</span> <span class="va">sawData</span><span class="op">$</span><span class="va">y</span>
-
-<span class="va">SSw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">y.ij</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">ybar.i</span><span class="op">$</span><span class="va">mu</span>, each <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">SSw</span>
-<span class="co">#&gt; [1] 1620</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># individual saw data</span></span>
+<span><span class="va">y.ij</span> <span class="op">&lt;-</span> <span class="va">sawData</span><span class="op">$</span><span class="va">y</span></span>
+<span></span>
+<span><span class="va">SSw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">y.ij</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">ybar.i</span><span class="op">$</span><span class="va">mu</span>, each <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">SSw</span></span>
+<span><span class="co">#&gt; [1] 1620</span></span></code></pre></div>
 </div>
-<div id="means-squares" class="section level4">
-<h4 class="hasAnchor">
-<a href="#means-squares" class="anchor"></a>Means squares</h4>
+<div class="section level5">
+<h5 id="means-squares">Means squares<a class="anchor" aria-label="anchor" href="#means-squares"></a>
+</h5>
 <p>Mean squares among</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df1</span> <span class="op">&lt;-</span> <span class="va">a</span> <span class="op">-</span> <span class="fl">1</span>
-<span class="op">(</span><span class="va">MSa</span> <span class="op">&lt;-</span> <span class="va">SSa</span> <span class="op">/</span> <span class="va">df1</span><span class="op">)</span>
-<span class="co">#&gt; [1] 360</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="va">a</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span><span class="op">(</span><span class="va">MSa</span> <span class="op">&lt;-</span> <span class="va">SSa</span> <span class="op">/</span> <span class="va">df1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 360</span></span></code></pre></div>
 <p>Mean squares within</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df2</span> <span class="op">&lt;-</span> <span class="va">a</span> <span class="op">*</span> <span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>
-<span class="op">(</span><span class="va">MSw</span> <span class="op">&lt;-</span> <span class="va">SSw</span> <span class="op">/</span> <span class="va">df2</span><span class="op">)</span>
-<span class="co">#&gt; [1] 101.2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="va">a</span> <span class="op">*</span> <span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">MSw</span> <span class="op">&lt;-</span> <span class="va">SSw</span> <span class="op">/</span> <span class="va">df2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 101.2</span></span></code></pre></div>
 </div>
-<div id="f-statistic" class="section level4">
-<h4 class="hasAnchor">
-<a href="#f-statistic" class="anchor"></a><em>F</em>-statistic</h4>
+<div class="section level5">
+<h5 id="f-statistic">
+<em>F</em>-statistic<a class="anchor" aria-label="anchor" href="#f-statistic"></a>
+</h5>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">F.stat</span> <span class="op">&lt;-</span> <span class="va">MSa</span> <span class="op">/</span> <span class="va">MSw</span><span class="op">)</span>
-<span class="co">#&gt; [1] 3.556</span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">F.stat</span> <span class="op">&lt;-</span> <span class="va">MSa</span> <span class="op">/</span> <span class="va">MSw</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 3.556</span></span></code></pre></div>
 </div>
-<div id="critical-values-and-p-values" class="section level4">
-<h4 class="hasAnchor">
-<a href="#critical-values-and-p-values" class="anchor"></a>Critical values and <em>p</em>-values</h4>
-<p>Recall that in ANOVA, we only consider the upper tail of the <em>F</em>-distribution.</p>
+<div class="section level5">
+<h5 id="critical-values-and-p-values">Critical values and <em>p</em>-values<a class="anchor" aria-label="anchor" href="#critical-values-and-p-values"></a>
+</h5>
+<p>Recall that in ANOVA, we only consider the upper tail of the
+<em>F</em>-distribution.</p>
 <p>Critical value:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">0.05</span>
-<span class="op">(</span><span class="va">F.crit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">qf</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">alpha</span>, <span class="va">df1</span>, <span class="va">df2</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 3.239</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">0.05</span></span>
+<span><span class="op">(</span><span class="va">F.crit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html" class="external-link">qf</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">alpha</span>, <span class="va">df1</span>, <span class="va">df2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 3.239</span></span></code></pre></div>
 <p><em>p</em>-value</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">p.value</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">pf</a></span><span class="op">(</span><span class="va">F.stat</span>, <span class="va">df1</span>, <span class="va">df2</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.03823</span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">p.value</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html" class="external-link">pf</a></span><span class="op">(</span><span class="va">F.stat</span>, <span class="va">df1</span>, <span class="va">df2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.03823</span></span></code></pre></div>
 </div>
 </div>
-<div id="multiple-comparisons" class="section level2">
-<h2 class="hasAnchor">
-<a href="#multiple-comparisons" class="anchor"></a>Multiple comparisons</h2>
-<div id="group-means-1-se" class="section level4">
-<h4 class="hasAnchor">
-<a href="#group-means-1-se" class="anchor"></a>Group means +1 SE</h4>
+<div class="section level3">
+<h3 id="multiple-comparisons">Multiple comparisons<a class="anchor" aria-label="anchor" href="#multiple-comparisons"></a>
+</h3>
+<div class="section level5">
+<h5 id="group-means-1-se">Group means +1 SE<a class="anchor" aria-label="anchor" href="#group-means-1-se"></a>
+</h5>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mean.SE</span> <span class="op">&lt;-</span> <span class="fl">6.364</span> <span class="co"># from model.tables() -- see slide 7.</span>
-
-<span class="co"># Add SE column</span>
-<span class="va">ybar.i</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">ybar.i</span>, SE <span class="op">=</span> <span class="va">mu</span> <span class="op">+</span> <span class="va">mean.SE</span><span class="op">)</span>
-
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">ybar.i</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Brand</span>, y <span class="op">=</span> <span class="va">mu</span>, fill <span class="op">=</span> <span class="va">Brand</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_errorbar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">mu</span>, ymax <span class="op">=</span> <span class="va">SE</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_y_continuous</span><span class="op">(</span><span class="st">"Chainsaw kickback angle"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mean.SE</span> <span class="op">&lt;-</span> <span class="fl">6.364</span> <span class="co"># from model.tables() -- see slide 7.</span></span>
+<span></span>
+<span><span class="co"># Add SE column</span></span>
+<span><span class="va">ybar.i</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">ybar.i</span>, SE <span class="op">=</span> <span class="va">mu</span> <span class="op">+</span> <span class="va">mean.SE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">ybar.i</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Brand</span>, y <span class="op">=</span> <span class="va">mu</span>, fill <span class="op">=</span> <span class="va">Brand</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_errorbar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">mu</span>, ymax <span class="op">=</span> <span class="va">SE</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span><span class="st">"Chainsaw kickback angle"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="lab03_ANOVA_files/figure-html/unnamed-chunk-21-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="tukeys-honestly-significant-difference-test" class="section level2">
-<h2 class="hasAnchor">
-<a href="#tukeys-honestly-significant-difference-test" class="anchor"></a>Tukey’s Honestly Significant Difference test</h2>
+<div class="section level3">
+<h3 id="tukeys-honestly-significant-difference-test">Tukey’s Honestly Significant Difference test<a class="anchor" aria-label="anchor" href="#tukeys-honestly-significant-difference-test"></a>
+</h3>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/TukeyHSD.html">TukeyHSD</a></span><span class="op">(</span><span class="va">aov.out1</span><span class="op">)</span>
-<span class="co">#&gt;   Tukey multiple comparisons of means</span>
-<span class="co">#&gt;     95% family-wise confidence level</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fit: aov(formula = y ~ Brand, data = sawData)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $Brand</span>
-<span class="co">#&gt;     diff     lwr     upr  p adj</span>
-<span class="co">#&gt; B-A   10  -8.207 28.2074 0.4214</span>
-<span class="co">#&gt; C-A   16  -2.207 34.2074 0.0956</span>
-<span class="co">#&gt; D-A   -2 -20.207 16.2074 0.9888</span>
-<span class="co">#&gt; C-B    6 -12.207 24.2074 0.7826</span>
-<span class="co">#&gt; D-B  -12 -30.207  6.2074 0.2727</span>
-<span class="co">#&gt; D-C  -18 -36.207  0.2074 0.0532</span></code></pre></div>
-<div id="plot-tukeys-confidence-intervals" class="section level4">
-<h4 class="hasAnchor">
-<a href="#plot-tukeys-confidence-intervals" class="anchor"></a>Plot Tukey’s confidence intervals</h4>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/TukeyHSD.html" class="external-link">TukeyHSD</a></span><span class="op">(</span><span class="va">aov.out1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Tukey multiple comparisons of means</span></span>
+<span><span class="co">#&gt;     95% family-wise confidence level</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit: aov(formula = y ~ Brand, data = sawData)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Brand</span></span>
+<span><span class="co">#&gt;     diff     lwr     upr  p adj</span></span>
+<span><span class="co">#&gt; B-A   10  -8.207 28.2074 0.4214</span></span>
+<span><span class="co">#&gt; C-A   16  -2.207 34.2074 0.0956</span></span>
+<span><span class="co">#&gt; D-A   -2 -20.207 16.2074 0.9888</span></span>
+<span><span class="co">#&gt; C-B    6 -12.207 24.2074 0.7826</span></span>
+<span><span class="co">#&gt; D-B  -12 -30.207  6.2074 0.2727</span></span>
+<span><span class="co">#&gt; D-C  -18 -36.207  0.2074 0.0532</span></span></code></pre></div>
+<div class="section level5">
+<h5 id="plot-tukeys-confidence-intervals">Plot Tukey’s confidence intervals<a class="anchor" aria-label="anchor" href="#plot-tukeys-confidence-intervals"></a>
+</h5>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/TukeyHSD.html">TukeyHSD</a></span><span class="op">(</span><span class="va">aov.out1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/TukeyHSD.html" class="external-link">TukeyHSD</a></span><span class="op">(</span><span class="va">aov.out1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="lab03_ANOVA_files/figure-html/unnamed-chunk-23-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
-<div id="assignment" class="section level1">
-<h1 class="hasAnchor">
-<a href="#assignment" class="anchor"></a>Assignment</h1>
-<p>A biologist wants to compare the growth of four different tree species she is considering for use in reforestation efforts. All 32 seedlings of the four species are planted at the same time in a large plot. Heights in meters recorded after several years.</p>
+<div class="section level2">
+<h2 id="assignment">Assignment<a class="anchor" aria-label="anchor" href="#assignment"></a>
+</h2>
+<p>A biologist wants to compare the growth of four different tree
+species she is considering for use in reforestation efforts. All 32
+seedlings of the four species are planted at the same time in a large
+plot. Heights in meters recorded after several years.</p>
 <p>Create an R Markdown file to do the following:</p>
 <ol style="list-style-type: decimal">
 <li>Create an <code>R</code> chunk to load the data using:</li>
 </ol>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">FANR6750</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"treeHt"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">FANR6750</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"treeHt"</span><span class="op">)</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
-<li><p>Create a header called “Hypotheses” and under this header, indicate, in plain English, what the null and alternative hypotheses are. Also use R Markdown’s equation features to write these hypotheses (to the extent possible) using mathematical notation</p></li>
-<li><p>Create a header called “ANOVA by hand”. Under this header, perform an ANOVA analysis (degrees of freedom, sums-of-squares, mean-squares, and <em>F</em>-value) without using <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code>. Compute either the critical value of <em>F</em>, or the <em>p</em>-value. Be sure to <strong>annotate your code</strong>.</p></li>
-<li><p>Create a header called “ANOVA in R”. Under this header, perform an ANOVA analysis on the data using the <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> function</p></li>
+<li><p>Create a header called “Hypotheses” and under this header,
+indicate, in plain English, what the null and alternative hypotheses
+are. Also use R Markdown’s equation features to write these hypotheses
+(to the extent possible) using mathematical notation</p></li>
+<li><p>Create a header called “ANOVA by hand”. Under this header,
+perform an ANOVA analysis (degrees of freedom, sums-of-squares,
+mean-squares, and <em>F</em>-value) without using <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code>.
+Compute either the critical value of <em>F</em>, or the
+<em>p</em>-value. Be sure to <strong>annotate your
+code</strong>.</p></li>
+<li><p>Create a header called “ANOVA in R”. Under this header, perform
+an ANOVA analysis on the data using the <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code>
+function</p></li>
 <li>
 <p>Under a subheader called “ANOVA results”:</p>
 <ul>
-<li><p>indicate whether or not the null hypothesis can be rejected at the <span class="math inline">\(\alpha = 0.05\)</span> level</p></li>
-<li><p>include a well-formatted ANOVA table using the <code><a href="https://generics.r-lib.org/reference/tidy.html">broom::tidy()</a></code> function</p></li>
+<li><p>indicate whether or not the null hypothesis can be rejected at
+the <span class="math inline">\(\alpha = 0.05\)</span> level</p></li>
+<li><p>include a well-formatted ANOVA table using the
+<code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">broom::tidy()</a></code> function</p></li>
 <li><p>create a barplot showing the group means and SEs</p></li>
 </ul>
 </li>
-<li><p>Create a header called “Which means are different?”. Use Tukey’s HSD test to determine which pairs of means differ at the <span class="math inline">\(\alpha = 0.05\)</span> level. Include a few sentences indicating which pairs are different</p></li>
+<li><p>Create a header called “Which means are different?”. Use Tukey’s
+HSD test to determine which pairs of means differ at the <span class="math inline">\(\alpha = 0.05\)</span> level. Include a few
+sentences indicating which pairs are different</p></li>
 </ol>
 <p>A few things to remember when creating the assignment:</p>
 <ul>
-<li><p>Be sure the output type is set to: <code>output: html_document</code></p></li>
-<li><p>Title the document: <code>title: "Lab 3 assignment"</code></p></li>
-<li><p>Be sure to include your first and last name in the <code>author</code> section</p></li>
-<li><p>Be sure to set <code>echo = TRUE</code> in all <code>R</code> chunks so we can see both your code and the output</p></li>
-<li><p>Please upload both the <code>html</code> and <code>.Rmd</code> files when you submit your assignment</p></li>
-<li><p>See the R Markdown reference sheet for help with creating <code>R</code> chunks, equations, tables, etc.</p></li>
+<li><p>Be sure the output type is set to:
+<code>output: html_document</code></p></li>
+<li><p>Title the document:
+<code>title: "Lab 3 assignment"</code></p></li>
+<li><p>Be sure to include your first and last name in the
+<code>author</code> section</p></li>
+<li><p>Be sure to set <code>echo = TRUE</code> in all <code>R</code>
+chunks so we can see both your code and the output</p></li>
+<li><p>Please upload both the <code>html</code> and <code>.Rmd</code>
+files when you submit your assignment</p></li>
+<li><p>See the R Markdown reference sheet for help with creating
+<code>R</code> chunks, equations, tables, etc.</p></li>
 </ul>
 </div>
   </div>
@@ -690,11 +736,13 @@ Residuals
 
 
       <footer><div class="copyright">
-  <p>Developed by Clark Rushing.</p>
+  <p></p>
+<p>Developed by Clark Rushing.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -702,6 +750,8 @@ Residuals
 
   
 
+
+  
 
   </body>
 </html>

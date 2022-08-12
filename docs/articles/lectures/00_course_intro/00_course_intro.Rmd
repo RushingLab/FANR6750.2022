@@ -136,6 +136,25 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 .footnote[[1] Material is somewhat cummalative by nature & some important concepts will be repeated]  
 
 ---
+# course objectives
+
+**To understand:**  
+<br/>
+
+--
+1) the logical structure of experiments, especially the design of manipulative experiments;  
+<br/>
+
+--
+2) the analysis of such experiments, focusing on linear models;  
+<br/>
+
+--
+3) the use of models in ecological studies (experimental and observational);  
+<br/>
+
+
+---
 # basic structure
 
 --
@@ -152,7 +171,7 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 
 --
 
-4) Linear model variations for experiments (t-tests, ANCOVA)
+4) Linear model variations for experiments (t-tests, ANOVA, ANCOVA)
 
 --
 
