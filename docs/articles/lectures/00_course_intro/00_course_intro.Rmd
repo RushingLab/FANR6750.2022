@@ -133,7 +133,7 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 
 - 5 lab assignments, 10 points (5%) each
 
-.footnote[[1] Material is somewhat cummalative by nature & some important concepts will be repeated]  
+.footnote[[1] Material is somewhat cumulative by nature & some important concepts will be repeated]  
 
 ---
 # course objectives
