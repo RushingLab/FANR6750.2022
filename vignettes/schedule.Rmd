@@ -52,8 +52,8 @@ schedule <- data.frame(WK = c("1", "", "",
        "Statistical power", "Contrasts", "Contrasts", "", #6
       "Transformations", "Nonparametrics", "Nonparametrics", "", #7
        "Random and fixed effects", "Blocking and blocked designs",  "Blocking and blocked designs", "", #8 
-      "AB factorial designs", "AB factorial designs", "Paper discussion: Pseudoreplication", "", # 9
-       "ABC factorial designs", "Nested designs", "Nested designs", "", #10
+      "Nested designs", "Nested designs", "Paper discussion: Pseudoreplication", "", # 9
+       "AB factorial designs", "AB factorial designs", "ABC factorial designs",  "", #10
           "Split-plot designs", "Split-plot designs", "Fall break", "", #11
       "Repeated measures", "Repeated measures", "Buffer", "",
          "Regression review", "Analysis of covariance", "Analysis of covariance", "", #13
@@ -70,12 +70,12 @@ schedule <- data.frame(WK = c("1", "", "",
                                "Contrasts and power", "", "", "",
                                "Transformations and nonparametrics*", "", "", "",
                                "Blocking", "", "", "",
+                                "Nested designs", "", "", "",
                                "Factorial designs*", "", "", "",
-                               "Nested designs", "", "", "",
-                               "Split-plot designs*", "", "", "",
-                               "Repeated measures", "", "", "",
-                               "ANCOVA*", "", "", "",
-                               "Linear models", "", "", "",
+                               "Split-plot designs", "", "", "",
+                               "Repeated measures*", "", "", "",
+                               "ANCOVA", "", "", "",
+                               "Linear models*", "", "", "",
                                "GLMs", "", "", "",
                                # "Model selection", "", "", "",
                                "No lab"),
@@ -90,8 +90,8 @@ schedule <- data.frame(WK = c("1", "", "",
                                "Chp. 9.2", "", "Colegrave & Ruxton 2018", "",
                                "", "Chp. 9.1", "", "",
                                "Chp. 11.1-11.3", "", "", "",
-                               "", "**Exam 2 distributed**", "", "",
-                               "Chp. 6", "Chp. 12; **Exam 2 due**", "", "",
+                               "**Exam 2 distributed**", "",  "", "",
+                               "Chp. 6; **Exam 2 due**", "Chp. 12", "", "",
                                "Chp. 13", "", "", "",
                                "", "", "", "",
                                "**Exam 3 distributed**", "", "Tredennick et al. 2021", "",

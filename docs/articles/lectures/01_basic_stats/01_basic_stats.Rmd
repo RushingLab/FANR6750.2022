@@ -100,7 +100,7 @@ class: inverse
 
 - Based on *falsification*
 
-- Example: All swans can fly :: penguins are birds :: penguins can fly
+- Example: All birds can fly :: penguins are birds :: penguins can fly
 ]
 
 ---

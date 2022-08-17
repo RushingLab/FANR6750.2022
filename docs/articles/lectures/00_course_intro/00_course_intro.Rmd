@@ -47,6 +47,8 @@ source(here::here("R/zzz.R"))
 
 Lectures and labs: [rushinglab.github.io/FANR6750](https://rushinglab.github.io/FANR6750)<sup>1</sup>
 
+.footnote[[1] Bookmark this page!]
+
 --
 
 .pull-left[
@@ -56,11 +58,11 @@ Quinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biolo
 ]
 
 .pull-right[
-```{r, echo = FALSE, out.height=350, out.width=262}
+```{r, echo = FALSE, out.height=300, out.width=225}
 knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologists-1.jpg")
 ```
 ]
-.footnote[[1] Bookmark this page!]
+
 
 ---
 # labs
