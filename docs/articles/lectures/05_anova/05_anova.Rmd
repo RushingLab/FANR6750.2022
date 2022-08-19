@@ -89,6 +89,38 @@ pine %>%
 ]
 
 ---
+# a brief tangent
+
+#### What counts as an observation?
+
+--
+
+#### Experimental unit
+
+> the physical unit that receives a particular treatment
+
+--
+
+#### Observational unit
+
+> the physical unit on which measurements are taken
+
+--
+
+These are not always the same! 
+
+--
+
+Examples
+
+- Agricultural fields given different fertilizer, crop yield measured  
+
+- Rats given different diets, disease state measured
+
+- Microcosm given different predator abundance, tadpole growth measured
+
+
+---
 # motivating example
 
 **Question:** Is there a difference in growth among the four treatment groups?
@@ -649,23 +681,205 @@ anova_tab %>%
 
 --
 
-#### Critical value: $F_{\alpha=0.05,2,9} = 4.26$
+#### Critical value: $\large F_{\alpha=0.05,2,9} = 4.26$
 
 --
 
 ### Decision?
 
 ---
-# can we make causal inference?
+# anova as a linear model
+
+As discussed previously, ANOVA is a linear model ( $y = a + bx$ )
+
+--
+
+So we could also analyze these data using the `lm()` function:
+
+```{r echo = TRUE, eval = FALSE}
+cawa_long <- tidyr::pivot_longer(cawa, 
+                                 cols = c("Low", "Medium", "High"), 
+                                 names_to = "Elevation", values_to = "Count")
+
+fit.lm <- lm(Count ~ Elevation, data = cawa_long)
+summary(fit.lm)
+```
+
+```{r cawa_lm, echo = FALSE}
+cawa <- data.frame(Replicate = c("1", "2", "3", "4"),
+                   Low = as.character(c(1, 3, 0, 2)),
+                   Medium = as.character(c(2, 0, 4, 3)),
+                   High = as.character(c(4, 7, 5, 5)))
+cawa_long <- tidyr::pivot_longer(cawa, 
+                                 cols = c("Low", "Medium", "High"), 
+                                 names_to = "Elevation", values_to = "Count")
+
+fit.lm <- lm(Count ~ Elevation, data = cawa_long)
+as.data.frame(broom::tidy(fit.lm))
+```
+
+---
+# anova as a linear model
+
+```{r cawa_lm2, echo = FALSE}
+as.data.frame(broom::tidy(fit.lm))
+```
+
+Before we can interpret these output (and how it relates to the ANOVA table), we need to understand how `R` fits this model
+
+---
+# anova as a linear model
+
+```{r cawa_lm3, echo = FALSE}
+as.data.frame(broom::tidy(fit.lm))
+```
+
+#### The model matrix
+
+```{r echo = TRUE}
+head(model.matrix(fit.lm), 2)
+```
+
+- One row for each observation
+
+- Intercept = reference level (alphabetical order by default)
+
+- Low and Medium treated as *dummy variables* (0/1)
+
+---
+# anova as a linear model
+
+```{r cawa_lm4, echo = FALSE}
+as.data.frame(broom::tidy(fit.lm))
+```
+
+#### The model matrix
+
+```{r echo = TRUE}
+head(model.matrix(fit.lm), 2)
+```
+
+- Multiplied by the vector of model coefficients $\beta_0$, $\beta_1$, $\beta_2$ to get $E[y_i]$
+
+- `R` names the coefficients `Intercept`, `ElevationLow`, `ElevationMedium`
+
+- e.g., row 1 = $E[y_1] = Intercept \times 1 + ElevationLow \times 1 + ElevationMedium \times 0$
+
+---
+# anova as a linear model
+
+```{r cawa_lm5, echo = FALSE}
+as.data.frame(broom::tidy(fit.lm))
+```
+
+#### How do we interpret the coefficients?
+
+--
+
+- `Intercept` is the expected count at a high elevation site
+
+--
+
+- `ElevationLow` is the *difference* between high and low elevation
+
+--
+
+- `ElevationMedium` is the *difference* between high and medium elevation
+
+
+---
+# anova as a linear model
+
+```{r cawa_lm6, echo = FALSE}
+as.data.frame(broom::tidy(fit.lm))
+```
+
+#### Residuals
+
+- `lm()` also returns residuals (e.g., $y_i - E[y_i]$)
+
+```{r echo = TRUE}
+fit.lm$residual
+```
+--
+
+```{r echo = TRUE}
+sum(fit.lm$residuals^2)
+```
+
+--
+
+- Does this look familiar?
+
+---
+# anova as a linear model
+
+```{r cawa_lm7, echo = FALSE}
+as.data.frame(broom::tidy(fit.lm))
+```
+
+#### Residuals
+
+What about among group variation?
+
+```{r echo = TRUE}
+fit.lm$fitted.values
+```
+
+
+```{r echo = TRUE}
+sum((fit.lm$fitted.values - mean(fit.lm$fitted.values))^2)
+```
+
+--
+
+- So the model is the same, the only difference is *how* we present the results
+
+---
+# anova as a linear model
+
+One more way to fit the model:
+
+```{r echo = TRUE, eval = FALSE}
+fit.lm2 <- lm(Count ~ Elevation - 1, data = cawa_long)
+summary(fit.lm2)
+```
+
+```{r cawa_lmEff, echo = FALSE}
+fit.lm2 <- lm(Count ~ Elevation - 1, data = cawa_long)
+as.data.frame(broom::tidy(fit.lm2))
+```
+
+--
+
+```{r echo = TRUE}
+head(model.matrix(fit.lm2), 5)
+```
+
+---
+# causal inference
+
+#### Can we make causal inference about the effect of elevation on Canada Warbler abundance?
 
 <br/>
 
 --
 
-### **Answer**: Definitely not.
+### **Answer**: Definitely not!
 
 <br/>
 
 --
 
 ### **What was missing?**
+
+---
+# looking ahead
+
+<br/>
+
+#### **Next time:** Multiple comparisons
+
+<br/>
+
+#### **Reading:** Quinn chp. 3.4

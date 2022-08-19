@@ -15,9 +15,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # LECTURE 4: t-tests and null hypothesis testing
+]
+.subtitle[
 ## FANR 6750 (Experimental design)
+]
+.author[
 ### <br/><br/><br/>Fall 2022
+]
 
 ---
 
@@ -341,7 +347,7 @@ Theory says that the test statistic will follow a `\(t\)`-distribution with `\(n
 ]
 
 ---
-## `\(\large p\)`-values
+## `\(\Large p\)`-values
 
 &lt;br/&gt;
 &lt;img src="04_NHST_files/figure-html/p-1.png" width="576" style="display: block; margin: auto;" /&gt;
@@ -377,7 +383,7 @@ Theory says that the test statistic will follow a `\(t\)`-distribution with `\(n
 4) If the `\(p\)`-value is `\(&lt; \alpha\)` (or if `\(t\)` is more extreme than the critical value), reject the null  
 
 ---
-## MORE ON `\(\large p\)`-VALUES
+## MORE ON `\(\Large p\)`-VALUES
 
 &lt;br/&gt;
 #### A `\(\large p\)`-value tells you how likely your observations (or more extreme) would be **if the null hypothesis is true**  
@@ -532,23 +538,23 @@ class: inverse, center, middle
 
 --
 
-- Mean of low group: `\(\large \bar{y}_L = 20.2\)`  
+- Mean of low group: `\(\large \bar{y}_L = 19.2\)`  
 
 - Mean of high group: `\(\large \bar{y}_H = 6.1\)`  
 
 --
 
-- Standard deviation of low group: `\(\large s_L = 6.03\)`  
+- Standard deviation of low group: `\(\large s_L = 6.16\)`  
 
 - Standard deviation of high group: `\(\large s_H = 5.63\)`  
 
 --
 
-- Standard error of difference in means `\(\large SEDM_1 = 2.61\)`  
+- Standard error of difference in means `\(\large SEDM_1 = 2.64\)`  
 
 --
 
-- Test statistic: `\(\large t = (20.2 - 6.1)/2.61 = 5.4\)`  
+- Test statistic: `\(\large t = (19.2 - 6.1)/2.64 = 4.97\)`  
 
 --
 
@@ -634,6 +640,34 @@ and `\(df_2\)`
 --
 
 #### Decision: `\(\large p &gt; \alpha\)` (or observed `\(F\)` is lower than critical value). Fail to reject the null. No strong evidence that variances are different.
+
+---
+## The t-test as a linear model
+
+As discussed previously, the t-test is a linear model ( `\(y = a + bx\)` )
+
+--
+
+So we could also analyze these data using the `lm()` function:
+
+
+```r
+trees &lt;- data.frame(Trees = c(16, 14, 18, 17, 29, 31, 14, 16, 22, 15,
+                              2, 11, 6, 8, 0, 3, 19, 1, 6, 5),
+                    Elevation = factor(rep(c("Low", "High"), each = 10), 
+                                       levels = c("Low", "High")))
+
+fit.lm &lt;- lm(Trees ~ Elevation, data = trees)
+summary(fit.lm)
+```
+
+
+```
+##            term estimate std.error statistic   p.value
+## 1   (Intercept)     19.2     1.866    10.291 5.729e-09
+## 2 ElevationHigh    -13.1     2.638    -4.965 1.001e-04
+```
+
 
 ---
 class: inverse, middle, center
@@ -845,6 +879,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

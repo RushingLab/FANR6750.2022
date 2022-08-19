@@ -52,3 +52,5 @@ navbar:
           href: articles/projects_and_directories.html
         - text: "R Markdown reference"
           href: articles/RMarkdown.html
+        - text: "Creating publication-quality graphics"
+          href: articles/graphics.html

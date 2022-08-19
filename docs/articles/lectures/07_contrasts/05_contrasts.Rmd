@@ -1,7 +1,7 @@
 ---
-title: "LECTURE 5: *a priori* orthogonal contrasts"
+title: "LECTURE 7: *a priori* orthogonal contrasts"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2021"
+author: "<br/><br/><br/>Fall 2022"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -42,38 +42,38 @@ library(kableExtra)
 > Because tests that are not of interest are ignored, and the experiment is set up to test only certain hypotheses, orthogonal contrasts offer a more powerful procedure  
 
 ---
-# chain saw kickback angles
+# mussel size
 
 ```{r echo = FALSE}
 library(FANR6750)
 library(dplyr)
-data("sawData")
+data("musselData")
 
-cs <- dplyr::mutate(sawData, ID = rep(1:5, 4)) %>%
-        tidyr::pivot_wider(names_from = Brand, values_from = y) %>%
+cs <- dplyr::mutate(musselData, ID = rep(1:5, 4)) %>%
+        tidyr::pivot_wider(names_from = Watershed, values_from = Length) %>%
          select(-ID)
 
 cs %>%
   kable("html", align = 'c') %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = TRUE) %>%
-  add_header_above(c("Brand" = 4))
+  add_header_above(c("Watershed" = 4))
 ```
 
 --
-- Brands A and D are lightweight home models  
+- Chattooga and Keowee are more forested  
 
-- Brands B and C are heavy-duty industrial models
+- Coneross and Twelvemile are more agricultural
 
 ---
 # hypotheses
 
 #### Questions
 
-1) Do home models differ from industrial models?
+1) Do mussels from forested watersheds differ from agricultural watersheds?
 
-2) Do the home models differ from one another?
+2) Do the agricultural watersheds differ from one another?
 
-3) Do the industrial models differ from one another?
+3) Do the forested watersheds differ from one another?
 
 --
 
@@ -81,12 +81,12 @@ cs %>%
 
 ```{r echo = FALSE}
 h0 <- data.frame(col1 = c("1", "2", "3"),
-                 Comparison = c("Home vs industrial", 
-                                "Home model A vs home model D",
-                                "Industrial model B vs industrial model C"),
-                 H = c('\\(\\frac{\\mu_A + \\mu_D}{2} - \\frac{\\mu_B + \\mu_C}{2}=0\\)',
-                       '\\(\\mu_A - \\mu_D = 0\\)',
-                       '\\(\\mu_B - \\mu_C = 0\\)'))
+                 Comparison = c("Forested vs agricultural", 
+                                "Twelvemile vs Coneross",
+                                "Chattooga vs Keowee"),
+                 H = c('\\(\\frac{\\mu_T + \\mu_{Co}}{2} - \\frac{\\mu_{Ch} + \\mu_K}{2}=0\\)',
+                       '\\(\\mu_{T} - \\mu_{Co} = 0\\)',
+                       '\\(\\mu_{Ch} - \\mu_K = 0\\)'))
 
 h0 %>%
     kable(align = c("l", "l", "c"), col.names = c("", "Comparisons", "H0 to test"), 
@@ -102,12 +102,12 @@ h0 %>%
 
 ```{r echo = FALSE}
 h0 <- data.frame(col1 = c("1", "2", "3"),
-                 Comparison = c("Home vs industrial", 
-                                "Home model A vs home model D",
-                                "Industrial model B vs industrial model C"),
-                 H = c('\\(\\frac{\\mu_A + \\mu_D}{2} - \\frac{\\mu_B + \\mu_C}{2}=0\\)',
-                       '\\(\\mu_A - \\mu_D = 0\\)',
-                       '\\(\\mu_B - \\mu_C = 0\\)'))
+                 Comparison = c("Forested vs agricultural", 
+                                "Twelvemile vs Coneross",
+                                "Chattooga vs Keowee"),
+                 H = c('\\(\\frac{\\mu_T + \\mu_{Co}}{2} - \\frac{\\mu_{Ch} + \\mu_K}{2}=0\\)',
+                       '\\(\\mu_{T} - \\mu_{Ch} = 0\\)',
+                       '\\(\\mu_{Ch} - \\mu_{K} = 0\\)'))
 
 h0 %>%
     kable(align = c("l", "l", "c"), col.names = c("", "Comparisons", "H0 to test"), 
@@ -122,9 +122,9 @@ h0 %>%
 
 ```{r echo = FALSE}
 lc <- data.frame(col1 = c("1", "2", "3"),
-                 H = c('\\((1/2)\\mu_A - (1/2)\\mu_B - (1/2)\\mu_C + (1/2)\\mu_D\\)',
-                       '\\((1)\\mu_A + (0)\\mu_B + (0)\\mu_C - (1)\\mu_D\\)',
-                       '\\((0)\\mu_A + (1)\\mu_B - (1)\\mu_C + (0)\\mu_D\\)'))
+                 H = c('\\((1/2)\\mu_T - (1/2)\\mu_{Ch} - (1/2)\\mu_{K} + (1/2)\\mu_{Co}\\)',
+                       '\\((1)\\mu_T + (0)\\mu_{Ch} + (0)\\mu_{K} - (1)\\mu_{Co}\\)',
+                       '\\((0)\\mu_T + (1)\\mu_{Ch} - (1)\\mu_K + (0)\\mu_{Co}\\)'))
 
 lc %>%
     kable(align = c("c", "l"), col.names = NULL, 
@@ -158,18 +158,18 @@ $$\large \sum_i a_i=0;\;\; \sum_i b_i=0; \;\;and \; \sum_i a_ib_i=0$$
 ---
 # back to the saw data
 
-Returning to the question: "Does kickback differ among industrial and home types of saws?":
+Returning to the question: "Does mussel size differ among forested and agricultural watersheds?":
 
-$$\large H_{0_1} = \frac{\mu_A + \mu_D}{2} - \frac{\mu_B + \mu_C}{2} = 0$$
+$$\large H_{0_1} = \frac{\mu_T + \mu_{Co}}{2} - \frac{\mu_{Ch} + \mu_{K}}{2} = 0$$
 
 --
 Multiplying through by 2 gives:
 
-$$\large H_{0_1} = (\mu_A + \mu_D) - (\mu_B + \mu_C) = 0$$
+$$\large H_{0_1} = (\mu_{T} + \mu_{Co}) - (\mu_{Ch} + \mu_K) = 0$$
 
 --
 Which can be written as:
-$$\large L1 = (1)\mu_A + (-1)\mu_B + (-1)\mu_C + (1)\mu_D$$
+$$\large L1 = (1)\mu_T + (-1)\mu_{Ch} + (-1)\mu_K + (1)\mu_{Ch}$$
 where the coefficients are $a_1 = 1$, $a_2 = -1$, $a_3 = -1$, and $a_4 = 1$
 
 --
@@ -214,31 +214,31 @@ where $\large  T_i$ is the sum of observations in group $\large  i$, and $\large
 
 For thefirst hypothesis we have:
 
-$$ \large SS_{L_1} = \frac{(165 - 215 - 245 - 155)^2}{5(1 + 1 + 1 + 1)} = 980$$
+$$ \large SS_{L_1} = \frac{(66-107-121+77)^2}{5(1 + 1 + 1 + 1)} = 361.2$$
 
 ---
 # sums of squares for each contrast
 
-For the second hypothesis we have: $\large L_2 = \mu_A + 0 + 0 - \mu_D$ with coefficients $\large a_i = (1, 0, 0,-1)$
+For the second hypothesis we have: $\large L_2 = \mu_T + 0 + 0 - \mu_{Co}$ with coefficients $\large a_i = (1, 0, 0,-1)$
 
-$$\large SS_{L_2} = \frac{(165 +0 +0 - 155)^2}{5(1 + 0 + 0 + 1)} = 10$$
+$$\large SS_{L_2} = \frac{(66 +0 +0 - 77)^2}{5(1 + 0 + 0 + 1)} = 12.1$$
 
 --
 
 For the third hypothesis we have: $\large L_3 = 0 + \mu_B - \mu_C + 0$ with coefficients $\large a_i = (0, 1,-1, 0)$
 
-$$\large SS_{L_3} = \frac{(0 + 215 - 245 + 0)^2}{5(0 + 1 + 1 + 0)} = 90$$
+$$\large SS_{L_3} = \frac{(0 + 107 - 121 + 0)^2}{5(0 + 1 + 1 + 0)} = 19.6$$
 ---
 # expanded anova table
 
 For each contrast, each SS is divided by 1 d.f., and then divided by MSW.
 
 ```{r echo = FALSE}
-cs <- data.frame(Source = c("Among chainsaws", "Home vs Ind ", "A vs D", "B vs C", "Within"),
+cs <- data.frame(Source = c("Among waterfeds", "F vs Ag ", "T vs Co", "Ch vs K", "Within"),
                  df = c("3","1", "1", "1", "16"),
-                 SS = c(1080, 980, 10, 90, 1620),
-                 MS = c(360, 980, 10, 90, 101),
-                 F = c(3.56, 9.68, 0.10, 0.89, NA),
+                 SS = c(393, 361, 12, 20, 216),
+                 MS = c(131, 361, 12, 20, 13.5),
+                 F = c(9.70, 26.76, 0.90, 1.45, NA),
                  Fcrit = c(3.24, 4.49, 4.49, 4.49, NA))
 options(knitr.kable.NA = '') # don't print NA's in table
 cs %>%
@@ -254,8 +254,6 @@ Notice that the Sums of Squares are partitioned according to hypotheses we are i
 
 ---
 # example 
-
-#### Problem 10.4.3 from Dowdy et al.
 
 Study on the effectiveness of analgesics. Five persons who have a headache are chosen at random for each treatment. All patients take the medication in capsule form and do not know which group they are in. The capsules containing aspirin (with or without something else) all contain the same amount.  
 

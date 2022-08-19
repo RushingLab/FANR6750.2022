@@ -131,6 +131,9 @@
     <li>
       <a href="../articles/RMarkdown.html">R Markdown reference</a>
     </li>
+    <li>
+      <a href="../articles/graphics.html">Creating publication-quality graphics</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -163,11 +166,64 @@ Methods in Forestry and Natural Resources Research</h3>
 <div class="section level2">
 <h2 id="attributes-of-good-figures">Attributes of good figures<a class="anchor" aria-label="anchor" href="#attributes-of-good-figures"></a>
 </h2>
+<p>Effective data visualizations should:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Tell a story</strong>. Each figure in a manuscript or
+report should communicate one of the main findings you want readers to
+know. A casual reader should be able to understand the primary findings
+by looking at the figures.</p></li>
+<li><p><strong>Be intuitive</strong>. Strive for figures that readers
+can understand without having to read the caption or text. Readers
+should at least grasp the main gist of the figure just by looking at
+it.</p></li>
+<li><p><strong>Err towards simplicity</strong>. Avoid clutter. Avoid
+gratuitous use of visual attributes (color, size, shape) that do not
+show attributes of the data. Avoid background colors. Use grid lines
+sparingly and only when they make interpretation of the data
+easier.</p></li>
+<li><p><strong>Be readable</strong>. The default sizes for axis labels
+and text are rarely big enough. You will almost always need to make them
+bigger.</p></li>
+<li><p><strong>Maximize data-ink ratio, within reason</strong>. Related
+to point 3, most of the “ink” in your figure should show data rather
+than non-data (axis ticks/labels, titles, legends, grid lines, etc.).
+Maximize ink that shows data relative to non-data, <a href="https://clauswilke.com/dataviz/balance-data-context.html" class="external-link">within
+reason</a>.</p></li>
+<li><p><strong>Have a visual hierarchy</strong>. The most important
+information in the plot should be the most visible. Use layering, color,
+brightness, size, transparency, etc. to make important attributes
+(generally data, sometimes even specific portions of the data) jump out
+and less important attributes (axis ticks/lines, grid lines, less
+important data points) fade into the background.</p></li>
+</ol>
+</div>
+<div class="section level2">
+<h2 id="what-type-of-figure-should-i-use">What type of figure should I use?<a class="anchor" aria-label="anchor" href="#what-type-of-figure-should-i-use"></a>
+</h2>
+<p><strong>Trends or time series</strong> - line chart</p>
+<p><strong>Amounts/comparisons of discrete groups</strong> - bar chart,
+dot plot with error bars</p>
+<p><strong>Frequencies/distributions</strong> - histogram</p>
+<p><strong>Associations of 2 or more continuous variables</strong> -
+scatterplot</p>
+<p><strong>Comparing distributions of discrete groups</strong> -
+box-and-whisker plot, violin plt</p>
+<p><strong>Spatial relationships</strong> - map</p>
+</div>
+<div class="section level2">
+<h2 id="visualization-checklist">Visualization checklist<a class="anchor" aria-label="anchor" href="#visualization-checklist"></a>
+</h2>
 <p>Below is a list of considerations for making high-quality figures for
-publications. This is</p>
+publications. This is not a complete list and these should be considered
+suggestions.</p>
 <ul>
-<li>
-<li><p>Do you axes start and stop at reasonable values?</p></li>
+<li><p>Does your figure include a caption that clearly explains all
+elements needed to interpret the visualization? Remember that the
+caption and figure should be understandable without referencing the main
+text.</p></li>
+<li><p>Does your figure accurately show variability in the data or
+uncertainty in estimates?</p></li>
+<li><p>Do your axes start and stop at reasonable values?</p></li>
 <li><p>Do your axis titles clearly indicate what variables are being
 shown? Do they include units?</p></li>
 <li><p>Are your axis labels, axis titles, and text annotations
@@ -175,24 +231,72 @@ appropriately sized?</p></li>
 <li><p>If your figure includes different colors, shapes, or sizes, do
 these attributes communicate properties of the data?</p></li>
 <li><p>If your figure includes different colors, shapes, or sizes, do
-have a legend to show what values are represented by these
+you have a legend to show what values are represented by these
 attributes?</p></li>
 <li><p>Are color palettes colorblind-friendly?</p></li>
+<li><p>If you have overlapping elements (points, bars, etc.), can they
+be clearly distinguished?</p></li>
+<li><p>If your figure includes multiple panels, are the axis limits
+consistent?</p></li>
+<li><p>If your figure includes multiple panels, is each panel
+labeled?</p></li>
 <li><p>Do you have grid lines? If so, do they show relevant information
 needed to interpret the figure?</p></li>
-<li><p>Did you use a 3D pie chart?</p></li>
+<li><p>Do you have grid lines? If so, are they appropriately sized and
+colored to not distract from the data?</p></li>
+<li><p>Did you use a 3D pie chart? 😠</p></li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="saving-figures-for-publication">Saving figures for publication<a class="anchor" aria-label="anchor" href="#saving-figures-for-publication"></a>
+<h2 id="saving-high-resolution-figures-for-publication">Saving high-resolution figures for publication<a class="anchor" aria-label="anchor" href="#saving-high-resolution-figures-for-publication"></a>
 </h2>
+<p>In many cases, you will need to save your figures rather than render
+them directly in your .rmd file. The <code>ggsave()</code> function is
+(in my opinion) the easiest way to save high-resolution figures. By
+default, <code>ggsave()</code> will save the last plot that you created
+in <code>R</code> using the ssame size as your graphics device. All you
+have to tell the function is where to save the figure and what to name
+the file. So, for example, the following code would save</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">libary</span><span class="op">(</span><span class="va">ggplot2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>, </span>
+<span>                 y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"figs/scatterplot.png"</span><span class="op">)</span></span></code></pre></div>
+<p><code>ggsave()</code> also uses whatever file type you name the
+figure file to guess what format to save the figure as (in this case,
+png). Options include: “eps”, “ps”, “tex”, “pdf”, “jpeg”, “tiff”, “png”,
+“bmp”, and “svg”.</p>
+<p>You can also change the defaults to, for example, save a specific
+figure object, change the figure size, and change the figure resolution.
+For example,</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">libary</span><span class="op">(</span><span class="va">ggplot2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>, </span>
+<span>                 y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggsave</span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"figs/scatterplot.png"</span>,</span>
+<span>       plot <span class="op">=</span> <span class="va">p</span>,</span>
+<span>       width <span class="op">=</span> <span class="fl">5</span>, </span>
+<span>       height <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>       units <span class="op">=</span> <span class="st">"in"</span>,</span>
+<span>       dpi <span class="op">=</span> <span class="fl">600</span><span class="op">)</span></span></code></pre></div>
+<p>Easy!</p>
 </div>
 <div class="section level2">
 <h2 id="additional-resources">Additional resources<a class="anchor" aria-label="anchor" href="#additional-resources"></a>
 </h2>
 <p><a href="https://clauswilke.com/dataviz/" class="external-link">Fundamentals of Data
 Visualization</a>, by Claus Wilke. A comprehensive book on data
-visualization, with lots of R code</p>
+visualization, with lots of <code>R</code> code.</p>
 </div>
   </div>
 

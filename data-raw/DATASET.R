@@ -90,3 +90,6 @@ usethis::use_data(vegData, overwrite = TRUE)
 
 salinityData <- read.csv("data-raw/salinityData.csv")
 usethis::use_data(salinityData, overwrite = TRUE)
+
+musselData <- read.csv("data-raw/musselData.csv")
+usethis::use_data(musselData, overwrite = TRUE)

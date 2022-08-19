@@ -417,7 +417,7 @@ legend(-5, 0.5, c("Standard normal distribution", "t distribution (df=5)", "t di
 ]
 
 ---
-## $\large p$-values
+## $\Large p$-values
 
 <br/>
 ```{r p, fig.width=8, fig.height=6}
@@ -498,7 +498,7 @@ $$\large t = \frac{\bar{y} - \mu_0}{SEM}$$
 4) If the $p$-value is $< \alpha$ (or if $t$ is more extreme than the critical value), reject the null  
 
 ---
-## MORE ON $\large p$-VALUES
+## MORE ON $\Large p$-VALUES
 
 <br/>
 #### A $\large p$-value tells you how likely your observations (or more extreme) would be **if the null hypothesis is true**  
@@ -672,23 +672,23 @@ ggplot(df, aes(x = Elevation, y = Trees)) + geom_boxplot()
 
 --
 
-- Mean of low group: $\large \bar{y}_L = 20.2$  
+- Mean of low group: $\large \bar{y}_L = 19.2$  
 
 - Mean of high group: $\large \bar{y}_H = 6.1$  
 
 --
 
-- Standard deviation of low group: $\large s_L = 6.03$  
+- Standard deviation of low group: $\large s_L = 6.16$  
 
 - Standard deviation of high group: $\large s_H = 5.63$  
 
 --
 
-- Standard error of difference in means $\large SEDM_1 = 2.61$  
+- Standard error of difference in means $\large SEDM_1 = 2.64$  
 
 --
 
-- Test statistic: $\large t = (20.2 - 6.1)/2.61 = 5.4$  
+- Test statistic: $\large t = (19.2 - 6.1)/2.64 = 4.97$  
 
 --
 
@@ -793,6 +793,36 @@ par(op)
 --
 
 #### Decision: $\large p > \alpha$ (or observed $F$ is lower than critical value). Fail to reject the null. No strong evidence that variances are different.
+
+---
+## The t-test as a linear model
+
+As discussed previously, the t-test is a linear model ( $y = a + bx$ )
+
+--
+
+So we could also analyze these data using the `lm()` function:
+
+```{r echo = TRUE, eval = FALSE}
+trees <- data.frame(Trees = c(16, 14, 18, 17, 29, 31, 14, 16, 22, 15,
+                              2, 11, 6, 8, 0, 3, 19, 1, 6, 5),
+                    Elevation = factor(rep(c("Low", "High"), each = 10), 
+                                       levels = c("Low", "High")))
+
+fit.lm <- lm(Trees ~ Elevation, data = trees)
+summary(fit.lm)
+```
+
+```{r cawa_lm, echo = FALSE}
+trees <- data.frame(Trees = c(16, 14, 18, 17, 29, 31, 14, 16, 22, 15,
+                              2, 11, 6, 8, 0, 3, 19, 1, 6, 5),
+                    Elevation = factor(rep(c("Low", "High"), each = 10), 
+                                       levels = c("Low", "High")))
+
+fit.lm <- lm(Trees ~ Elevation, data = trees)
+as.data.frame(broom::tidy(fit.lm))
+```
+
 
 ---
 class: inverse, middle, center

@@ -4,7 +4,7 @@ subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Res
 author: "Fall 2022"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{lab04_contrasts}
+  %\VignetteIndexEntry{lab05_contrasts}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 library(kableExtra)
 library(FANR6750)
 source(here::here("R/zzz.R"))
-data("sawData")
+data("musselData")
 ```
 
 # Today's topics
@@ -34,34 +34,39 @@ data("sawData")
 
 # Contrasts
 
-## Chain saw data
+## Chain mussel data
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 library(FANR6750)
-data("sawData")
-head(sawData)
+data("musselData")
+head(musselData)
+
+# By default, R will order watershed in alphabetical order
+# We will change it to a factor and explicitly set the order to match the order from lecture
+musselData$Watershed <- factor(musselData$Watershed, 
+                               levels = c("Twelvemile", "Chattooga","Keowee", "Coneross"))
 ```
 
 ```{r echo = FALSE}
-knitr::kable(head(sawData), format = 'html')
+knitr::kable(head(musselData), format = 'html')
 ```
 
 ## Questions
 
 Suppose we want to make 3 *a priori* comparisons:  
 
-1) Groups A&D vs B&C  
+1) Agricultural (Twelvemile & Coneross) vs. Forested (Chattooga & Keowee)  
 
-2) Groups A vs D  
+2) Within agricultural (Twelvemile vs Coneross) 
 
-3) Groups B vs C  
+3) Within forested (Chattooga vs Keowee)  
 
 ```{r echo = FALSE}
 contrasts <- data.frame(col1 =c("1", "2", "3"),
-                        Comparison = c("AD vs BC", "A vs D", "B vs C"),
-                        H0 <- c('\\(\\frac{\\mu_A + \\mu_D}{2} - \\frac{\\mu_B + \\mu_C}{2} = 0\\)',
-                                '\\(\\mu_A - \\mu_D = 0\\)',
-                                '\\(\\mu_B - \\mu_C = 0\\)'))
+                        Comparison = c("Ag. vs Forested", "Twelvemile vs Coneross", "Chattooga vs Keowee"),
+                        H0 <- c('\\(\\frac{\\mu_T + \\mu_{Co}}{2} - \\frac{\\mu_{Ch} + \\mu_{K}}{2} = 0\\)',
+                                '\\(\\mu_T - \\mu_{Co} = 0\\)',
+                                '\\(\\mu_{Ch} - \\mu_{K} = 0\\)'))
 
 contrasts %>%
   kable(align = c("c", "l", "c"), 
@@ -76,9 +81,9 @@ contrasts %>%
 ### Coefficients
 
 ```{r}
-ADvBC <- c(1/2, -1/2, -1/2, 1/2)
-AvD <- c(1, 0, 0, -1)
-BvC <- c(0, 1, -1, 0)
+AgvF <- c(1/2, -1/2, -1/2, 1/2)
+TvCo <- c(1, 0, 0, -1)
+ChvK <- c(0, 1, -1, 0)
 ```
 
 ### Are they orthogonal?
@@ -86,7 +91,7 @@ BvC <- c(0, 1, -1, 0)
 **Step 1**: sum of coefficients is 0, for each contrast.
 
 ```{r}
-all(sum(ADvBC) == 0, sum(AvD) == 0, sum(BvC) == 0)
+all(sum(AgvF) == 0, sum(TvCo) == 0, sum(ChvK) == 0)
 ```
 
 ***
@@ -98,9 +103,9 @@ all(sum(ADvBC) == 0, sum(AvD) == 0, sum(BvC) == 0)
 **Step 2**: pairwise dot products are all equal to 0.
 
 ```{r}
-all(sum(ADvBC * AvD) == 0,
-    sum(ADvBC * BvC) == 0,
-    sum(AvD * BvC) == 0)
+all(sum(AgvF * TvCo) == 0,
+    sum(AgvF * ChvK) == 0,
+    sum(TvCo * ChvK) == 0)
 ```
 
 **Step 2 (alternate method)**: pairwise dot products are all equal to 0.
@@ -108,7 +113,7 @@ all(sum(ADvBC * AvD) == 0,
 Try the %*% operator:
 
 ```{r}
-ADvBC %*% AvD
+AgvF %*% TvCo
 ```
 
 ***
@@ -123,7 +128,7 @@ To use contrasts in `R`, each set of coefficients must be formatted as a column 
 We can use `cbind()` for this:
 
 ```{r}
-(contrast.mat <- cbind(ADvBC, AvD, BvC))
+(contrast.mat <- cbind(AgvF, TvCo, ChvK))
 ```
 
 ## Contrasts
@@ -131,17 +136,17 @@ We can use `cbind()` for this:
 #### Fit the model with contrasts
 
 ```{r}
-aov.out <- aov(y ~ Brand, data=sawData,
-               contrasts=list(Brand=contrast.mat))
+aov.out <- aov(Length ~ Watershed, data=musselData,
+               contrasts=list(Watershed=contrast.mat))
 ```
 
 #### Now partition the sum-of-squares with `split=` argument:
 
 ```{r}
 summary(aov.out, 
-        split = list(Brand = c("ADvBC" = 1, 
-                               "AvD" = 2, 
-                               "BvC" = 3)))
+        split = list(Watershed = c("AgvF" = 1, 
+                               "TvCo" = 2, 
+                               "ChvK" = 3)))
 ```
 
 ## ANOVA without contrasts
@@ -165,7 +170,7 @@ ggplot(f, aes(x = F, y = pdf)) +
   annotate("text", label = "p = 0.95", hjust = 1,
            x = p - 0.1, y = 0.79, size = 6,
            color = "#D47500") +
-  annotate("text", label = "Brand", x = 3.66, y = 0.79, size = 6, hjust = 0,
+  annotate("text", label = "Watershed", x = 3.66, y = 0.79, size = 3, hjust = 0,
            color = "#446E9B") 
 ```
 
@@ -194,11 +199,11 @@ ggplot(f, aes(x = F, y = pdf)) +
   annotate("text", label = "p = 0.95", hjust = 1,
            x = p - 0.1, y = 1.24, size = 6,
            color = "#D47500") +
-  annotate("text", label = "AvD", x = 0.2, y = 1.24, size = 4, hjust = 0,
+  annotate("text", label = "TvCo", x = 0.2, y = 1.24, size = 3.75, hjust = 0,
            color = "#446E9B") +
-    annotate("text", label = "BvC", x = 0.99, y = 1.24, size = 4, hjust = 0,
+    annotate("text", label = "ChvK", x = 0.99, y = 1.24, size = 3.75, hjust = 0,
            color = "#446E9B") +
-      annotate("text", label = "ADvBC", x = 9.58, y = 1.24, size = 4, hjust = 1,
+      annotate("text", label = "AgvF", x = 9.58, y = 1.24, size = 3.75, hjust = 1,
            color = "#446E9B") 
 ```
 
@@ -208,18 +213,24 @@ ggplot(f, aes(x = F, y = pdf)) +
 
 ```{r}
 library(dplyr)
-(group.means <- sawData %>% 
-                group_by(Brand) %>%
-                 summarise(mu = mean(y)))
+(group.means <- musselData %>% 
+                group_by(Watershed) %>%
+                 summarise(mu = mean(Length)))
 ```
 
-#### Difference in means for A vs D
+#### Difference in means for Twelvemile vs Coneross
 
 ```{r}
 group.means$mu[1] - group.means$mu[4]
 ```
 
-#### Difference in means for AD vs BC
+#### Difference in means for Chattooga vs Keowee
+
+```{r}
+group.means$mu[2] - group.means$mu[3]
+```
+
+#### Difference in means for Ag. vs Forested
 
 ```{r}
 mean(group.means$mu[c(1,4)]) - mean(group.means$mu[2:3])
@@ -227,20 +238,29 @@ mean(group.means$mu[c(1,4)]) - mean(group.means$mu[2:3])
 
 ## Standard errors for each contrast
 
-#### SE for A vs D
+#### SE for Twelvemile vs Coneross
 
 ```{r}
 se.contrast(aov.out, 
-            contrast.obj = list(Brand == "A", Brand == "D"), 
-            data = sawData)
+            contrast.obj = list(Watershed == "Twelvemile", Watershed == "Coneross"), 
+            data = musselData)
 ```
 
-#### SE for AD vs BC
+#### SE for Chattooga vs Keowee
+
+```{r}
+se.contrast(aov.out, 
+            contrast.obj = list(Watershed == "Chattooga", Watershed == "Keowee"), 
+            data = musselData)
+```
+
+#### SE for Ag. vs Forested
 
 ```{r}
 se.contrast(aov.out,
-            contrast.obj = list(Brand %in% c("A","D"), Brand %in% c("B","C")), 
-            data = sawData)
+            contrast.obj = list(Watershed %in% c("Twelvemile","Coneross"),
+                                Watershed %in% c("Chattooga","Keowee")), 
+            data = musselData)
 ```
 
 ***
@@ -256,7 +276,7 @@ The `%in%` function returns `TRUE` for any elements of the first vector that mat
 In an ANOVA context, confidence intervals can be constructed using the equation:
 
 $$CI = Point\; estimate \pm t_{\alpha/2,a(n−1)}\times SE$$
-As usual, the hard part is computing the SE^[See page 300 of Dowdy et al.]
+As usual, the hard part is computing the SE
 
 ## Confidence intervals from one-way ANOVA
 
@@ -270,7 +290,7 @@ As usual, the hard part is computing the SE^[See page 300 of Dowdy et al.]
 
 ```{r}
 # str(effects.SE)
-alpha.i <- as.numeric(effects.SE$tables$Brand)
+alpha.i <- as.numeric(effects.SE$tables$Watershed)
 SE <- as.numeric(effects.SE$se)
 ```
 
@@ -287,7 +307,8 @@ upperCI <- alpha.i + tc * SE
 #### Put results into a data frame
 
 ```{r}
-CI <- data.frame(Brand = c("A", "B", "C", "D"),
+CI <- data.frame(Watershed = factor(c("Twelvemile", "Chattooga",  "Keowee", "Coneross"),
+                            levels = c("Twelvemile", "Chattooga","Keowee", "Coneross")),
                  effect.size = alpha.i, 
                  SE, 
                  lowerCI, 
@@ -298,7 +319,7 @@ head(CI)
 #### And plot:
 
 ```{r fig.align="c", fig.width=7, fig.height=5}
-ggplot(CI, aes(x = Brand, y = effect.size)) +
+ggplot(CI, aes(x = Watershed, y = effect.size)) +
   geom_hline(yintercept = 0, linetype = "longdash", color = "grey50") +
   geom_errorbar(aes(ymin = lowerCI, ymax = upperCI), width = 0) +
   geom_point() +

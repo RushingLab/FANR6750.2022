@@ -15,8 +15,7 @@ output:
 
 ```{r setup, echo = FALSE, include=FALSE}
 options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
-                      fig.retina = 2)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, fig.retina = 2)
 library(FANR6750)
 #library(emo)
 library(kableExtra)
