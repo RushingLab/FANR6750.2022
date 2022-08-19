@@ -347,7 +347,7 @@ One of `R`'s primary strengths is the large number of *packages* available to us
 
 Accessing the code in a package first requires installing the package. This only needs to be done once per computer and is usually done using the `install.packages()` function:
 
-```{r}
+```{r eval = FALSE}
 install.packages("devtools")
 ```
 
@@ -363,7 +363,7 @@ Unlike `install.packages()`, `library()` must be re-run each time you open `R`. 
 
 Occasionally, some packages are stored in other places (e.g., github). These packages can be installed using different functions. For example, I created a package for this course that contains small data sets we will use in labs throughout the semester. The package is stored on github and can be installed by running:
 
-```{r}
+```{r eval = FALSE}
 install_github("RushingLab/FANR6750")
 ```
 

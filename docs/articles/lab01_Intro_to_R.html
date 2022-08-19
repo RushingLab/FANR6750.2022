@@ -684,13 +684,7 @@ think of.</p>
 package. This only needs to be done once per computer and is usually
 done using the <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> function:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   There are binary versions available but the source versions are later:</span></span>
-<span><span class="co">#&gt;          binary source needs_compilation</span></span>
-<span><span class="co">#&gt; gert      1.6.0  1.7.1              TRUE</span></span>
-<span><span class="co">#&gt; usethis   2.1.5  2.1.6             FALSE</span></span>
-<span><span class="co">#&gt; devtools  2.4.3  2.4.4             FALSE</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span></code></pre></div>
 <p>Note that the name of the package (in this case
 <code>devtools</code>) must be in quotation marks. Packages installed
 using <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> are stored in a centralized
@@ -716,27 +710,7 @@ example, I created a package for this course that contains small data
 sets we will use in labs throughout the semester. The package is stored
 on github and can be installed by running:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"RushingLab/FANR6750"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; pillar    (1.8.0 -&gt; 1.8.1) [CRAN]</span></span>
-<span><span class="co">#&gt; tinytex   (0.40  -&gt; 0.41 ) [CRAN]</span></span>
-<span><span class="co">#&gt; httr      (1.4.3 -&gt; 1.4.4) [CRAN]</span></span>
-<span><span class="co">#&gt; rmarkdown (2.14  -&gt; 2.15 ) [CRAN]</span></span>
-<span><span class="co">#&gt; sf        (1.0-2 -&gt; 1.0-8) [CRAN]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   There are binary versions available but the source versions are later:</span></span>
-<span><span class="co">#&gt;           binary source needs_compilation</span></span>
-<span><span class="co">#&gt; pillar     1.7.0  1.8.1             FALSE</span></span>
-<span><span class="co">#&gt; tinytex     0.38   0.41             FALSE</span></span>
-<span><span class="co">#&gt; httr       1.4.2  1.4.4             FALSE</span></span>
-<span><span class="co">#&gt; rmarkdown   2.13   2.15             FALSE</span></span>
-<span><span class="co">#&gt; sf         1.0-7  1.0-8              TRUE</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; * checking for file ‘/private/var/folders/86/zwkzbn9s0x37lq6_st9zs_780000gn/T/RtmpdGMR8T/remotese15a4251e72c/RushingLab-FANR6750-534233c/DESCRIPTION’ ... OK</span></span>
-<span><span class="co">#&gt; * preparing ‘FANR6750’:</span></span>
-<span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
-<span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
-<span><span class="co">#&gt; * checking for empty or unneeded directories</span></span>
-<span><span class="co">#&gt; * building ‘FANR6750_2022.1.0.tar.gz’</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"RushingLab/FANR6750"</span><span class="op">)</span></span></code></pre></div>
 <p>Note that the <code><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github()</a></code> function is from the
 <code>devtools</code> package so you need to run
 <code><a href="https://devtools.r-lib.org/" class="external-link">library(devtools)</a></code> before you install the package. Make sure
