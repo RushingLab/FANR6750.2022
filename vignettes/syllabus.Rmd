@@ -67,7 +67,7 @@ Lecture material will largely be based on:
 
 **Quinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press**  
 
-Purchasing the textbook is not required but may be helpful for clarifying some concepts.   
+Purchasing the textbook is not required but may be helpful for clarifying some concepts. A pdf of the book can be downloaded [here](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf).  
 
 Additional readings will come from a variety of sources, including other textbooks and scientific journals, and will be posted on eLC.
 

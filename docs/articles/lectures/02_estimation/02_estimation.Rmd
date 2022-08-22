@@ -364,7 +364,7 @@ ggplot() +
 
 $$\Large s = \sqrt{s^2}$$
 
-- $s$ tells us how far, on average, each observation $y$ is from the sample mean $\bar{y}$
+- $\large s$ tells us how far, on average, each observation $\large y$ is from the sample mean $\large \bar{y}$
 
 <br/>
 --
@@ -372,7 +372,7 @@ $$\Large s = \sqrt{s^2}$$
 > The standard error (SE) is an inferential statistic  
 
 $$\Large SE = \frac{s}{\sqrt{n}}$$
-- $SE$ tells us how far, on average, each sample mean $\bar{y}$ is from the population mean $\mu$
+- $\large SE$ tells us how far, on average, each sample mean $\large \bar{y}$ is from the population mean $\large \mu$
 
 ???
 

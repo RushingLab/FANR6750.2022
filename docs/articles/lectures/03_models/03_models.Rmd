@@ -74,7 +74,7 @@ class: inverse
 ---
 # but i don't want to be a modeler!
 
-```{r echo = FALSE, out.height="75%", out.width="50%"}
+```{r echo = FALSE, out.height="65%", out.width="46%"}
 knitr::include_graphics("puffy_shirt.png")
 ```
 

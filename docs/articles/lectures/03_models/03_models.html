@@ -13,10 +13,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # LECTURE 3: introduction to statistical modeling
+]
+.subtitle[
 ## (or, everything is a linear model)
+]
+.author[
 ### <br/><br/>FANR 6750 (Experimental design)
+]
+.date[
 ### <br/><br/><br/>Fall 2022
+]
 
 ---
 
@@ -74,7 +82,7 @@ class: inverse
 ---
 # but i don't want to be a modeler!
 
-&lt;img src="puffy_shirt.png" width="50%" height="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="puffy_shirt.png" width="46%" height="65%" style="display: block; margin: auto;" /&gt;
 
 --
 - Inference **requires** models  
@@ -231,7 +239,7 @@ Note that the deterministic portion of the model has the same form as the equati
 
 `$$\Large y = 20 + 0.5x - 0.3x^2$$`
 
-&lt;img src="03_models_files/figure-html/unnamed-chunk-10-1.png" width="504" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_models_files/figure-html/unnamed-chunk-10-1.png" width="396" style="display: block; margin: auto;" /&gt;
 
 ---
 # residuals
@@ -411,6 +419,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
