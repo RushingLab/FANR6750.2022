@@ -1,0 +1,56 @@
+---
+title: "Removed materials"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+# 2022 (removed from 2021)
+
+---
+class: middle, inverse, center
+
+# transformations
+
+---
+# arcsine-square root transformation
+
+<br/>
+
+$$\huge y = arcsin(\sqrt{u})$$
+
+<br/>
+
+--
+
+- Used on proportions  
+
+--
+
+- logit transformation is an alternative: $y = log\Big(\frac{u}{1-u}\Big)$  
+
+--
+
+- Binomial (logistic) regression is an alternative for proportions
+
+---
+# reciprocal transformation
+
+<br/>
+
+$$\huge y = \frac{1}{u + C}$$
+
+<br/>
+
+--
+
+- C is often 1 but could be 0 if there are no zeros in $u$  
+
+--
+
+- Useful when group SDs are proportional to the squared group means

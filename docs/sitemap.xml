@@ -91,16 +91,19 @@
     <loc>/articles/lectures/05_anova/05_anova.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/06_power-analysis/06_power-analysis.html</loc>
+    <loc>/articles/lectures/06_mult_comparisons/06_mult_comparisons.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/07_contrasts/05_contrasts.html</loc>
+    <loc>/articles/lectures/07_contrasts/07_contrasts.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/07_estimation/07_estimation.html</loc>
+    <loc>/articles/lectures/08_power-analysis/08_power-analysis.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/08_assumptions/08_assumptions.html</loc>
+    <loc>/articles/lectures/09_assumptions/09_assumptions.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lectures/09_estimation2/09_estimation.html</loc>
   </url>
   <url>
     <loc>/articles/lectures/09_nonparametrics/09_nonparametrics.html</loc>

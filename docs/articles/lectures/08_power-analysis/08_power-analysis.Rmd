@@ -1,0 +1,365 @@
+---
+title: "LECTURE 8: power analysis"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
+                      fig.retina = 2, fig.width = 9, fig.height = 7)
+library(WILD3810)
+library(emo)
+library(kableExtra)
+# library(gganimate)
+```
+
+# outline 
+
+<br/>
+
+1) Motivation
+
+<br/>
+
+--
+
+2) Type I and Type II error
+
+<br/>
+
+--
+
+3) Two-sample *t*-test
+
+<br/>
+
+--
+
+4) ANOVA
+
+---
+class: inverse
+
+# motivation
+
+<br/>
+<br/>
+
+> A statistical test will not be able to detect a true difference if the sample size is too small compared with the magnitude of the difference.
+
+> Since data are sampled at random, there is always a risk of reaching a wrong conclusion, and things can go wrong in two ways - Dalgaard (2008)
+
+---
+# type i & type ii errors
+
+#### Type I error (i.e., false positive)
+
+> The null hypothesis is correct, but the test rejects it.
+
+$$\large \alpha = Pr(Type\;I\;error)$$
+
+--
+
+#### Type II error (i.e., false negative)
+
+> The null hypothesis is wrong, but the test fails to reject it.
+
+$$\large \beta = Pr(Type\;II\;error)$$
+
+--
+
+#### Power
+
+> The test's ability to reject a false null hypothesis.
+
+$$\large Power = 1 - \beta$$
+---
+# type i & type ii errors
+
+#### The type I error rate is set by the scientist
+
+--
+
+#### The type II error rate, and hence the power of the test, depends on many factors  
+
+--
+
+#### In the context of a two-sample *t*-test, these are:
+
+1) Magnitude of the difference ( $\delta$ )  
+
+2) Standard deviation (or variance) of population ( $\sigma$ )  
+
+3) The sample size ( $n$ )  
+
+4) The Type I error rate ( $\alpha$ )  
+
+---
+# magnitude of the difference
+
+```{r echo = FALSE, fig.align="c"}
+x <- seq(from = 0, to = 200, length.out = 200)
+
+delta_df <- data.frame(x = x, 
+                       y1 = c(dnorm(x, 98, 10), dnorm(x, 102, 10)),
+                       y2 = c(dnorm(x, 80, 10), dnorm(x, 120, 10)),
+                       y3 = c(dnorm(x, 80, 40), dnorm(x, 120, 40)),
+                       population = rep(c("A", "B"), each = 200))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Hard to detect a difference")
+```
+
+---
+# magnitude of the difference
+
+```{r echo = FALSE, fig.align="c"}
+
+ggplot(delta_df, aes(x = x, y = y2, color = population)) +
+  geom_path(size = 1.75) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Easier to detect a difference")
+```
+
+---
+# standard deviation
+
+```{r echo = FALSE, fig.align="c"}
+
+ggplot(delta_df, aes(x = x, y = y2, color = population)) +
+  geom_path(size = 1.75) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Easier to detect a difference")
+```
+
+
+---
+# standard deviation
+
+```{r echo = FALSE, fig.align="c"}
+
+ggplot(delta_df, aes(x = x, y = y3, color = population)) +
+  geom_path(size = 1.75) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Hard to detect a difference")
+```
+
+---
+# sample size
+
+```{r echo = FALSE, fig.align="c"}
+n1 <- data.frame(x1 = c(rnorm(10, 97, 10), rnorm(10, 103, 10)),
+                # x2 = c(rnorm(100, 97, 10), rnorm(100, 103, 10)),
+                y = rep(c(0, 0.001), each = 10),
+                population = rep(c("A", "B"), each = 10))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  geom_point(data = n1, aes(x = x1, y = y, color = population), alpha = 0.5) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Hard to detect a difference (n = 10)")
+```
+
+---
+# sample size
+
+```{r echo = FALSE, fig.align="c"}
+n2 <- data.frame(x1 = c(rnorm(100, 97, 10), rnorm(100, 103, 10)),
+                y = rep(c(0, 0.001), each = 100),
+                population = rep(c("A", "B"), each = 100))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  geom_point(data = n2, aes(x = x1, y = y, color = population), alpha = 0.25) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Easier to detect a difference (n = 100)")
+```
+
+---
+# type i error rate
+
+```{r cv}
+op <- par(mai=c(0.8, 0.2, 0.2, 0.2))
+curve(dt(x, df=18), -4, 4, xlab="t value", ylab="", yaxt="n",
+      ylim=c(0,0.5),
+      frame=FALSE , main="Easier to detect difference", cex.main=1.5)
+xs1 <- seq(qt(.025, df=18), -4, by=-0.1)
+ys1 <- dt(xs1, df=19)
+xs2 <- seq(qt(.975, df=18), 4, by=0.1)
+ys2 <- dt(xs2, df=19)
+polygon(c(xs1, rev(xs1)), c(rep(0, length(xs1)), rev(ys1)), col=gray(0.7))
+polygon(c(xs2, rev(xs2)), c(rep(0, length(xs2)), rev(ys2)), col=gray(0.7))
+#text(-3, dt(0,18), "t=-3", pos=3)
+#text(3, dt(0,18), "t=3", pos=3)
+#arrows(-3, dt(0,18), -3, dt(-3,18), length=0.1)
+#arrows(3, dt(0,18), 3, dt(3,18), length=0.1)
+par(op)
+
+```
+
+---
+# type i error rate
+
+```{r cv2}
+op <- par(mai=c(0.8, 0.2, 0.2, 0.2))
+curve(dt(x, df=18), -4, 4, xlab="t value", ylab="", yaxt="n",
+      ylim=c(0,0.5),
+      frame=FALSE , main="Harder to detect difference", cex.main=1.5)
+xs1 <- seq(qt(.005, df=18), -4, by=-0.1)
+ys1 <- dt(xs1, df=19)
+xs2 <- seq(qt(.995, df=18), 4, by=0.1)
+ys2 <- dt(xs2, df=19)
+polygon(c(xs1, rev(xs1)), c(rep(0, length(xs1)), rev(ys1)), col=gray(0.7))
+polygon(c(xs2, rev(xs2)), c(rep(0, length(xs2)), rev(ys2)), col=gray(0.7))
+#text(-3, dt(0,18), "t=-3", pos=3)
+#text(3, dt(0,18), "t=3", pos=3)
+#arrows(-3, dt(0,18), -3, dt(-3,18), length=0.1)
+#arrows(3, dt(0,18), 3, dt(3,18), length=0.1)
+par(op)
+
+```
+
+---
+# factors affecting power
+
+#### In two-sample *t*-test, power increases when:
+
+1) The difference in means increases  
+
+2) The standard deviation of the population decreases  
+
+3) The sample size increases  
+
+4) The Type I error rate increases  
+
+---
+# example in `R`
+
+```{r echo = TRUE}
+power.t.test(n = 5, 
+             delta = 10, 
+             sd = 5, 
+             sig.level = 0.05, 
+             power = NULL)
+```
+
+---
+## When should I do a power analysis?
+
+#### Prospective is always better than retrospective!
+
+--
+
+**Retrospective** (conducted after experiment) 
+
+- If you failed to reject the null, then your power was low  
+
+- But you can't use this as an excuse!  
+
+- Only useful as a way of planning a subsequent experiment  
+
+--
+
+**Prospective** (Done before the experiment)  
+
+- Used to determine sample size or power, given $\delta$ and $\sigma$
+
+- How can $\delta$  and/or $\sigma$ be known ahead of time?  
+
+    + Requires prior knowledge, perhaps from a pilot study
+
+    + Requires clear-headed thinking about what consitutes a biologically signiffcant difference
+
+---
+## What level of power should I aim for?
+
+<br/>
+
+#### We want power to be as close to 1 as possible
+
+<br/>
+
+--
+
+#### Sometimes it may be prohibitively expensive to obtain a sample size large enough to achieve power close to 1
+
+<br/>
+
+--
+
+#### In practice, we are usually satisfied with power > 0.8
+
+---
+# one-way anova
+
+#### To conduct a power analysis in the context of a one-way ANOVA, we need:
+
+- The among group variance (MSa) instead of the difference in means, and  
+
+- The within group variance (MSe) instead of the standard deviation of the population
+
+--
+
+#### Power goes up when:
+
+- MSa increases  
+
+- MSe decreases  
+
+- Same rules about $\large n$ and $\large \alpha$ from before also apply
+
+---
+# example in `R`
+
+```{r echo = TRUE}
+power.anova.test(groups = 4, 
+                 n = 5, 
+                 between.var = 101, 
+                 within.var = 20, 
+                 sig.level = 0.05, 
+                 power = NULL)
+```
+
+---
+# summary
+
+- Power analysis let's you determine the necessary sample size (or power) for testing an effect size of interest
+
+--
+
+- Power is influenced by the magnitude of the effect, the standard deviation of the population, the Type I error rate, and the sample size
+
+--
+
+- Retrospective power analysis isn't useful unless you are planning a subsequent experiment
+ 
+--
+
+- `R` has several functions for conducting power analysis, but only for simple tests
+
+--
+
+- More complicated power analysis can be performed using simulation (not covered in this course)

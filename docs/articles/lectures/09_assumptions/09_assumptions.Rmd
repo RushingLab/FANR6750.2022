@@ -1,0 +1,433 @@
+---
+title: "LECTURE 9: assumptions and transformations"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
+                      fig.retina = 2, fig.width = 9, fig.height = 7)
+source(here::here("R/zzz.R"))
+library(emo)
+library(kableExtra)
+library(dplyr)
+library(FANR6750)
+# library(gganimate)
+```
+
+# outline 
+
+<br/>
+
+1) Motivation
+
+<br/>
+
+--
+
+2) Assumptions
+
+<br/>
+
+--
+
+3) Transformations
+
+
+---
+# assumptions
+
+The key assumptions of ANOVA are that the residuals are **independent** and come from a **normal distribution** with mean 0 and **variance** $\sigma^2$  
+
+--
+
+#### This implies the following:
+
+1) Within each treatment group, the residuals are normally distributed  
+
+--
+
+2) Treatment group variances are equal  
+
+--
+
+3) There is no spatial, temporal, or other forms of correlation among the residuals - they are independent
+
+---
+# normality assumption
+
+<br/>
+
+### Assessment
+
+--
+- Inspect histograms and boxplots of the data for each treatment group  
+
+--
+
+- Inspect histograms and boxplots of the residuals  
+
+--
+
+- Conduct a Shapiro-Wilk test of normality on the residuals
+
+    + Goodness-of-fit test of normality  
+    
+    + Assumption of normality is rejected if p < 0.05 
+
+---
+# normality assumption
+
+```{r}
+data("warblerWeight")
+warblerWeight2 <- dplyr::filter(warblerWeight, population %in% c("A", "B", "C", "D"))
+
+ggplot(warblerWeight2) +
+     geom_histogram(aes(weight), binwidth = 1, color = "black", fill = "grey70") +
+     facet_wrap(.~population, nrow = 2, ncol = 2) +
+  scale_x_continuous("Warbler weight") +
+  scale_y_continuous("Frequency")
+```
+
+---
+# normality assumption
+
+#### ANOVA is usually considered robust to violations of this assumption as long as they aren't severe and the sample size isn't too small.  
+
+#### However, some problems can arise  
+
+<br/>
+
+--
+
+**Consequences of non-normality**  
+
+- Implausible confidence intervals  
+
+- Altered power if the data are heavily skewed (platykurtic or leptokurtic)
+
+---
+# normality assumption
+
+<br/>
+
+#### Cases where normality assumption might not hold  
+
+- Count data, especially when there are lots of zeros  
+
+- Proportion or percentage data  
+
+- Arbitrary scales, such as a 10-point taste test  
+
+- Weights of very small things  
+
+---
+# equal variance assumption
+
+<br/>
+
+### Assessment
+
+--
+- Inspect histograms and boxplots of the data from each treatment group
+
+--
+
+- Plot group variances  
+
+--
+
+- Conduct a Bartlett test of equality of variances  
+
+    + Assumption of homogeneity is rejected if p < 0.05
+
+---
+# equal variance assumption
+
+```{r}
+set.seed(340)
+x <- c(rpois(50, 0.5), rpois(50, 2), rpois(50, 8))
+ff <- gl(3, 50, labels=c("Pine", "Oak-Hickory", "Prairie"))
+
+deer_df <- data.frame(Abundance = x, 
+                      Habitat = ff)
+
+ggplot(deer_df) +
+     geom_histogram(aes(Abundance), binwidth = 1, color = "black", fill = "grey70") +
+     facet_wrap(.~Habitat, nrow = 1) +
+  scale_x_continuous("Deer abundance") +
+  scale_y_continuous("Frequency")
+```
+
+
+---
+# equal variance assumption
+
+```{r}
+library(dplyr)
+var.i <- deer_df %>%
+  group_by(Habitat) %>%
+  summarise(mu = mean(Abundance),
+            alpha.i = mu - mean(deer_df$Abundance),
+            var.i = var(Abundance))
+
+ggplot(var.i, aes(x = Habitat, y = var.i)) +
+  geom_col(color = "black", fill = "grey70") +
+  scale_y_continuous("Variance")
+```
+
+
+
+
+---
+# equal variance assumption
+
+#### ANOVA is again considered robust to violations of this assumption, especially if sample sizes are similar among groups.
+
+--
+#### Consequences of heteroscedasticity
+
+--
+
+- Estimates of variance ( $\sigma^2$ ) will be wrong  
+
+- Confidence intervals and F-tests will be affected  
+
+--
+
+#### Cases where heteroscedasticity might be expected
+
+- Count data, especially when there are lots of zeros  
+
+- Proportion or percentage data  
+
+- Arbitrary scales, such as a 10-point taste test
+
+---
+# independence assumption
+
+<br/>
+
+--
+
+#### Residuals are independent if the value of one residual tells us nothing about the value of another residual  
+
+<br/>
+
+--
+
+#### This assumption can be met by randomly selecting experimental units and randomly assigning them to treatment groups  
+
+<br/>
+
+--
+
+#### It is unlikely to hold if multiple observations are made on the same experimental unit, or if the experimental units are highly clustered  
+
+---
+# independence assumption
+
+### Assessment
+
+--
+
+- In general, this problem is hard to diagnose unless you know the details of the design  
+
+--
+
+- Plot group variances against group means. There shouldn't be any pattern  
+
+--
+
+- When temporal or spatial autocorrelation is a concern, auto-covariance plots can be used for diagnosis  
+
+--
+
+### Consequences of non-independence
+
+- Estimates of variance will generally be too small
+
+- Power will be in inflated
+
+---
+# what if assumptions don't hold?
+
+### At least three options:
+
+--
+1) Use a more complicated model that relaxes some assumptions, such as:
+
+  + Generalized linear models that don't assume normality  
+
+  + Linear models with multiple variance parameters  
+
+  + Time-series models or spatial models allowing for correlated residuals  
+
+
+--
+
+2) Nonparametrics  
+
+<br/>
+--
+
+3) Transform the data
+
+---
+class: inverse, center, middle
+
+# transformations
+
+---
+# transformations
+
+### Key idea
+
+> Transform the raw data ( $u_{ij}$ ) so that the transformed data ( $y_{ij}$ ) meet the assumptions of ANOVA  
+
+--
+
+#### What kinds of transformations are valid?
+
+- The transformation must maintain the rank order of the original data
+
+- Common examples include:
+
+    + Logarithmic transformations  
+
+    + Square-root transformations  
+
+    + Arcsine transformations  
+    
+    + Reciprocal transformations
+
+---
+# logarithmic transformation
+
+<br/>
+
+$$\huge y = log(u + C)$$
+
+<br/>
+
+--
+
+- The constant C is often 1, or 0 if there are no zeros in the data ( $u$ )
+
+--
+
+- Useful when group variances are proportional to the means (count data)
+
+--
+- Could use $log_{10}$ or any base, but the natural logarithm is preferred
+
+---
+# logarithmic transformation
+
+```{r}
+# Weights
+u1 <- data.frame(u = c(4.4, 5, 5.6, 4.2, 4.3, 5.3, 4.2, 3.6, 4.8, 4.9,
+        5.7, 4.6, 5.8, 6.3, 4.5, 4.1, 3.6, 4, 4.5, 4.6,
+        6.6, 4.3, 4.8, 3.7, 5.5, 2.9, 4.3, 4.2, 3.6, 4.7))
+#
+#
+# Tree diameters
+u2 <- data.frame(u = c(137.6, 102.6, 327.6, 550.4, 214, 86, 185.2, 24.5,
+        134.6, 169.1, 263.5, 226.4, 225.3, 82, 391.8, 567.1,
+        74.8, 52.8, 72.2, 474.2, 138, 42.4, 172.5, 209.6,
+        102.6, 563.4, 241.1, 260.6, 203.1, 137.9))
+
+ggplot(u2, aes(x = u)) +
+  geom_histogram(binwidth = 100, 
+                 fill = "grey70", color = "black") +
+  scale_y_continuous("Frequency")
+
+```
+
+---
+# logarithmic transformation
+
+```{r}
+
+ggplot(u2, aes(x = log(u))) +
+  geom_histogram(binwidth = 0.4, fill = "wheat", color = "black") +
+  scale_y_continuous("Frequency") +
+  scale_x_continuous("y = log(u)")
+
+```
+
+---
+# square root transformation
+
+<br/>
+$$\huge y = \sqrt{u + C}$$
+
+<br/>
+
+--
+
+- C is often 0.5 or some other small number
+
+--
+
+- Useful when group variances are proportional to the means (count data)
+
+---
+# square root transformation
+
+```{r}
+
+ggplot(u2, aes(x = u)) +
+  geom_histogram(binwidth = 100, 
+                 fill = "grey70", color = "black") +
+  scale_y_continuous("Frequency")
+
+```
+
+---
+# square root transformation
+
+```{r}
+ggplot(u2, aes(x = sqrt(u))) +
+  geom_histogram(binwidth = 4, fill = "wheat", color = "black") +
+  scale_y_continuous("Frequency") +
+  scale_x_continuous("y = sqrt(u)")
+```
+
+
+
+---
+# summary
+
+--
+- The assumptions of ANOVA are made explicit by the linear model  
+
+--
+
+- Colloquially, these assumptions are:  
+
+    + Within each treatment group, the data are normally distributed  
+    
+    + Treatment group variances are equal  
+    
+    + There is no spatial, temporal, or other forms of correlation among the residuals - they are independent  
+    
+--
+
+- ANOVA is considered robust to violations of the first two assumptions  
+
+--
+
+- Transformations, in some cases, can be used to meet all three assumptions
+
+--
+- If transformations don't work, it is always possible to relax assumptions by adopting a more complicated model

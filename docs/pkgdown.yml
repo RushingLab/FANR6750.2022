@@ -1,4 +1,4 @@
-pandoc: '2.18'
+pandoc: 2.17.1.1
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
@@ -23,5 +23,5 @@ articles:
   projects_and_directories: projects_and_directories.html
   schedule: schedule.html
   syllabus: syllabus.html
-last_built: 2022-08-22T15:12Z
+last_built: 2022-09-01T12:25Z
 
