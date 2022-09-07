@@ -47,9 +47,9 @@ schedule <- data.frame(WK = c("1", "", "",
                        Lecture = c("Course introduction", "Basic concepts in statistics", "", #1
       "Principles of estimation",  "Principles of estimation", "Intro to statistical modeling", "",#2
       "Intro to statistical modeling", "t-tests and null hypothesis testing", "t-tests and null hypothesis testing", "", #3
-      "Labor Day", "t-tests and null hypothesis testing", "Paper discussion: hypothesis testing", "", # 4
-      "Randomized ANOVA", "Randomized ANOVA", "Multiple comparisons",   "", #5
-       "Statistical power", "Contrasts", "Contrasts", "", #6
+      "Labor Day", "Randomized ANOVA", "Randomized ANOVA", "", # 4
+       "Multiple comparisons", "Statistcal Power", "Paper discussion: hypothesis testing",  "", #5
+       "Contrasts", "Contrasts", "Buffer", "", #6
       "Transformations", "Nonparametrics", "Nonparametrics", "", #7
        "Random and fixed effects", "Blocking and blocked designs",  "Blocking and blocked designs", "", #8 
       "Nested designs", "Nested designs", "Paper discussion: Pseudoreplication", "", # 9
@@ -82,8 +82,8 @@ schedule <- data.frame(WK = c("1", "", "",
                        Reading = c("", "Chp. 1", "",
                                "Chp. 2.1-2.3", "", "Chp. 5.2-5.3", "",
                                "", "Chp. 3.1;", "", "",
-                               "", "", "Johnson 1999", "",
-                               "Chp. 8.1-8.4", "", "Chp. 8.6", "",
+                               "", "Chp. 8.1-8.4", "", "",
+                               "Chp. 8.6", "", "Johnson 1999", "",
                                "Chp. 7.3", "", "", "",
                                "**Exam 1 distributed**", "Chp. 8.5", "", "",
                                "Chp. 8.2; **Exam 1 due**", "Chp. 10.1-10.2", "", "",
