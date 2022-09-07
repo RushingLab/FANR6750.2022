@@ -288,37 +288,6 @@ We can now decompose the observations as
   + It is the unexplained (random) deviation of the observation from the group mean
   
 ---
-# anova as a linear model
-
-`$$\large y_{j} = \beta_0 + \beta_1 x^1_j + \beta_2x^2_j + \beta_ax^a_j + \epsilon_{j}$$`
-
-`$$\large \epsilon_{j} \sim normal(0, \sigma^2)$$`
-
-#### Notes
-
-- `\(\large \mu\)` is the grand mean of the population, estimated by `\(\large \bar{y}.\)`  
-  
---
-
-- `\(\large \alpha_i\)` is the effect of treatment *i*, estimated by `\(\large\bar{y}_i - \bar{y}.\)`  
-
---
-  + It is the deviation of the group mean from the grand mean  
-
-  + If all `\(\large\alpha_i = 0\)`, there is no treatment effect  
-
-  + Thus, we can write either  
-    - `\(H_0 : \mu_1 = \mu_2=... =\mu_a\)`, or  
-    - `\(H_0 : \alpha_1 = \alpha_2=... =\alpha_a = 0\)`  
-
---
-
-- `\(\large \epsilon_{ij}\)` is the residual error, estimated by `\(\large y_{ij} - \bar{y}_i\)`  
-
-  + It is the unexplained (random) deviation of the observation from the group mean
-  
-  
----
 # sums of squares
 
 #### Variation among groups 
@@ -853,7 +822,9 @@ Image courtesy of William H. Majoros via Wikicommons
 ---
 # anova as a linear model
 
-As discussed previously, ANOVA is a linear model ( `\(y = a + bx\)` )
+As discussed previously, ANOVA is a linear model
+
+`$$\large y_{j} = \beta_0 + \beta_1 x^1_j + \beta_2x^2_j + \epsilon_{j}$$`
 
 --
 
