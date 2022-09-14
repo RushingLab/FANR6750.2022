@@ -102,6 +102,42 @@ class: center, middle, inverse, title-slide
 - Coneross and Twelvemile are more agricultural
 
 ---
+# anova table
+
+&lt;/br&gt;
+
+&lt;table class="table table-condensed" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Source &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; SS &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; MS &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; F &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Fcrit &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; Among watersheds &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 393 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 131.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9.7 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3.24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; Within &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 216 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
 # hypotheses
 
 #### Questions
@@ -232,7 +268,7 @@ Multiplying through by 2 gives:
 
 --
 Which can be written as:
-`$$\large L1 = (1)\mu_T + (-1)\mu_{Ch} + (-1)\mu_K + (1)\mu_{Ch}$$`
+`$$\large L1 = (1)\mu_T + (-1)\mu_{Ch} + (-1)\mu_K + (1)\mu_{Co}$$`
 where the coefficients are `\(a_1 = 1\)`, `\(a_2 = -1\)`, `\(a_3 = -1\)`, and `\(a_4 = 1\)`
 
 --
@@ -309,7 +345,7 @@ For each contrast, each SS is divided by 1 d.f., and then divided by MSW.
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; Among waterfeds &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; Among watersheds &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 393 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 131.0 &lt;/td&gt;

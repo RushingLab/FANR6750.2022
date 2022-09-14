@@ -16,7 +16,7 @@ output:
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
                       fig.retina = 2)
-library(WILD3810)
+# library(WILD3810)
 library(emo)
 library(kableExtra)
 # library(gganimate)
@@ -63,6 +63,26 @@ cs %>%
 - Chattooga and Keowee are more forested  
 
 - Coneross and Twelvemile are more agricultural
+
+---
+# anova table
+
+</br>
+
+```{r echo = FALSE}
+cs <- data.frame(Source = c("Among watersheds", "Within"),
+                 df = c("3", "16"),
+                 SS = c(393, 216),
+                 MS = c(131, 13.5),
+                 F = c(9.70, NA),
+                 Fcrit = c(3.24,NA))
+options(knitr.kable.NA = '') # don't print NA's in table
+cs %>%
+    kable(align = c("r", "c", "c", "c", "c", "c"), 
+          booktabs = TRUE, escape = FALSE, format = "html") %>%
+    kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 16) 
+```
 
 ---
 # hypotheses
@@ -169,7 +189,7 @@ $$\large H_{0_1} = (\mu_{T} + \mu_{Co}) - (\mu_{Ch} + \mu_K) = 0$$
 
 --
 Which can be written as:
-$$\large L1 = (1)\mu_T + (-1)\mu_{Ch} + (-1)\mu_K + (1)\mu_{Ch}$$
+$$\large L1 = (1)\mu_T + (-1)\mu_{Ch} + (-1)\mu_K + (1)\mu_{Co}$$
 where the coefficients are $a_1 = 1$, $a_2 = -1$, $a_3 = -1$, and $a_4 = 1$
 
 --
@@ -234,7 +254,7 @@ $$\large SS_{L_3} = \frac{(0 + 107 - 121 + 0)^2}{5(0 + 1 + 1 + 0)} = 19.6$$
 For each contrast, each SS is divided by 1 d.f., and then divided by MSW.
 
 ```{r echo = FALSE}
-cs <- data.frame(Source = c("Among waterfeds", "F vs Ag ", "T vs Co", "Ch vs K", "Within"),
+cs <- data.frame(Source = c("Among watersheds", "F vs Ag ", "T vs Co", "Ch vs K", "Within"),
                  df = c("3","1", "1", "1", "16"),
                  SS = c(393, 361, 12, 20, 216),
                  MS = c(131, 361, 12, 20, 13.5),
