@@ -380,7 +380,7 @@ ggplot(data = caterpillar, aes(y = diff)) +
 
 **Recall**: Paired *t*-test is the same as a one-sample t-test on the differences. The hypothesis in the caterpillar example is one-tailed:
 
-- $\large H_0 : \mu_d = 0$  
+- $\large H_0 : \mu_d \leq 0$  
 
 - $\large H_A : \mu_d > 0$  
 
