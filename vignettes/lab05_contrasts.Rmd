@@ -34,7 +34,7 @@ data("musselData")
 
 # Contrasts
 
-## Chain mussel data
+## Mussel data
 
 ```{r, eval = TRUE}
 library(FANR6750)
