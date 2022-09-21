@@ -1,7 +1,7 @@
 ---
-title: "Lab 6: Randomized Complete Block Design"
+title: "Lab 7: Randomized Complete Block Design"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2021"
+author: "Fall 2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab06_blocking}
@@ -280,7 +280,7 @@ The values of the ANOVA table are the same as before, and there is no reason to 
 
 Later, we will see cases where it is important to use random and fixed effects.
 
-# Assignment
+# Assignment (not for a grade)
 
 Some time ago, plantations of *Pinus caribaea* were established at four locations on Puerto Rico. As part of a spacing study, four spacings were used at each location to determine the effect of four specific spacing intervals on tree height. Twenty years after the plantations were established, measurements were made in the study plots as follows:
 
@@ -319,16 +319,11 @@ As always:
 
 - Be sure the output type is set to: `output: html_document`
 
-- Title the document: `title: "Lab 6 assignment"`
-
-- Be sure to include your first and last name in the `author` section 
-
-- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
-
-- Please upload both the `html` and `.Rmd` files when you submit your assignment  
+- Be sure to set `echo = TRUE` in all `R` chunks
 
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
 
+- See the "Creating publication-quality graphics" reference sheet for tips on formatting figures
 
 
 

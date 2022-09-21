@@ -9,9 +9,9 @@ articles:
   lab02_Intro_project_and_Rmd: lab02_Intro_project_and_Rmd.html
   lab03_t-tests: lab03_t-tests.html
   lab04_ANOVA: lab04_ANOVA.html
-  lab05_assump_nonpar: lab05_assump_nonpar.html
   lab05_contrasts: lab05_contrasts.html
-  lab06_blocking: lab06_blocking.html
+  lab06_assump_nonpar: lab06_assump_nonpar.html
+  lab07_blocking: lab07_blocking.html
   lab07_factorial: lab07_factorial.html
   lab08_nested: lab08_nested.html
   lab09_splitplot: lab09_splitplot.html
@@ -23,5 +23,5 @@ articles:
   projects_and_directories: projects_and_directories.html
   schedule: schedule.html
   syllabus: syllabus.html
-last_built: 2022-09-07T14:44Z
+last_built: 2022-09-21T15:20Z
 

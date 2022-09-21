@@ -40,6 +40,10 @@ navbar:
           href: articles/lectures/08_power-analysis/08_power-analysis.html
         - text: "Lecture 9: Assumptions and transformations"
           href: articles/lectures/09_assumptions/09_assumptions.html
+        - text: "Lecture 10: Confidence intervals"
+          href: articles/lectures/10_estimation/10_estimation.html
+        - text: "Lecture 11: Blocking"
+          href: articles/lectures/11_blocking/11_blocking.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:
@@ -53,6 +57,10 @@ navbar:
           href: articles/lab04_ANOVA.html
         - text: "Lab 5: Contrasts"
           href: articles/lab05_contrasts.html
+        - text: "Lab 6: Assumptions of ANOVA"
+          href: articles/lab06_assump_nonpar.html
+        - text: "Lab 7: Blocking"
+          href: articles/lab07_blocking.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

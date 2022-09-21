@@ -43,7 +43,13 @@
     <loc>/articles/lab05_contrasts.html</loc>
   </url>
   <url>
+    <loc>/articles/lab06_assump_nonpar.html</loc>
+  </url>
+  <url>
     <loc>/articles/lab06_blocking.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lab07_blocking.html</loc>
   </url>
   <url>
     <loc>/articles/lab07_factorial.html</loc>
@@ -103,13 +109,13 @@
     <loc>/articles/lectures/09_assumptions/09_assumptions.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/09_estimation2/09_estimation.html</loc>
-  </url>
-  <url>
     <loc>/articles/lectures/09_nonparametrics/09_nonparametrics.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/10_blocking/10_blocking.html</loc>
+    <loc>/articles/lectures/10_estimation/10_estimation.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lectures/11_blocking/11_blocking.html</loc>
   </url>
   <url>
     <loc>/articles/lectures/11_raneff/11_raneff.html</loc>

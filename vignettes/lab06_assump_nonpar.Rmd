@@ -1,5 +1,5 @@
 ---
-title: "Lab 5: Assumptions of ANOVA"
+title: "Lab 6: Assumptions of ANOVA"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
 author: "Fall 2022"
 output: rmarkdown::html_vignette
@@ -313,19 +313,17 @@ data("infectionRates")
 
 2) Create a header called "ANOVA on transformed data". Within this section, decide which transformation is best for the `infectionRates` data by conducting ANOVAs using the log, square-root, arcsine square-root, and reciprocal transformations. Use boxplots, histograms, and Shapiro’s tests to determine the best transformation. 
 
-Within this section, use subheaders to delineate different transformations. At this point in the semester, your figures should be starting to look more professional so **take time to make them look nice** and **include captions** (see `fig.caption` chunk option). Also include a subheader within which you **write a short conclusion** about which transformation you think is best for these data.
+Within this section, use subheaders to delineate different transformations. At this point in the semester, your figures should be starting to look more professional so **take time to make them look nice** and **include captions** (see `fig.caption` chunk option). Look over the "Creating publication-quality graphics" reference for additional tips. Also include a subheader within which you **write a short conclusion** about which transformation you think is best for these data.
 
 3) Within the section with your conclusion about which transformation to use, discuss whether the transformation alters the conclusion about the null hypothesis of no difference in means? If not, were the transformations necessary?  
 
-4) Create a header called "Do infection rates differ between suburban and urban areas?" In this section, test the hypothesis that infection rates are equal between suburban and urban landscapes using a Wilcoxan rank sum test. What is the conclusion?  
-
-5) Create a header called "Non-parametric test". In this section, conduct a Kruskal-Wallis test on the data. What is the conclusion? Explain your answers.
+4) Create a header called "Non-parametric test". In this section, conduct a Kruskal-Wallis test on the data. What is the conclusion? Explain your answers.
 
 A few things to remember when creating the assignment:
 
 - Be sure the output type is set to: `output: html_document`
 
-- Title the document: `title: "Lab 5 assignment"`
+- Title the document: `title: "Homework 2"`
 
 - Be sure to include your first and last name in the `author` section 
 
@@ -335,5 +333,6 @@ A few things to remember when creating the assignment:
 
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
 
+- See the "Creating publication-quality graphics" reference sheet for tips on formatting figures
 
 

@@ -365,7 +365,7 @@ power.anova.test(groups = 4,
                  power = NULL)
 ```
 
-# Assignment
+# Assignment (not for a grade)
 
 Researchers wish to know if food supplementation affects the growth of nestling Canada warblers. The treatment groups are: (A) No supplementation control, (B) low, (C) medium, (D) high, and (E) very high. The response variable is the weight of a ten-day-old nestling.
 
@@ -409,3 +409,5 @@ A few things to remember when creating the document:
 - Regularly knit the document as you work to check for errors
 
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- See the "Creating publication-quality graphics" reference sheet for tips on formatting figures
