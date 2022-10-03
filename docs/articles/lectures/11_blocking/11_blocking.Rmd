@@ -294,12 +294,12 @@ traps placed in the plots.
 
 ```{r}
 gm <- data.frame(Region = 1:4,
-                  Bt = c(16, 3, 10, 18),
                   Control = c(25, 10, 15, 32),
+                  Bt = c(16, 3, 10, 18),
                   Dimilin = c(14, 2, 16, 12))
 
 gm %>%
-  kable(format = 'html', col.names = c(" ", "Bt", "Control", "Dimilin")) %>%
+  kable(format = 'html', col.names = c(" ",  "Control","Bt", "Dimilin")) %>%
   add_header_above(c("Region" = 1, "Treatment" = 3)) %>%
   kable_styling(full_width = FALSE, bootstrap_options = "condensed", font_size = 14)
 ```
