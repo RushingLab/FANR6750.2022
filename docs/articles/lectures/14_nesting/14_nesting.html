@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>LECTURE 13: nested designs</title>
+    <title>LECTURE 14: nested designs</title>
     <meta charset="utf-8" />
-    <meta name="author" content="   Fall 2021" />
+    <meta name="author" content="   Fall 2022" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <script src="libs/kePrint/kePrint.js"></script>
     <link href="libs/lightable/lightable.css" rel="stylesheet" />
@@ -14,9 +15,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# LECTURE 13: nested designs
+.title[
+# LECTURE 14: nested designs
+]
+.subtitle[
 ## FANR 6750 (Experimental design)
-### <br/><br/><br/>Fall 2021
+]
+.author[
+### <br/><br/><br/>Fall 2022
+]
 
 ---
 
@@ -486,7 +493,9 @@ class: inverse, center, middle
 
 --
 
-- Pseudoreplication occurs when `\(MS_e\)` is used in the denominator of the *F* test for the treatment effect
+- Pseudoreplication occurs when `\(MS_e\)` is used in the denominator of the *F* test for the treatment effect  
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -534,6 +543,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

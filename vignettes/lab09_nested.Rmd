@@ -1,7 +1,7 @@
 ---
-title: "Lab 8: Nested ANOVA"
+title: "Lab 9: Nested ANOVA"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2021"
+author: "Fall 2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab08_nested}
@@ -232,7 +232,7 @@ As always:
 
 - Be sure the output type is set to: `output: html_document`
 
-- Title the document: `title: "Lab 8 assignment"`
+- Title the document: `title: "Homework 3: Nested design"`
 
 - Be sure to include your first and last name in the `author` section 
 
@@ -241,6 +241,8 @@ As always:
 - Please upload both the `html` and `.Rmd` files when you submit your assignment  
 
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- See the "Creating publication-quality graphics" reference sheet for tips on formatting figures
 
 
 

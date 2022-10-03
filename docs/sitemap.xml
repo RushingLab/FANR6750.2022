@@ -55,7 +55,13 @@
     <loc>/articles/lab07_factorial.html</loc>
   </url>
   <url>
+    <loc>/articles/lab08_factorial.html</loc>
+  </url>
+  <url>
     <loc>/articles/lab08_nested.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lab09_nested.html</loc>
   </url>
   <url>
     <loc>/articles/lab09_splitplot.html</loc>
@@ -118,13 +124,13 @@
     <loc>/articles/lectures/11_blocking/11_blocking.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/11_raneff/11_raneff.html</loc>
+    <loc>/articles/lectures/12_raneff/12_raneff.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/12_factorial/12_factorial.html</loc>
+    <loc>/articles/lectures/13_factorial/13_factorial.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/13_nesting/13_nesting.html</loc>
+    <loc>/articles/lectures/14_nesting/14_nesting.html</loc>
   </url>
   <url>
     <loc>/articles/lectures/14_splitplot/14_splitplot.html</loc>

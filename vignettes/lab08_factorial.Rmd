@@ -1,7 +1,7 @@
 ---
-title: "Lab 7: Factorial designs"
+title: "Lab 8: Factorial designs"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2021"
+author: "Fall 2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab07_factorial}
@@ -138,19 +138,19 @@ Next, we'll extract the group means
 What about confidence intervals? Notice that `model.tables()` returns "Standard errors for
 differences of means".  
 
-Extending the formulas given in Dowdy et al. p. 300-2, to the $A \times B$ factorial case, the confidence interval for the difference in two $A \times B$ means is:
+Extending the formulas to the $A \times B$ factorial case, the confidence interval for the difference in two $A \times B$ means is:
 
 $$\Large CI_{1−\alpha} : \bar{y}_{ij.} − \bar{y}_{ij.′} \pm t_{1−\alpha/2,ab(n−1)}\times \sqrt{\frac{2MSE}{n}}$$
 
 where $n = 4$ in the vole example.
 
-To set up a plot of the group means, however, we need a confidence interval for each mean. We take out the ‘2’ from the SE expression (again, see Dowdy et al. p. 300):
+To set up a plot of the group means, however, we need a confidence interval for each mean. We take out the ‘2’ from the SE expression:
 
 $$\Large CI_{1−\alpha} : \bar{y}_{ij.} \pm t_{1−\alpha/2,ab(n−1)}\times \sqrt{\frac{MSE}{n}}$$
 
 Where can we find MSE?
 
-Answer: in the output of summary() of our aov1 object:
+Answer: in the output of `summary()` of our `aov1` object:
 
 ```{r}
 str(summary(aov1))
@@ -187,7 +187,7 @@ ggplot(predicted.voles, aes(x = Food, y = voles,
 ```
 
 
-# Assignment
+# Assignment (not for a grade)
 
 **Fictitious Scenario**   
 
@@ -230,9 +230,10 @@ As always:
 
 - Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
 
-- Please upload both the `html` and `.Rmd` files when you submit your assignment  
-
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- See the "Creating publication-quality graphics" reference sheet for tips on formatting figures
+
 
 
 

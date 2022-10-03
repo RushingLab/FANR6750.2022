@@ -44,6 +44,12 @@ navbar:
           href: articles/lectures/10_estimation/10_estimation.html
         - text: "Lecture 11: Blocking"
           href: articles/lectures/11_blocking/11_blocking.html
+        - text: "Lecture 12: Random effects"
+          href: articles/lectures/12_raneff/12_raneff.html
+        - text: "Lecture 13: Factorial designs"
+          href: articles/lectures/13_factorial/13_factorial.html
+        - text: "Lecture 14: Nested effects"
+          href: articles/lectures/14_nesting/14_nesting.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:
@@ -61,6 +67,10 @@ navbar:
           href: articles/lab06_assump_nonpar.html
         - text: "Lab 7: Blocking"
           href: articles/lab07_blocking.html
+        - text: "Lab 8: Factorial"
+          href: articles/lab08_factorial.html
+        - text: "Lab 9: Nesting"
+          href: articles/lab09_nested.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

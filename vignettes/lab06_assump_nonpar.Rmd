@@ -323,7 +323,7 @@ A few things to remember when creating the assignment:
 
 - Be sure the output type is set to: `output: html_document`
 
-- Title the document: `title: "Homework 2"`
+- Title the document: `title: "Homework 2: Assumptions and transformations"`
 
 - Be sure to include your first and last name in the `author` section 
 
