@@ -348,7 +348,7 @@ ggplot(newDat, aes(x = food, y = pred, color = predators)) +
 
 --
 
-- Development of Sums of Squares, degrees of freedom, etc. are natural extensions of what we have learned before, but we will not cover them in this course. See Dowdy et al. if you are interested in the details  
+- Development of Sums of Squares, degrees of freedom, etc. are natural extensions of what we have learned before, but we will not cover them in this course. See Quinn et al. if you are interested in the details  
 
 --
 
