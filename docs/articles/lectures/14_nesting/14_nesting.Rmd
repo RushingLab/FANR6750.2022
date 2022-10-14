@@ -112,7 +112,7 @@ n <- data.frame(obs = rep(c("1", "2", "3"), 2),
 n %>%
   kable(format = "html", align = "c", col.names = c(" ", " ", "Bt", "Dimilin", "Control"), 
         escape = TRUE) %>%
-  add_header_above(c("Observation (k)" = 1, "Experimental unit within observation (j)" = 1, 
+  add_header_above(c("Observation (k)" = 1, "Experimental unit (j)" = 1, 
                      "Treatment (i)" = 3)) %>%
   kable_styling(bootstrap_options = c("condensed"), font_size = 14)
 ```
@@ -167,8 +167,9 @@ class: inverse, middle, center
 
 ```{r anova_tab}
 anova_tab <- data.frame(Source = c("Among treatment", "Among whole units within treatments", "Among subunits within whole units"),
+                        Symbol = c('\\(SS_a\\)', '\\(SS_b\\)', '\\(SS_e\\)'),
                         df = c('\\(a-1\\)', '\\(a(b-1)\\)', '\\(ab(n-1)\\)'),
-                        SS = c('\\(bn \\sum_i (\\bar{y}_{i} - \\bar{y})^2\\)', 
+                        SS = c('\\(bn \\sum_i (\\bar{y}_{i} - \\bar{y}.)^2\\)', 
                                '\\(n \\sum_i \\sum_j (\\bar{y}_{ij} - \\bar{y}_{i})^2\\)',
                                '\\(\\sum_i \\sum_j \\sum_k (y_{ijk} - \\bar{y}_{ij})^2\\)'))
 
@@ -220,7 +221,7 @@ class: center, middle, inverse
 
 #### Standard error for the difference of two means
 
-$$\Large SE = \frac{2MS_b}{bn}$$
+$$\Large SE = \sqrt\frac{2MS_b}{bn}$$
 
 --
 
@@ -230,10 +231,6 @@ $$\Large SE = \frac{2MS_b}{bn}$$
 $$\Large CI = Estimate \pm t_{1-\alpha/2,a(b-1)} \times SE$$
 
 <br/>
-
---
-
-#### Review pages 300-302 of Dowdy et al. for background
 
 ---
 # why use a nested design?
@@ -276,7 +273,7 @@ exp %>%
 --
 
 .pull-right[
-$$\large \bar{y} = 15.39$$ 
+$$\large \bar{y}. = 15.39$$ 
 
 $$\large \bar{y}_i = 14.42, 13.00, 18.75$$ 
 $$\begin{aligned}
@@ -286,6 +283,46 @@ $$\begin{aligned}
 \end{aligned}$$
 
 ]
+
+---
+# example
+
+.pull-left[
+```{r}
+exp <- data.frame(obs = rep(c(1, 2, 3, 4), 3),
+                  expUnit = rep(c(1,2,3), each = 4),
+                  bt = c(16.0, 16.0, 15.8, 14.2, 13.9, 14.2, 13.5, 13.4, 14.0, 13.1, 13.5, 15.4),
+                  Dim = c(12.3, 13.0, 12.7, 12.0, 14.0, 13.1, 13.5, 13.4, 13.0, 12.4, 12.8, 13.8),
+                  cnl = c(18.5, 18.0, 18.4, 18.1, 18.7, 19.0, 18.8, 18.5, 19.5, 17.5, 19.1, 20.9))
+
+exp %>%   
+  kable(format = "html", align = "c", col.names = c(" ", " ", "Bt", "Dimilin", "Control"), 
+        escape = TRUE) %>%
+  add_header_above(c("Observation (k)" = 1, "Experimental unit within observation (j)" = 1, 
+                     "Treatment (i)" = 3)) %>%
+  kable_styling(bootstrap_options = c("condensed"), font_size = 8)
+```
+]
+
+--
+
+.pull-right[
+```{r}
+anova_tab2 <- data.frame(Source = c("Among treatment", "Among whole units", "Residual"),
+                        df = c(2, 6, 27),
+                        SS = c(215.4, 11.2, 13.9),
+                        MS = c(107.7, 1.9, 0.5),
+                        F = c("?", 
+                               "?", NA))
+
+options(knitr.kable.NA = " ")
+anova_tab2 %>%
+  kable(align = 'c', booktabs = TRUE, escape = FALSE, format = "html") %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 18)
+```
+]
+
 ---
 # connections to what's ahead
 

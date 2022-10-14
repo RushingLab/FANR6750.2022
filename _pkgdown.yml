@@ -50,6 +50,10 @@ navbar:
           href: articles/lectures/13_factorial/13_factorial.html
         - text: "Lecture 14: Nested effects"
           href: articles/lectures/14_nesting/14_nesting.html
+        - text: "Lecture 15: Split-plot designs"
+          href: articles/lectures/15_splitplot/15_splitplot.html
+        - text: "Lecture 16: Repeated measures"
+          href: articles/lectures/16_repeated_measures/16_repeated_measures.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:

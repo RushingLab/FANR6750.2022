@@ -123,7 +123,7 @@ class: inverse, middle, center
  &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Observation (k)&lt;/div&gt;&lt;/th&gt;
-&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Experimental unit within observation (j)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Experimental unit (j)&lt;/div&gt;&lt;/th&gt;
 &lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment (i)&lt;/div&gt;&lt;/th&gt;
 &lt;/tr&gt;
   &lt;tr&gt;
@@ -232,6 +232,7 @@ class: inverse, middle, center
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:center;"&gt; Source &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Symbol &lt;/th&gt;
    &lt;th style="text-align:center;"&gt; df &lt;/th&gt;
    &lt;th style="text-align:center;"&gt; SS &lt;/th&gt;
   &lt;/tr&gt;
@@ -239,16 +240,19 @@ class: inverse, middle, center
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:center;"&gt; Among treatment &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(SS_a\) &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; \(a-1\) &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; \(bn \sum_i (\bar{y}_{i} - \bar{y})^2\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(bn \sum_i (\bar{y}_{i} - \bar{y}.)^2\) &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:center;"&gt; Among whole units within treatments &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(SS_b\) &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; \(a(b-1)\) &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; \(n \sum_i \sum_j (\bar{y}_{ij} - \bar{y}_{i})^2\) &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:center;"&gt; Among subunits within whole units &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(SS_e\) &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; \(ab(n-1)\) &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; \(\sum_i \sum_j \sum_k (y_{ijk} - \bar{y}_{ij})^2\) &lt;/td&gt;
   &lt;/tr&gt;
@@ -310,7 +314,7 @@ class: center, middle, inverse
 
 #### Standard error for the difference of two means
 
-`$$\Large SE = \frac{2MS_b}{bn}$$`
+`$$\Large SE = \sqrt\frac{2MS_b}{bn}$$`
 
 --
 
@@ -320,10 +324,6 @@ class: center, middle, inverse
 `$$\Large CI = Estimate \pm t_{1-\alpha/2,a(b-1)} \times SE$$`
 
 &lt;br/&gt;
-
---
-
-#### Review pages 300-302 of Dowdy et al. for background
 
 ---
 # why use a nested design?
@@ -464,6 +464,154 @@ class: inverse, center, middle
 \end{aligned}$$`
 
 ]
+
+---
+# example
+
+.pull-left[
+&lt;table class="table table-condensed" style="font-size: 8px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Observation (k)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Experimental unit within observation (j)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment (i)&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Bt &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Dimilin &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Control &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 15.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.7 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.9 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 17.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 15.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 20.9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+&lt;table class="table table-condensed" style="font-size: 18px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Source &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; SS &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; MS &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; F &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Among treatment &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 215.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 107.7 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; ? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Among whole units &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 11.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1.9 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; ? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Residual &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 27 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.9 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
 ---
 # connections to what's ahead
 
