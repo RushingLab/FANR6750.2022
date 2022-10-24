@@ -1,7 +1,7 @@
 ---
-title: "Lab 10: Repeated measures"
+title: "Lab 11: Repeated measures"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2021"
+author: "Fall 2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab10_repeated_measures}
@@ -247,7 +247,7 @@ As always:
 
 - Be sure the output type is set to: `output: html_document`
 
-- Title the document: `title: "Lab 10 assignment"`
+- Title the document: `title: "Homework 4: Repeated Measures"`
 
 - Be sure to include your first and last name in the `author` section 
 
@@ -257,5 +257,6 @@ As always:
 
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
 
+- See the "Creating publication-quality graphics" reference sheet for tips on formatting figures
 
 

@@ -224,7 +224,7 @@ As always:
 
 - Be sure the output type is set to: `output: html_document`
 
-- Title the document: `title: "Lab 7 assignment"`
+- Title the document: `title: "Lab 8 assignment"`
 
 - Be sure to include your first and last name in the `author` section 
 

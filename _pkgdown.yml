@@ -75,6 +75,10 @@ navbar:
           href: articles/lab08_factorial.html
         - text: "Lab 9: Nesting"
           href: articles/lab09_nested.html
+        - text: "Lab 10: Split-plot design"
+          href: articles/lab10_splitplot.html
+        - text: "Lab 11: Repeated Measures"
+          href: articles/lab11_repeated_measures.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

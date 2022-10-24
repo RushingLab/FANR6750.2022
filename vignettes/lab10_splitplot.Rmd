@@ -1,7 +1,7 @@
 ---
-title: "Lab 9: Split plot designs"
+title: "Lab 10: Split plot designs"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2021"
+author: "Fall 2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab09_splitplot}
@@ -162,7 +162,7 @@ Nested-and-crossed is same as split-plot, but without the block. For example:
 
 - Each field is divided into 4 plots. Each plot is treated with one of ($b=4$) fertilizers.
 
-## Assignment
+## Assignment (not for a grade)
 
 The data can be accessed using:
 
@@ -192,13 +192,13 @@ As always:
 
 - Be sure the output type is set to: `output: html_document`
 
-- Title the document: `title: "Lab 9 assignment"`
+- Title the document: `title: "Lab 10 assignment"`
 
 - Be sure to include your first and last name in the `author` section 
 
 - Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
 
-- Please upload both the `html` and `.Rmd` files when you submit your assignment  
-
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- See the "Creating publication-quality graphics" reference sheet for tips on formatting figures
 
