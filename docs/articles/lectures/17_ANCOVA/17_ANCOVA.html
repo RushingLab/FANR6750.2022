@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 17: ancova</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2022" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# LECTURE 17: ancova
+]
+.subtitle[
+## FANR 6750 (Experimental design)
+]
+.author[
+### <br/><br/><br/>Fall 2022
+]
+
+---
+
+
+
+
+# outline 
+
+&lt;br/&gt;
+
+1) Motivation
+
+&lt;br/&gt;
+
+--
+
+2) Regression
+
+&lt;br/&gt;
+
+--
+
+3) ANCOVA
+
+
+
+---
+# motivation
+
+#### Analysis of covariance (ANCOVA) features a combination of regression analysis and analysis of variance. ANCOVA is used when the response variable `\(\large y\)`, in addition to being affected by the treatments, is also related to another continuous variable `\(\large x\)`  
+
+--
+
+#### ANCOVA can be used to:
+
+--
+
+1) Increase precision in an experiment  
+
+--
+
+
+2) Control for extraneous variability  
+
+--
+
+3) Compare regressions within several groups  
+
+--
+
+#### The continuous covariate `\(\large x\)` is usually a variable that we can't control in the design phase of the research, so it must be accounted for in the model  
+
+---
+class: inverse, middle, center
+
+# regression
+
+---
+# regression review
+
+#### A regression is a type of linear model of the form:
+
+`$$\Large y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$`
+`$$\large \epsilon_i \sim normal(0, \sigma^2)$$`
+
+--
+
+#### where
+
+- `\(y_i =\)` response (or dependent) variable  
+
+- `\(x_i =\)` explanatory (or independent) variable  
+
+- `\(\beta_0 =\)` intercept: The expected value of `\(y\)` when `\(x = 0\)`  
+
+- `\(\beta_1 =\)` slope: The change in `\(y\)` with a unit increase in `\(x\)`  
+
+- `\(\epsilon_i =\)` residual  
+
+---
+# regression review
+
+The relationship between `\(x\)` and `\(y\)` is often depicted with a scatter plot   
+
+&lt;img src="17_ANCOVA_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# regression review
+
+The relationship between `\(x\)` and `\(y\)` is often depicted with a scatter plot   
+
+&lt;img src="17_ANCOVA_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+The regression line `\(y = \beta_0 + \beta_1 \times x\)` represents the mean `\(y\)` response at a given `\(x\)` value  
+
+---
+# regression hypotheses
+
+#### The null and alternative hypotheses of interest are:
+
+`$$\Large H_0 : \beta_1 = 0$$`
+`$$\Large H_a : \beta_1 &gt; 0$$`
+
+&lt;br/&gt;
+
+--
+
+Note that we could test the hypothesis that the intercept is equal to zero, but we usually do not because this is rarely biologically meaningful, and the intercept often lies outside the range of the observed data  
+
+---
+# `\(\large \beta_1 &gt; 0\)`
+
+&lt;img src="17_ANCOVA_files/figure-html/unnamed-chunk-3-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# `\(\large \beta_1 &lt; 0\)`
+
+&lt;img src="17_ANCOVA_files/figure-html/unnamed-chunk-4-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+
+---
+# `\(\large \beta_1 = 0\)`
+
+&lt;img src="17_ANCOVA_files/figure-html/unnamed-chunk-5-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# estimation
+
+#### The regression line is simply a line with intercept `\(\large \beta_0\)` and slope`\(\beta_1\)`. It is used to predict `\(\large y\)` for any value of `\(\large x\)`  
+
+&lt;br/&gt;
+
+--
+
+#### The intercept and slope parameters are usually estimated using the method of "*ordinary least squares*", which finds the estimates that minimize the residual sum of squares:
+
+`$$\Large SS_{res} = \sum_i \epsilon_i^2 = \sum_i (y_i - (\beta_0 + \beta_1 x_i))^2$$`
+---
+# residuals
+
+&lt;img src="17_ANCOVA_files/figure-html/unnamed-chunk-6-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# testing
+
+#### Once we have the estimates, we can test the null hypothesis `\(\large \beta_1 = 0\)` using a *t* -test:
+
+`$$\Large t = \frac{\hat{\beta}_1}{SE(\hat{\beta}_1)}$$`
+&lt;br/&gt;
+
+where `\(SE(\hat{\beta}_1)\)` is the estimated standard error  
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+--
+
+#### The test statistic follows a *t* distribution with `\(\large n - 2\)` degrees of freedom under the null hypothesis  
+
+---
+## `\(R^2\)` and `\(\large r\)`
+
+#### A common measure of the proportion of variation explained is `\(R^2\)`, the squared Pearson correlation coefficient ( `\(\large r\)` ):
+
+`$$\Large r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2(y_i - \bar{y})^2}}$$`
+
+&lt;br/&gt;
+
+--
+
+`\(r\)` ranges from `\(-1\)` to `\(+1\)` where the extremes are perfect correlation
+and zero means no correlation. As a result, `\(R^2\)` ranges from 0 to 1  
+
+&lt;br/&gt;
+
+--
+
+`\(r\)` is negative when large values of one variable are associated with small values of the other (and vice versa). `\(R^2\)` approaches 1 as the residuals approach zero  
+
+---
+class: middle, center, inverse
+
+# ancova
+
+---
+# ancova
+
+#### ANCOVA is used when we want to do an ANOVA, but we have to control for variation in `\(\large y\)` due to a continuous covariate `\(\large x\)`  
+
+--
+
+#### We can't control `\(\large x\)` in the design, so we have to account for it in the model  
+
+--
+
+#### An ANCOVA can be thought of as several regressions, one for each level of the treatment factor. Thus, we need `\(a\)` intercepts and one slope parameter  
+
+--
+
+#### By combining regressions of `\(\large y\)` on `\(\large x\)` with ANOVA on `\(\large y\)`, the within-treatment variability is reduced, making it more likely that treatment differences will be detected  
+
+---
+# example
+
+&lt;img src="17_ANCOVA_files/figure-html/unnamed-chunk-7-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# model
+
+One way to write the model involves an intercept ( `\(\large \beta_0\)` ) for one factor level and `\(\large \beta\)`'s that describe the difference between the intercepts of the other levels and the reference level  
+
+--
+
+`$$\large y_i = \beta_0 + \beta_1 x_i + \beta_2 d2_i + \beta_3 d3_i + ...$$`
+
+--
+where
+
+- `\(\large y_i =\)` response variable, `\(\large x_i =\)` continuous covariate  
+
+- `\(\large \beta_0 =\)` intercept for the reference level (arbitrary)  
+
+- `\(\large \beta_1 =\)` slope (assumed equal for all factor levels)  
+
+- `\(\large \beta_2 =\)` difference in the intercepts of level 2 and the reference level  
+
+- `\(\large d2_i =\)` dummy variable for factor level 2 (1 when `\(i =\)` level 2, 0 otherwise)  
+
+If there are `\(a\)` levels of the factor, there will be `\(a - 1\)` dummy variables  
+
+---
+# example
+
+&lt;img src="17_ANCOVA_files/figure-html/unnamed-chunk-8-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# hypothesis tests
+
+#### As in regression, we can use *t* statistics to test the null hypothesis:
+
+`$$\Large H_0 : \beta = 0$$`
+
+for each `\(\beta\)` in the model  
+
+--
+
+#### We can also construct an ANOVA table to test for effects of `\(\large x\)` and the treatment variable. Unfortunately, there are multiple ways of doing this. We will briefly cover two options:
+
+
+- Type I sums of squares
+
+- Type III sums of squares
+
+---
+# type i sums of squares
+
+#### This is the default method used by `R`'s `summary.aov()` and `anova()` functions  
+
+--
+
+#### This method calculates the sums of squares **sequentially**  
+
+--
+
+#### If you put the treatment variable before the covariate, the equation for SS is the same as for a one-way ANOVA  
+
+--
+
+#### If you put the treatment variable after the covariate, the equation describes how much variation is explained by the treatment variable **after** accounting for the covariate  
+
+--
+
+#### Both options are valid, but the latter is usually preferred in an ANCOVA setting
+
+---
+# type i sums of squares example
+
+
+```r
+fm1 &lt;- lm(weight ~ diet + length, dietData)
+summary.aov(fm1)
+```
+
+```
+##             Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## diet         3   54.6    18.2    5.24   0.003 ** 
+## length       1  305.8   305.8   88.03 5.2e-13 ***
+## Residuals   55  191.1     3.5                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+
+--
+
+
+```r
+fm2 &lt;- lm(weight ~ length + diet, dietData)
+summary.aov(fm2)
+```
+
+```
+##             Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## length       1  278.3   278.3   80.09 2.5e-12 ***
+## diet         3   82.2    27.4    7.89 0.00018 ***
+## Residuals   55  191.1     3.5                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+---
+# type iii sums of squares
+
+Each sum of squares is calculated relative to the entire model, but excluding the variable of interest. This can be done using `R`'s `drop1()` function:
+
+
+```r
+drop1(fm1, test="F")
+```
+
+```
+## Single term deletions
+## 
+## Model:
+## weight ~ diet + length
+##        Df Sum of Sq RSS   AIC F value  Pr(&gt;F)    
+## &lt;none&gt;              191  79.5                    
+## diet    3      82.2 273  95.0    7.89 0.00018 ***
+## length  1     305.8 497 134.8   88.03 5.2e-13 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+&lt;br/&gt;
+
+--
+
+This method is fine for testing the effect of each predictor variable in the model, but be aware that the sums of squares are not additive  
+
+---
+# yet another *f* -test
+
+The summary method for `lm()` always reports a single *F*-test, based on the SS explained by all predictor variables in the model and the SS of the residuals  
+
+
+```r
+broom::tidy(fm2)
+```
+
+
+```
+##          term estimate std.error statistic   p.value
+## 1 (Intercept)  19.1402    0.8858    21.607 1.514e-28
+## 2      length   0.5573    0.0594     9.382 5.203e-13
+## 3     dietLow   1.3688    0.6875     1.991 5.147e-02
+## 4     dietMed   2.5265    0.6973     3.623 6.361e-04
+## 5    dietHigh   3.0830    0.6832     4.513 3.410e-05
+```
+
+&lt;br/&gt;
+
+
+```r
+broom::glance(fm2)
+```
+
+
+```
+##   df df.residual statistic   p.value
+## 1  4          55     25.94 4.147e-12
+```
+
+
+---
+# summary
+
+#### ANCOVA is a hybrid of one-way ANOVA and simple linear regression
+
+--
+
+- In experimental settings, ANCOVA is used when the effects of `\(x\)` can't be controlled as part of the design  
+
+--
+
+- It is good practice to sample in such as way as to ensure that the range of `\(x\)` values is similar for each level of the treatment factor  
+
+--
+
+- There are many ways of writing the model, but we will use a dummy variable approach to be consistent with `R`'s default output and to ease the transition into linear models  
+
+--
+
+- Including `\(x\)` in the model increases the power of testing the effect of the treatment factor
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

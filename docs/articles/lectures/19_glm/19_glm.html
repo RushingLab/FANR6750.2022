@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 19: generalized linear models</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2022" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# LECTURE 19: generalized linear models
+]
+.subtitle[
+## FANR 6750 (Experimental design)
+]
+.author[
+### <br/><br/><br/>Fall 2022
+]
+
+---
+
+
+
+
+# outline 
+
+&lt;br/&gt;
+
+1) Motivation
+
+&lt;br/&gt;
+
+--
+
+2) Logistic regression
+
+&lt;br/&gt;
+
+--
+
+3) Poisson regression
+
+
+
+---
+# motivation
+
+#### Benefits of generalized linear models  
+
+--
+
+- The residuals don’t have to be normally distributed  
+
+--
+
+- The response variable can be binary, integer, strictly-positive, etc...  
+
+--
+
+- The variance is not assumed to be constant  
+
+--
+
+- Useful for manipulative experiments or observational studies, just like linear models 
+
+--
+
+#### Examples
+
+- Presence-absence studies  
+
+- Studies of survival  
+
+- Seed germination studies  
+
+---
+# from linear to generalized linear
+
+#### Linear model
+
+`$$\Large E(y_i) = \beta_0 + \beta_1x_{i1} +\beta_2x_{i2} + ...$$`
+`$$\Large y_i \sim normal(E(y_i), \sigma^2)$$`
+
+--
+
+#### Generalized linear model
+
+`$$\Large g\big(E(y_i)\big) = \beta_0 + \beta_1x_{i1} +\beta_2x_{i2} + ...$$`
+`$$\Large y_i \sim f(E(y_i))$$`
+
+--
+
+where `\(g()\)` is a **link function**, such as the log or logit link and `\(f\)` is a probability distribution such as the binomial or Poisson
+
+---
+# alternative representations
+
+#### This:
+`$$\Large g\big(E(y_i)\big) = \beta_0 + \beta_1x_{i1} +\beta_2x_{i2} + ...$$`
+`$$\Large y_i \sim f(E(y_i))$$`
+
+#### Is the same as this:
+
+`$$\Large E(y_i) = g^{-1}(\beta_0 + \beta_1x_{i1} +\beta_2x_{i2} + ...)$$`
+`$$\Large y_i \sim f(E(y_i))$$`
+
+--
+
+#### Is the same as this:
+
+`$$\Large g\big(E(y_i)\big) = \mathbf{X \beta}$$`
+`$$\Large y_i \sim f(E(y_i))$$`
+
+---
+# link functions
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Distribution &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; link name &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; link equation &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; inverse link equation &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Binomial &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; logit &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(log(\frac{p}{1-p})\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\frac{e^{X\beta}}{1+e^{X\beta}}\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Poisson &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; log &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(log(\lambda)\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(e^{X\beta}\) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;br/&gt;
+
+--
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Distribution &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; link name &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; link in R &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; inverse link in R &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Binomial &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; logit &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; qlogis &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; plogis &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Poisson &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; log &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; log &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; exp &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# logit link example
+
+
+```r
+beta0 &lt;- 5
+beta1 &lt;- -0.08
+(logit.p &lt;- beta0 + beta1*100) # linear predictor for x = 100
+```
+
+```
+## [1] -3
+```
+
+--
+
+#### How do we convert -3 to a probability? Use the inverse-link:
+
+
+```r
+(p &lt;- exp(logit.p)/(1+exp(logit.p))) # same as plogis(logit.p)
+```
+
+```
+## [1] 0.04743
+```
+
+--
+
+#### To go back, use the link function itself:
+
+
+```r
+log(p/(1-p))
+```
+
+```
+## [1] -3
+```
+
+```r
+qlogis(p)
+```
+
+```
+## [1] -3
+```
+
+---
+# logit link example
+
+
+```r
+plot(function(x) 5 + -0.08*x, from=0, to=100,
+xlab="Elevation", ylab="logit(prob of occurrence)")
+```
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-6-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# logit link example
+
+
+```r
+plot(function(x) plogis(5 + -0.08*x), from=0, to=100,
+xlab="Elevation", ylab="Probability of occurrence")
+```
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-7-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, middle, center
+# logistic regression
+
+---
+# logistic regression
+
+#### Logistic regression is a specific type of GLM in which the response variable follows a binomial distribution and the link function is the logit  
+
+--
+
+#### It would be better to call it “binomial regression” since other link functions (e.g. the probit) can be used  
+
+--
+
+#### Appropriate when the response is binary or a count with an upper limit
+
+--
+
+#### Examples:
+
+- Presence/absence studies  
+
+- Survival studies  
+
+- Disease prevalance studies  
+
+
+---
+# logistic regression
+
+&lt;br/&gt;
+
+`$$\Large logit(p_i) = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ...$$`
+`$$\Large y_i \sim binomial(N, p_i)$$`
+--
+
+#### where:
+
+- `\(\large N\)` is the number of “trials” (e.g. coin flips)  
+
+- `\(\large p_i\)` is the probability of success for sample unit *i*
+
+---
+# binomial distribution
+
+&lt;br/&gt;
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-8-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# binomial distribution
+
+&lt;br/&gt;
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-9-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# binomial distribution
+
+#### Properties
+
+- The expected value of `\(\large y\)` is `\(\large Np\)`  
+
+- The variance is `\(\large Np(1 - p)\)`  
+
+--
+
+#### Bernoulli distribution
+
+- The Bernoulli distribution is a binomial distribution with a single trial (N = 1)  
+
+- Logistic regression is usually done in this context, such that the response variable is 0/1 or No/Yes or Bad/Good, etc.
+
+---
+# worked example using glm
+
+First we will model the presence-absence response variable to determine if elevation and habitat affect the probability of occurrence
+
+
+```r
+data("frogData")
+head(frogData, n=12)
+```
+
+```
+##    presence abundance elevation habitat
+## 1         0         0        58     Oak
+## 2         1         7       191     Oak
+## 3         0         0        43     Oak
+## 4         1        11       374     Oak
+## 5         1        11       337     Oak
+## 6         1         1        64     Oak
+## 7         1         4       195     Oak
+## 8         1         6       263     Oak
+## 9         0         0       181     Oak
+## 10        1         1        59     Oak
+## 11        1        50       489   Maple
+## 12        1         5       317   Maple
+```
+
+---
+# raw data
+
+
+```r
+ggplot(frogData, aes(x = elevation, y = presence)) +
+  geom_point() +
+  scale_y_continuous("Frog Occurrence") + scale_x_continuous("Elevation")
+```
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-11-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# raw data
+
+
+```r
+library(dplyr)
+
+frogData %&gt;% group_by(habitat) %&gt;% summarise(group.prob = mean(presence)) %&gt;%
+  ggplot(., aes(x = habitat, y = group.prob)) +
+  geom_col(fill = "grey70", color = "black") +
+  scale_y_continuous("Proportion of sites with frogs") + scale_x_discrete("Habitat")
+```
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+# the `glm` function
+
+&lt;br/&gt;
+
+
+```r
+fm1 &lt;- glm(presence ~ habitat + elevation, 
+           family=binomial(link="logit"), 
+           data = frogData)
+broom::tidy(fm1)
+```
+
+&lt;br/&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.9960 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.217 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.8184 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4131 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0968 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.367 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0708 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9436 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.3372 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.382 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.2441 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8072 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0137 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.006 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.2723 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0231 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# occurrence probability and elevation
+
+
+```r
+newdat &lt;- data.frame(elevation=seq(12, 489, length = 50), 
+                     habitat="Oak")
+head(newdat)
+```
+
+```
+##   elevation habitat
+## 1     12.00     Oak
+## 2     21.73     Oak
+## 3     31.47     Oak
+## 4     41.20     Oak
+## 5     50.94     Oak
+## 6     60.67     Oak
+```
+
+--
+
+To get confidence intervals on (0,1) scale, predict on linear (link) scale and then backtransform using inverse-link
+
+
+```r
+pred.link &lt;- predict(fm1, newdata=newdat, se.fit=TRUE, type="link")
+newdat$mu &lt;- plogis(pred.link$fit)
+newdat$lower &lt;- plogis(pred.link$fit - 1.96*pred.link$se.fit)
+newdat$upper &lt;- plogis(pred.link$fit + 1.96*pred.link$se.fit)
+```
+
+---
+# occurrence probability and elevation
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-17-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+class: center, middle, inverse
+
+# poisson regression
+
+---
+# poisson regression
+
+&lt;br/&gt;
+
+`$$\Large log(\lambda_i) = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ...$$`
+`$$\Large y_i \sim Poisson(\lambda_i)$$`
+
+&lt;br/&gt;
+
+--
+
+#### where
+
+- `\(\large \lambda_i\)` is the expected value of `\(\large y_i\)`
+
+---
+# poisson regression
+
+#### Useful for:
+
+- Count data  
+
+- Number of events in time intervals  
+
+- Other types of integer data  
+
+--
+
+#### Properties
+
+- The expected value of *y* ( `\(\large \lambda\)`) is equal to the variance  
+
+- This is an assumption of the Poisson model  
+
+- Like all assumptions, it can be relaxed if you have enough data  
+
+---
+# poisson distribution
+
+&lt;br/&gt;
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-18-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# poisson distribution
+
+&lt;br/&gt;
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-19-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# poisson distribution
+
+&lt;br/&gt;
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-20-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# log link example
+
+
+```r
+plot(function(x) 5 + -0.08*x, from=0, to=100,
+xlab="Elevation", ylab="log(Expected abundance)")
+```
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-21-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# log link example
+
+
+```r
+plot(function(x) exp(5 + -0.08*x), from=0, to=100,
+xlab="Elevation", ylab="Expected abundance")
+```
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-22-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# the `glm` function
+
+&lt;br/&gt;
+
+
+```r
+fm2 &lt;- glm(abundance ~ habitat + elevation, family=poisson(link="log"), 
+           data=frogData)
+broom::tidy(fm2)
+```
+
+&lt;br/&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.7870 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2941 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.6756 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0075 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.1534 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1971 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.7782 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4364 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0653 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1104 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.5914 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5543 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0098 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0006 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.5507 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# prediction
+
+
+```r
+newdat &lt;- data.frame(elevation = seq(12, 489, length = 50),
+                     habitat = "Oak")
+head(newdat)
+```
+
+```
+##   elevation habitat
+## 1     12.00     Oak
+## 2     21.73     Oak
+## 3     31.47     Oak
+## 4     41.20     Oak
+## 5     50.94     Oak
+## 6     60.67     Oak
+```
+
+--
+
+To get confidence intervals on (0, `\(\infty\)`) scale, predict on linear (link) scale and then backtransform using inverse-link
+
+
+```r
+pred.link &lt;- predict(fm2, newdata=newdat, se.fit=TRUE, type="link")
+newdat$mu &lt;- exp(pred.link$fit)
+newdat$lower &lt;- exp(pred.link$fit - 1.96*pred.link$se.fit)
+newdat$upper &lt;- exp(pred.link$fit + 1.96*pred.link$se.fit)
+```
+
+---
+# prediction
+
+&lt;br/&gt;
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-27-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# assessing model fit
+
+#### The most common problem in Poisson regression is overdispersion  
+
+--
+
+#### Overdispersion is the situation in which there is more variability in the data than predicted by the model  
+
+--
+
+#### Overdispersion cannot be assessed by simply comparing the mean and variance of the response variable  
+
+--
+
+### The presence of many zeros is not necessarily indicative of overdispersion  
+
+--
+
+### Overdispersion can be assessed using a goodness-of-fit test  
+
+---
+# goodness-of-fit
+
+#### The fit of a Poisson regression can be assessed using a `\(\large \chi^2\)` test  
+
+The test statistic is the residual deviance:
+
+`$$\Large D = 2\bigg[\sum y_i log\bigg(\frac{y_i}{\hat{\lambda}_i}\bigg)-(y_i-\hat{\lambda}_i)\bigg]$$`
+
+--
+
+If the null hypothesis is true (ie, the model fits the data), `\(D\)` should follow `\(\chi^2\)` distribution with `\(N - K\)` degrees-of-freedom  
+
+--
+
+
+```r
+N &lt;- nrow(frogData) # sample size
+K &lt;- length(coef(fm2)) # number of parameters
+df.resid &lt;- N-K # degrees-of-freedom
+Dev &lt;- deviance(fm2) # residual deviance
+(p.value &lt;- 1-pchisq(Dev, df=df.resid))# p-value
+```
+
+```
+## [1] 0.0121
+```
+
+---
+### `\(\large \chi^2\)` DISTRIBUTION AND RESIDUAL DEVIANCE
+
+&lt;br/&gt;
+
+
+```r
+curve(dchisq(x, df=df.resid), from=0, to=50, xlab="Deviance", ylab="Density")
+abline(v=Dev, lwd=3, col="red")
+```
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-29-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+--
+The red line is the residual deviance. We reject the null hypothesis, and we conclude that the Poisson model does not fit the data
+
+---
+# what if model doesn't fit the data?
+
+&lt;br/&gt;
+
+#### Alternatives to the Poisson distribution
+
+- Negative binomial  
+
+- Zero-inflated Poisson
+
+---
+# negative binomial distribution
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-30-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# negative binomial distribution
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-31-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# negative binomial distribution
+
+&lt;img src="19_glm_files/figure-html/unnamed-chunk-32-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

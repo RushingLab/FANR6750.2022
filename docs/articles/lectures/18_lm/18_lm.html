@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 18: linear regression (continued)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2022" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# LECTURE 18: linear regression (continued)
+]
+.subtitle[
+## FANR 6750 (Experimental design)
+]
+.author[
+### <br/><br/><br/>Fall 2022
+]
+
+---
+
+
+
+
+# outline 
+
+&lt;br/&gt;
+
+1) Motivation
+
+&lt;br/&gt;
+
+--
+
+2) Linear models
+
+&lt;br/&gt;
+
+--
+
+3) Example
+
+&lt;br/&gt;
+
+--
+
+4) Matrix notation
+
+
+
+---
+# motivation
+
+#### Why do we need this part of the course?
+
+--
+
+- We have been modeling all along  
+
+--
+
+- Good experimental design + ANOVA is often the most direct route to causal inference  
+
+--
+
+- However, it isn’t always possible (or even desirable) to control some aspects of the system being investigated  
+
+--
+
+- When manipulative experiments aren’t possible, observational studies and predictive models can be the next best option
+
+
+---
+# what is a model?
+
+#### Definition
+
+&gt; A model is an abstraction of reality used to describe the relationship between two or more variables
+
+--
+
+#### Types of models
+
+- Conceptual  
+
+- Mathematical  
+
+- Statistical  
+
+--
+
+#### Cautionary note
+
+&gt; All models are wrong but some are useful (George Box, 1976)
+
+---
+# statistical models
+
+&lt;br/&gt;
+
+#### What are they useful for?
+
+--
+- Formalizing hypotheses using math and probability  
+
+--
+
+- Evaulating hypotheses by confronting models with data  
+
+--
+
+- Predicting unobserved (including future) outcomes
+
+&lt;img src="figs/prediction.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
+
+---
+# statistical models
+
+
+#### Unlike many other types of models, statistical models are fitted to data
+
+--
+
+#### Two important components:
+
+1) Deterministic component
+
+- Equation for the expected value of the response variable  
+
+--
+
+2) Stochastic component
+
+- Probability distribution describing the differences between the expected values and the observed values
+
+- In parametric statistics, we assume we know the distribution, but not the parameters of the distribution
+
+---
+class: inverse, center, middle
+
+# linear models
+
+---
+# is this a linear model?
+
+`$$\Large y = 20 + 0.5x$$`
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# is this a linear model?
+
+`$$\Large y = 20 + 0.5x - 0.3x^2$$`
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-3-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# linear models
+
+### All of the models we've covered this semester, including fixed-effects regression and ANOVA, are linear models  
+
+--
+
+#### You must understand linear models before you can apply more advanced models such as GLMs, GAMS, GLMMs, etc. . .
+
+---
+# linear models
+
+#### A linear model is an equation of the form:
+
+`$$\large y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ... + \beta_px_{ip} + \epsilon_i$$`
+
+where the `\(\beta\)`’s are coefficients, and the `\(x\)` values are predictor variables (or dummy variables for categorical predictors)  
+
+--
+
+#### This equation is often expressed in matrix notation as:
+
+`$$\Large y = \mathbf{X \beta} + \epsilon$$`
+where `\(\mathbf{X}\)` is a **design matrix** and `\(\mathbf{\beta}\)` is a vector of coefficients  
+
+--
+
+More on matrix notation later...
+
+---
+## INTERPRETING THE `\(\beta\)`'s
+
+&lt;br/&gt;
+
+#### You must be able to interpret the `\(\large \beta\)` coefficients for any model that you fit to your data
+
+&lt;br/&gt;
+
+--
+
+#### A linear model might have dozens of continuous and categorical predictors variables, with dozens of associated `\(\large \beta\)` coefficients  
+
+&lt;br/&gt;
+
+--
+
+#### Linear models can also include polynomial terms and interactions
+
+---
+## INTERPRETING THE `\(\beta\)`'s
+
+#### The intercept `\(\large \beta_0\)` is the expected value of `\(\large y\)`, when all `\(\large x\)`’s are 0
+
+--
+
+#### If `\(\large x\)` is a continuous explanatory variable:
+
+- `\(\large \beta\)` can usually be interpreted as a slope parameter  
+
+- In this case, `\(\large \beta\)` is the change in `\(\large y\)` resulting from a 1 unit change in `\(\large x\)` (while holding the other predictors constant)  
+
+
+
+.pull-left[
+
+
+```r
+lm(y ~ x, data = df)
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ x, data = df)
+## 
+## Coefficients:
+## (Intercept)            x  
+##      11.346        0.957
+```
+
+]
+
+.pull-right[
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-6-1.png" width="648" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+### INTERPRETING THE `\(\large \beta\)`'s FOR CATEGORICAL PREDICTORS
+
+#### Things are more complicated for categorical explantory variables (i.e., factors) because they must be converted to dummy variables  
+
+--
+
+#### There are many ways of creating dummy variables  
+
+In `R`, the default method for creating dummy variables from unordered factors works like this:
+
+- One level of the factor is treated as a reference level  
+
+- The reference level is associated with the intercept  
+
+- The `\(\beta\)` coefficients for the other levels of the factor are differences from the reference level  
+
+--
+
+#### The default method corresponds to:
+
+```
+options(contrasts=c("contr.treatment","contr.poly"))
+```
+
+---
+### INTERPRETING THE `\(\large \beta\)`'s FOR CATEGORICAL PREDICTORS
+
+#### Another common method for creating dummy variables results in `\(\large \beta\)`’s that can be interpretted as the `\(\large \alpha\)`’s from the additive models that we saw earlier in the class  
+
+--
+
+#### With this method:
+
+- The `\(\beta\)` associated with each level of the factor is the difference from the intercept
+
+- The intercept can be interpeted as the grand mean if the continuous variables have been centered
+
+- One of the levels of the factor will not be displayed because it is redundant when the intercept is estimated
+
+--
+
+#### This method corresponds to:
+
+```
+options(contrasts=c("contr.sum","contr.poly"))
+```
+
+---
+class: inverse, middle, center
+
+# example
+
+---
+# example
+
+### The Island Scrub Jay (*Aphelocoma insularis*)
+
+
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Aphelocoma_insularis_Bouton_2.jpg" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+
+---
+# example
+
+&lt;img src="figs/santa_cruz.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# santa cruz data
+
+#### Habitat data for all 2787 grid cells covering the island
+
+
+```r
+data("cruzData")
+head(cruzData)
+```
+
+```
+##        x       y elevation forest chaparral habitat seeds
+## 1 230737 3774324       241      0         0     Oak   Low
+## 2 231037 3774324       323      0         0    Pine   Med
+## 3 231337 3774324       277      0         0    Pine  High
+## 4 230437 3774024        13      0         0     Oak   Med
+## 5 230737 3774024       590      0         0     Oak  High
+## 6 231037 3774024       533      0         0     Oak   Low
+```
+
+---
+# maps of predictor variables
+
+### Elevation
+
+
+```
+## Spherical geometry (s2) switched off
+```
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-10-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# maps of predictor variables
+
+### Forest cover
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-11-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# questions
+
+&lt;br/&gt;
+
+--
+1) How many jays are on the island?  
+
+&lt;br/&gt;
+
+--
+
+2) What environmental variables influence abundance?  
+
+&lt;br/&gt;
+
+--
+
+3) Can we predict consequences of environmental change?  
+
+
+---
+# maps of predictor variables
+
+### Chaparral and survey locations
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-12-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# the (fake) jay data
+
+
+```r
+data("jayData")
+head(jayData)
+```
+
+```
+##        x       y elevation forest chaparral habitat seeds jays
+## 1 258637 3764124       423   0.00      0.02     Oak   Med   34
+## 2 261937 3769224       506   0.10      0.45     Oak   Med   38
+## 3 246337 3764124       859   0.00      0.26     Oak  High   40
+## 4 239437 3763524      1508   0.02      0.03    Pine   Med   43
+## 5 239437 3767724       483   0.26      0.37     Oak   Med   36
+## 6 236437 3769524       830   0.00      0.01     Oak   Low   39
+```
+
+---
+# simple linear regression
+
+
+```r
+fm1 &lt;- lm(jays ~ elevation, data = jayData)
+broom::tidy(fm1)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 33.0828 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4540 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 72.87 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0083 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0006 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+???
+
+Don't forget that you can also use `broom::glance()` to get other output in data.frame format
+
+---
+# simple linear regression
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-16-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# multiple linear regression
+
+
+```r
+fm2 &lt;- lm(jays ~ elevation + forest, data = jayData)
+broom::tidy(fm2)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 33.0660 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4676 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 70.7107 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0083 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0006 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13.9431 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; forest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2944 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.7931 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1642 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8699 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+# multiple linear regression
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-19-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# one-way anova
+
+
+
+```r
+fm3 &lt;- lm(jays ~ habitat, data = jayData)
+broom::tidy(fm3)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35.875 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.356 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.456 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.493 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.448 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.413 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0177 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.039 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.503 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.357 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1780 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+# one-way anova
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-22-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# ancova
+
+
+```r
+fm4 &lt;- lm(jays ~ habitat + elevation, data = jayData)
+broom::tidy(fm4)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.7164 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8084 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 37.998 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.1661 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7850 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.034 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.6955 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8148 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.081 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0401 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0083 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.308 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+# ancova
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-25-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# continuous-categorical interaction
+
+
+```r
+fm5 &lt;- lm(jays ~ habitat * elevation, data = jayData)
+broom::tidy(fm5)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.6544 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.4463 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21.8861 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.4287 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.5652 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.5516 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1241 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.5799 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2532 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8007 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0068 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.3931 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0010 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak:elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0012 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0022 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5592 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5774 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine:elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0022 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9508 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3441 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+---
+# continuous-categorical interaction
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-28-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# quadratic effect of elevation
+
+
+```r
+fm6 &lt;- lm(jays ~ elevation + I(elevation^2), data = jayData)
+broom::tidy(fm6)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.6196 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7631 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 41.434 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0137 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0023 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.843 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; I(elevation^2) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.357 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0204 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+# quadratic effect of elevation
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-31-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# interaction and quadratic effects
+
+
+
+```r
+fm7 &lt;- lm(jays ~ habitat * forest + elevation + I(elevation^2), data = jayData)
+broom::tidy(fm7)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29.1977 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.0304 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.338 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.7052 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8433 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.394 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.2160 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8757 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.531 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0131 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; forest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 40.0659 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.8020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.441 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1529 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0122 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0023 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.285 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; I(elevation^2) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.721 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0886 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak:forest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -42.9246 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.8496 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.541 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1267 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine:forest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -39.1819 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.8386 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.407 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1627 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+# Predict jay abundance at each grid cell
+
+
+```r
+E5 &lt;- predict(fm5, type="response", newdata=cruzData, interval="confidence")
+```
+
+
+```r
+E5 &lt;- cbind(cruzData[,c("x","y")], E5)
+head(E5)
+```
+
+```
+##        x       y   fit   lwr   upr
+## 1 230737 3774324 36.01 35.14 36.87
+## 2 231037 3774324 34.91 34.02 35.79
+## 3 231337 3774324 34.50 33.57 35.43
+## 4 230437 3774024 34.19 33.02 35.36
+## 5 230737 3774024 38.79 38.23 39.36
+## 6 231037 3774024 38.34 37.75 38.93
+```
+
+---
+# map the predictions
+
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-36-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# map the predictions
+
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-37-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# map the predictions
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-38-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# future scenarios
+
+#### What if pine and oak disappear?
+
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-39-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# future scenarios
+
+#### What if pine and oak disappear?
+
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-40-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+class: center, middle, inverse
+
+# matrix notation
+
+---
+# matrix notation
+
+&lt;br/&gt;
+
+#### Linear models are often expressed in matrix notation
+
+&lt;br/&gt;
+
+#### There are two reasons for this:
+
+- It is more compact and therefore easier to write  
+
+- Matrix multiplication is fast on a computer  
+
+---
+# linear model
+
+#### All of the fixed effects models that we have covered can be expressed this way:
+
+`$$\Large y = \mathbf{X \beta} + \epsilon$$`
+
+where
+
+`$$\large \epsilon \sim normal(0, \sigma^2)$$`
+--
+
+#### Examples include
+
+- Completely randomized ANOVA  
+
+- Randomized complete block designs with fixed block effects  
+
+- Factorial designs  
+
+- ANCOVA  
+
+---
+# then how do they differ?
+
+&lt;br/&gt;
+
+--
+
+- The design matrices are different  
+
+--
+
+- And so are the number of parameters (coefficients) to be estimated  
+
+--
+
+- Important to understand how to construct design matrix that includes categorical variables  
+
+---
+# design matrix
+
+&lt;br/&gt;
+
+- A design matrix has `\(N\)` rows and `\(K\)` columns, where `\(N\)` is the total sample size and `\(K\)` is the number of coefficients (parameters) to be estimated  
+
+--
+
+- The first column contains just 1’s. This column corresponds to the intercept (`\(\beta_0\)`)  
+
+--
+
+- Continuous predictor variables appear unchanged in the design matrix  
+
+--
+
+- Categorical predictor variables appear as dummy variables  
+
+--
+
+- In `R`, the design matrix is created internally based on the formula that you provide  
+
+--
+
+- The design matrix can be viewed using the `model.matrix()` function
+
+---
+# design matrix
+
+#### Model
+
+
+```r
+fm1 &lt;- lm(jays ~ elevation, data = jayData)
+```
+
+--
+
+#### Design matrix
+
+
+```r
+X1 &lt;- model.matrix(fm1)
+head(X1, n = 4) # First 4 rows of design matrix
+```
+
+```
+##   (Intercept) elevation
+## 1           1       423
+## 2           1       506
+## 3           1       859
+## 4           1      1508
+```
+
+--
+
+#### Estimated `\(\large \beta\)` coefficients  
+
+
+```r
+(beta.hat1 &lt;- coef(fm1)) # Estimates of beta0 and beta1
+```
+
+```
+## (Intercept)   elevation 
+##   33.082808    0.008337
+```
+
+---
+# matrix multiplication
+
+&lt;br/&gt;
+
+`$$\Large E(y) = \mathbf{X \beta}$$`
+
+&lt;br/&gt;
+
+--
+
+`$$\large \begin{bmatrix}
+    a\times x + b\times y + c\times z\\
+    d\times x + e\times y + f\times z\\
+    g\times x + h\times y + i\times z
+\end{bmatrix} = \begin{bmatrix}
+    a &amp; b &amp; c \\
+    d &amp; e &amp; f \\
+    g &amp; h &amp; i 
+\end{bmatrix}\;\;
+\mathbf \times \begin{bmatrix}
+    x \\
+    y \\
+    z
+\end{bmatrix}$$`
+
+&lt;br/&gt;
+
+--
+
+where:  
+
+- The first matrix corresponds to the expected values of `\(y\)`  
+
+- The second matrix corresponds to the design matrix `\(\mathbf{X}\)`  
+
+- The third matrix corresponds to `\(\mathbf{\beta}\)`
+
+---
+# matrix multiplication
+
+&lt;br/&gt;
+
+`$$\Large E(y) = \mathbf{X \beta}$$` or `$$\Large E(y_i) = \beta_0 + \beta_1ELEV_i$$`
+
+&lt;br/&gt;
+
+
+```r
+Ey1 &lt;- X1 %*% beta.hat1 # Expected number of jays at each site
+head(Ey1, 5)
+```
+
+```
+##    [,1]
+## 1 36.61
+## 2 37.30
+## 3 40.24
+## 4 45.65
+## 5 37.11
+```
+
+---
+# design matrix for ancova
+
+#### Model
+
+
+```r
+fm4 &lt;- lm(jays ~ elevation + habitat, data = jayData)
+```
+
+--
+
+#### Design matrix
+
+
+```r
+X4 &lt;- model.matrix(fm4)
+head(X4, n = 4) # First 4 rows of design matrix
+```
+
+```
+##   (Intercept) elevation habitatOak habitatPine
+## 1           1       423          1           0
+## 2           1       506          1           0
+## 3           1       859          1           0
+## 4           1      1508          0           1
+```
+
+--
+
+#### Estimated `\(\large \beta\)` coefficients
+
+
+```r
+(beta.hat4 &lt;- coef(fm4)) # Estimates of beta0 and beta1
+```
+
+```
+## (Intercept)   elevation  habitatOak habitatPine 
+##   30.716372    0.008289    3.166148    1.695456
+```
+
+--
+
+How do we multiply the design matrix ($\mathbf{X}$) by the vector of regression coefficients ( `\(\beta\)`)?
+
+---
+# matrix multiplication
+
+`$$\Large E(y) = \mathbf{X \beta}$$` or 
+`$$\large E(y_i) = \beta_0 + \beta_1ELEV_i + \beta_2OAK_i + \beta_3PINE_i$$`
+&lt;br/&gt;
+
+
+```r
+Ey4 &lt;- X4 %*% beta.hat4 # Expected number of jays at each site
+head(Ey4, 5)
+```
+
+```
+##    [,1]
+## 1 37.39
+## 2 38.08
+## 3 41.00
+## 4 44.91
+## 5 37.89
+```
+
+---
+# summary
+
+&lt;br/&gt;
+
+--
+
+- Linear models are the foundation of modern statistical modeling techniques  
+
+&lt;br/&gt;
+
+--
+
+- They can be used to model a wide array of biological processes, and they can be easily extended when their assumptions do not hold  
+
+&lt;br/&gt;
+
+--
+
+- One of the most important extensions is to cases where the residuals are not normally distributed. Generalized linear models address this issue  
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

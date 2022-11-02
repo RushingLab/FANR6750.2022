@@ -79,10 +79,19 @@
     <loc>/articles/lab11_repeated_measures.html</loc>
   </url>
   <url>
+    <loc>/articles/lab12_ANCOVA.html</loc>
+  </url>
+  <url>
     <loc>/articles/lab12_lm.html</loc>
   </url>
   <url>
     <loc>/articles/lab13_glm.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lab13_lm.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lab14_glm.html</loc>
   </url>
   <url>
     <loc>/articles/lab14_model_selection.html</loc>
@@ -142,19 +151,16 @@
     <loc>/articles/lectures/15_splitplot/15_splitplot.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/16_ANCOVA/16_ANCOVA.html</loc>
-  </url>
-  <url>
     <loc>/articles/lectures/16_repeated_measures/16_repeated_measures.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/17_lm/17_lm.html</loc>
+    <loc>/articles/lectures/17_ANCOVA/17_ANCOVA.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/18_glm/18_glm.html</loc>
+    <loc>/articles/lectures/18_lm/18_lm.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/19_model_selection/19_model_selection.html</loc>
+    <loc>/articles/lectures/19_glm/19_glm.html</loc>
   </url>
   <url>
     <loc>/articles/projects_and_directories.html</loc>
