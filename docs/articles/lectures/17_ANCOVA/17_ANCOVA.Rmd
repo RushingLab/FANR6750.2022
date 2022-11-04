@@ -142,7 +142,7 @@ $$\Large H_a : \beta_1 > 0$$
 Note that we could test the hypothesis that the intercept is equal to zero, but we usually do not because this is rarely biologically meaningful, and the intercept often lies outside the range of the observed data  
 
 ---
-# $\large \beta_1 > 0$
+## $\large \beta_1 > 0$
 
 ```{r}
 ggplot(df, aes(x = x, y = y)) +
@@ -151,7 +151,7 @@ ggplot(df, aes(x = x, y = y)) +
 ```
 
 ---
-# $\large \beta_1 < 0$
+## $\large \beta_1 < 0$
 
 ```{r}
 df2 <- data.frame(x = x, y = rnorm(100, beta0 - beta1 * x, sigma2))
@@ -163,7 +163,7 @@ ggplot(df2, aes(x = x, y = y)) +
 
 
 ---
-# $\large \beta_1 = 0$
+## $\large \beta_1 = 0$
 
 ```{r}
 set.seed(12345)
