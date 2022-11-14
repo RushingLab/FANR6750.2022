@@ -347,13 +347,15 @@ head(cruzData)
 ### Elevation
 
 ```{r}
-sf::sf_use_s2(FALSE)
+# sf::sf_use_s2(FALSE)
+sink <- capture.output(sf::sf_use_s2(FALSE))
 projcrs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 
 cruz_sf <- sf::st_as_sf(x = cruzData, coords = c("x", "y"), crs = projcrs)
 
 ggplot(cruz_sf) +
-  geom_sf(aes(color = elevation), shape = 15, size = 2)
+  geom_sf(aes(color = elevation), shape = 15, size = 2) +
+  scale_color_viridis_b()
 ```
 
 ---
@@ -363,7 +365,8 @@ ggplot(cruz_sf) +
 
 ```{r}
 ggplot(cruz_sf) +
-  geom_sf(aes(color = forest), shape = 15, size = 2)
+  geom_sf(aes(color = forest), shape = 15, size = 2)+
+  scale_color_viridis_b()
 ```
 
 ---
@@ -397,7 +400,8 @@ data("jayData")
 jay_sf <- sf::st_as_sf(x = jayData, coords = c("x", "y"), crs = projcrs)
 ggplot() +
   geom_sf(data = cruz_sf, aes(color = chaparral), shape = 15, size = 2) +
-  geom_sf(data = jay_sf, color = "red")
+  geom_sf(data = jay_sf, color = "red")+
+  scale_color_viridis_c()
 ```
 
 ---
