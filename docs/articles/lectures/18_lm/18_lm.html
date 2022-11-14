@@ -438,429 +438,6 @@ broom::tidy(fm1)
 Don't forget that you can also use `broom::glance()` to get other output in data.frame format
 
 ---
-# simple linear regression
-
-&lt;img src="18_lm_files/figure-html/unnamed-chunk-16-1.png" width="648" style="display: block; margin: auto;" /&gt;
-
----
-# multiple linear regression
-
-
-```r
-fm2 &lt;- lm(jays ~ elevation + forest, data = jayData)
-broom::tidy(fm2)
-```
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 33.0660 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.4676 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 70.7107 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0083 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0006 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 13.9431 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; forest &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2944 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.7931 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1642 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.8699 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-
----
-# multiple linear regression
-
-&lt;img src="18_lm_files/figure-html/unnamed-chunk-19-1.png" width="648" style="display: block; margin: auto;" /&gt;
-
----
-# one-way anova
-
-
-
-```r
-fm3 &lt;- lm(jays ~ habitat, data = jayData)
-broom::tidy(fm3)
-```
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 35.875 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.356 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26.456 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.493 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.448 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.413 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0177 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.039 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.503 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.357 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1780 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-
----
-# one-way anova
-
-&lt;img src="18_lm_files/figure-html/unnamed-chunk-22-1.png" width="648" style="display: block; margin: auto;" /&gt;
-
----
-# ancova
-
-
-```r
-fm4 &lt;- lm(jays ~ habitat + elevation, data = jayData)
-broom::tidy(fm4)
-```
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 30.7164 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.8084 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 37.998 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.1661 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.7850 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4.034 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.6955 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.8148 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.081 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0401 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0083 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0005 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15.308 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-
----
-# ancova
-
-&lt;img src="18_lm_files/figure-html/unnamed-chunk-25-1.png" width="648" style="display: block; margin: auto;" /&gt;
-
----
-# continuous-categorical interaction
-
-
-```r
-fm5 &lt;- lm(jays ~ habitat * elevation, data = jayData)
-broom::tidy(fm5)
-```
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 31.6544 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4463 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 21.8861 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.4287 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.5652 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.5516 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1241 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.4000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.5799 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2532 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.8007 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0068 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.3931 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0010 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatOak:elevation &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0012 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0022 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5592 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5774 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatPine:elevation &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0022 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.9508 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.3441 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-
-
----
-# continuous-categorical interaction
-
-&lt;img src="18_lm_files/figure-html/unnamed-chunk-28-1.png" width="648" style="display: block; margin: auto;" /&gt;
-
----
-# quadratic effect of elevation
-
-
-```r
-fm6 &lt;- lm(jays ~ elevation + I(elevation^2), data = jayData)
-broom::tidy(fm6)
-```
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 31.6196 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.7631 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 41.434 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0137 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0023 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5.843 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; I(elevation^2) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -2.357 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0204 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-
----
-# quadratic effect of elevation
-
-&lt;img src="18_lm_files/figure-html/unnamed-chunk-31-1.png" width="648" style="display: block; margin: auto;" /&gt;
-
----
-# interaction and quadratic effects
-
-
-
-```r
-fm7 &lt;- lm(jays ~ habitat * forest + elevation + I(elevation^2), data = jayData)
-broom::tidy(fm7)
-```
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 29.1977 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.0304 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28.338 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.7052 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.8433 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4.394 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.2160 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.8757 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.531 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0131 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; forest &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 40.0659 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 27.8020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.441 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1529 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0122 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0023 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5.285 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; I(elevation^2) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -1.721 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0886 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatOak:forest &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -42.9246 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 27.8496 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -1.541 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1267 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; habitatPine:forest &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -39.1819 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 27.8386 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -1.407 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1627 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-
----
-# Predict jay abundance at each grid cell
-
-
-```r
-E5 &lt;- predict(fm5, type="response", newdata=cruzData, interval="confidence")
-```
-
-
-```r
-E5 &lt;- cbind(cruzData[,c("x","y")], E5)
-head(E5)
-```
-
-```
-##        x       y   fit   lwr   upr
-## 1 230737 3774324 36.01 35.14 36.87
-## 2 231037 3774324 34.91 34.02 35.79
-## 3 231337 3774324 34.50 33.57 35.43
-## 4 230437 3774024 34.19 33.02 35.36
-## 5 230737 3774024 38.79 38.23 39.36
-## 6 231037 3774024 38.34 37.75 38.93
-```
-
----
-# map the predictions
-
-
-&lt;img src="18_lm_files/figure-html/unnamed-chunk-36-1.png" width="648" style="display: block; margin: auto;" /&gt;
-
----
-# map the predictions
-
-
-&lt;img src="18_lm_files/figure-html/unnamed-chunk-37-1.png" width="648" style="display: block; margin: auto;" /&gt;
-
----
-# map the predictions
-
-&lt;img src="18_lm_files/figure-html/unnamed-chunk-38-1.png" width="648" style="display: block; margin: auto;" /&gt;
-
----
-# future scenarios
-
-#### What if pine and oak disappear?
-
-
-&lt;img src="18_lm_files/figure-html/unnamed-chunk-39-1.png" width="648" style="display: block; margin: auto;" /&gt;
-
----
-# future scenarios
-
-#### What if pine and oak disappear?
-
-
-&lt;img src="18_lm_files/figure-html/unnamed-chunk-40-1.png" width="648" style="display: block; margin: auto;" /&gt;
-
----
 class: center, middle, inverse
 
 # matrix notation
@@ -1050,6 +627,281 @@ head(Ey1, 5)
 ## 5 37.11
 ```
 
+
+---
+# simple linear regression
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-20-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# multiple linear regression
+
+
+```r
+fm2 &lt;- lm(jays ~ elevation + forest, data = jayData)
+broom::tidy(fm2)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 33.0660 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4676 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 70.7107 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0083 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0006 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13.9431 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; forest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2944 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.7931 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1642 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8699 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# design matrix for multiple regression
+
+#### Design matrix
+
+
+```r
+X2 &lt;- model.matrix(fm2)
+head(X2, n = 4) # First 4 rows of design matrix
+```
+
+```
+##   (Intercept) elevation forest
+## 1           1       423   0.00
+## 2           1       506   0.10
+## 3           1       859   0.00
+## 4           1      1508   0.02
+```
+
+--
+
+#### Estimated `\(\large \beta\)` coefficients
+
+
+```r
+(beta.hat2 &lt;- coef(fm2)) # Estimates of beta0 and beta1
+```
+
+```
+## (Intercept)   elevation      forest 
+##   33.065994    0.008337    0.294350
+```
+
+---
+# matrix multiplication
+
+`$$\Large E(y) = \mathbf{X \beta}$$` or 
+`$$\large E(y_i) = \beta_0 + \beta_1ELEV_i + \beta_2FOREST_i$$`
+&lt;br/&gt;
+
+
+```r
+Ey2 &lt;- X2 %*% beta.hat2 # Expected number of jays at each site
+head(Ey2, 5)
+```
+
+```
+##    [,1]
+## 1 36.59
+## 2 37.31
+## 3 40.23
+## 4 45.64
+## 5 37.17
+```
+
+---
+# multiple linear regression
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-26-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# one-way anova
+
+
+
+```r
+fm3 &lt;- lm(jays ~ habitat, data = jayData)
+broom::tidy(fm3)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35.875 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.356 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.456 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.493 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.448 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.413 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0177 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.039 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.503 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.357 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1780 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# design matrix for anova
+
+#### Model
+
+
+```r
+fm3 &lt;- lm(jays ~ habitat, data=jayData)
+```
+
+--
+
+#### Design matrix
+
+
+```r
+X3 &lt;- model.matrix(fm3)
+head(X3, n = 4) # First 4 rows of design matrix
+```
+
+```
+##   (Intercept) habitatOak habitatPine
+## 1           1          1           0
+## 2           1          1           0
+## 3           1          1           0
+## 4           1          0           1
+```
+
+--
+
+#### Estimated `\(\large \beta\)` coefficients
+
+
+```r
+(beta.hat3 &lt;- coef(fm3)) # Estimates of beta0, beta1, beta2
+```
+
+```
+## (Intercept)  habitatOak habitatPine 
+##      35.875       3.493       2.039
+```
+
+---
+# matrix multiplication
+
+`$$\Large E(y) = \mathbf{X \beta}$$` or 
+`$$\large E(y_i) = \beta_0 + \beta_1OAK_i + \beta_2PINE_i$$`
+&lt;br/&gt;
+
+
+```r
+Ey3 &lt;- X3 %*% beta.hat3 # Expected number of jays at each site
+head(Ey3, 5)
+```
+
+```
+##    [,1]
+## 1 39.37
+## 2 39.37
+## 3 39.37
+## 4 37.91
+## 5 39.37
+```
+
+---
+# one-way anova
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-33-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# ancova
+
+
+```r
+fm4 &lt;- lm(jays ~ habitat + elevation, data = jayData)
+broom::tidy(fm4)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.7164 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8084 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 37.998 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.1661 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7850 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.034 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.6955 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8148 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.081 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0401 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0083 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.308 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
 ---
 # design matrix for ancova
 
@@ -1057,7 +909,7 @@ head(Ey1, 5)
 
 
 ```r
-fm4 &lt;- lm(jays ~ elevation + habitat, data = jayData)
+fm4 &lt;- lm(jays ~  habitat + elevation, data = jayData)
 ```
 
 --
@@ -1071,11 +923,11 @@ head(X4, n = 4) # First 4 rows of design matrix
 ```
 
 ```
-##   (Intercept) elevation habitatOak habitatPine
-## 1           1       423          1           0
-## 2           1       506          1           0
-## 3           1       859          1           0
-## 4           1      1508          0           1
+##   (Intercept) habitatOak habitatPine elevation
+## 1           1          1           0       423
+## 2           1          1           0       506
+## 3           1          1           0       859
+## 4           1          0           1      1508
 ```
 
 --
@@ -1084,23 +936,19 @@ head(X4, n = 4) # First 4 rows of design matrix
 
 
 ```r
-(beta.hat4 &lt;- coef(fm4)) # Estimates of beta0 and beta1
+(beta.hat4 &lt;- coef(fm4)) # Beta estimates
 ```
 
 ```
-## (Intercept)   elevation  habitatOak habitatPine 
-##   30.716372    0.008289    3.166148    1.695456
+## (Intercept)  habitatOak habitatPine   elevation 
+##   30.716372    3.166148    1.695456    0.008289
 ```
-
---
-
-How do we multiply the design matrix ($\mathbf{X}$) by the vector of regression coefficients ( `\(\beta\)`)?
 
 ---
 # matrix multiplication
 
 `$$\Large E(y) = \mathbf{X \beta}$$` or 
-`$$\large E(y_i) = \beta_0 + \beta_1ELEV_i + \beta_2OAK_i + \beta_3PINE_i$$`
+`$$\large E(y_i) = \beta_0 + \beta_1OAK_i + \beta_2PINE_i+ \beta_3ELEV_i$$`
 &lt;br/&gt;
 
 
@@ -1117,6 +965,272 @@ head(Ey4, 5)
 ## 4 44.91
 ## 5 37.89
 ```
+
+---
+# ancova
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-40-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# continuous-categorical interaction
+
+
+```r
+fm5 &lt;- lm(jays ~ habitat * elevation, data = jayData)
+broom::tidy(fm5)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.6544 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.4463 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21.8861 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.4287 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.5652 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.5516 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1241 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.5799 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2532 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8007 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0068 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.3931 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0010 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak:elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0012 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0022 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5592 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5774 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine:elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0022 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9508 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3441 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+---
+# continuous-categorical interaction
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-43-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# quadratic effect of elevation
+
+
+```r
+fm6 &lt;- lm(jays ~ elevation + I(elevation^2), data = jayData)
+broom::tidy(fm6)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.6196 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7631 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 41.434 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0137 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0023 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.843 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; I(elevation^2) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.357 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0204 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+# quadratic effect of elevation
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-46-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# interaction and quadratic effects
+
+
+
+```r
+fm7 &lt;- lm(jays ~ habitat * forest + elevation + I(elevation^2), data = jayData)
+broom::tidy(fm7)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29.1977 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.0304 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.338 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.7052 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8433 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.394 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.2160 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8757 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.531 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0131 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; forest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 40.0659 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.8020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.441 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1529 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; elevation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0122 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0023 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.285 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; I(elevation^2) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.721 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0886 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatOak:forest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -42.9246 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.8496 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.541 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1267 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; habitatPine:forest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -39.1819 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.8386 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.407 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1627 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+# Predict jay abundance at each grid cell
+
+
+```r
+E5 &lt;- predict(fm5, type="response", newdata=cruzData, interval="confidence")
+```
+
+
+```r
+E5 &lt;- cbind(cruzData[,c("x","y")], E5)
+head(E5)
+```
+
+```
+##        x       y   fit   lwr   upr
+## 1 230737 3774324 36.01 35.14 36.87
+## 2 231037 3774324 34.91 34.02 35.79
+## 3 231337 3774324 34.50 33.57 35.43
+## 4 230437 3774024 34.19 33.02 35.36
+## 5 230737 3774024 38.79 38.23 39.36
+## 6 231037 3774024 38.34 37.75 38.93
+```
+
+---
+# map the predictions
+
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-51-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# map the predictions
+
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-52-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# map the predictions
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-53-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# future scenarios
+
+#### What if pine and oak disappear?
+
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-54-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# future scenarios
+
+#### What if pine and oak disappear?
+
+
+&lt;img src="18_lm_files/figure-html/unnamed-chunk-55-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
 
 ---
 # summary

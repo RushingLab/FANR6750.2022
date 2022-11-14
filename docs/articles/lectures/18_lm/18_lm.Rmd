@@ -430,6 +430,171 @@ kable(broom::tidy(fm1))
 Don't forget that you can also use `broom::glance()` to get other output in data.frame format
 
 ---
+class: center, middle, inverse
+
+# matrix notation
+
+---
+# matrix notation
+
+<br/>
+
+#### Linear models are often expressed in matrix notation
+
+<br/>
+
+#### There are two reasons for this:
+
+- It is more compact and therefore easier to write  
+
+- Matrix multiplication is fast on a computer  
+
+---
+# linear model
+
+#### All of the fixed effects models that we have covered can be expressed this way:
+
+$$\Large y = \mathbf{X \beta} + \epsilon$$
+
+where
+
+$$\large \epsilon \sim normal(0, \sigma^2)$$
+--
+
+#### Examples include
+
+- Completely randomized ANOVA  
+
+- Randomized complete block designs with fixed block effects  
+
+- Factorial designs  
+
+- ANCOVA  
+
+---
+# then how do they differ?
+
+<br/>
+
+--
+
+- The design matrices are different  
+
+--
+
+- And so are the number of parameters (coefficients) to be estimated  
+
+--
+
+- Important to understand how to construct design matrix that includes categorical variables  
+
+---
+# design matrix
+
+<br/>
+
+- A design matrix has $N$ rows and $K$ columns, where $N$ is the total sample size and $K$ is the number of coefficients (parameters) to be estimated  
+
+--
+
+- The first column contains just 1’s. This column corresponds to the intercept ($\beta_0$)  
+
+--
+
+- Continuous predictor variables appear unchanged in the design matrix  
+
+--
+
+- Categorical predictor variables appear as dummy variables  
+
+--
+
+- In `R`, the design matrix is created internally based on the formula that you provide  
+
+--
+
+- The design matrix can be viewed using the `model.matrix()` function
+
+---
+# design matrix
+
+#### Model
+
+```{r echo = TRUE}
+fm1 <- lm(jays ~ elevation, data = jayData)
+```
+
+--
+
+#### Design matrix
+
+```{r echo = TRUE}
+X1 <- model.matrix(fm1)
+head(X1, n = 4) # First 4 rows of design matrix
+```
+
+--
+
+#### Estimated $\large \beta$ coefficients  
+
+```{r echo = TRUE}
+(beta.hat1 <- coef(fm1)) # Estimates of beta0 and beta1
+```
+
+---
+# matrix multiplication
+
+<br/>
+
+$$\Large E(y) = \mathbf{X \beta}$$
+
+<br/>
+
+--
+
+$$\large \begin{bmatrix}
+    a\times x + b\times y + c\times z\\
+    d\times x + e\times y + f\times z\\
+    g\times x + h\times y + i\times z
+\end{bmatrix} = \begin{bmatrix}
+    a & b & c \\
+    d & e & f \\
+    g & h & i 
+\end{bmatrix}\;\;
+\mathbf \times \begin{bmatrix}
+    x \\
+    y \\
+    z
+\end{bmatrix}$$
+
+<br/>
+
+--
+
+where:  
+
+- The first matrix corresponds to the expected values of $y$  
+
+- The second matrix corresponds to the design matrix $\mathbf{X}$  
+
+- The third matrix corresponds to $\mathbf{\beta}$
+
+---
+# matrix multiplication
+
+<br/>
+
+$$\Large E(y) = \mathbf{X \beta}$$ or $$\Large E(y_i) = \beta_0 + \beta_1ELEV_i$$
+
+<br/>
+
+```{r echo = TRUE}
+Ey1 <- X1 %*% beta.hat1 # Expected number of jays at each site
+head(Ey1, 5)
+```
+
+
+---
 # simple linear regression
 
 ```{r}
@@ -453,6 +618,35 @@ fm2 <- lm(jays ~ elevation + forest, data=jayData)
 kable(broom::tidy(fm2))
 ```
 
+---
+# design matrix for multiple regression
+
+#### Design matrix
+
+```{r echo = TRUE}
+X2 <- model.matrix(fm2)
+head(X2, n = 4) # First 4 rows of design matrix
+```
+
+--
+
+#### Estimated $\large \beta$ coefficients
+
+```{r echo = TRUE}
+(beta.hat2 <- coef(fm2)) # Estimates of beta0 and beta1
+```
+
+---
+# matrix multiplication
+
+$$\Large E(y) = \mathbf{X \beta}$$ or 
+$$\large E(y_i) = \beta_0 + \beta_1ELEV_i + \beta_2FOREST_i$$
+<br/>
+
+```{r echo = TRUE}
+Ey2 <- X2 %*% beta.hat2 # Expected number of jays at each site
+head(Ey2, 5)
+```
 
 ---
 # multiple linear regression
@@ -478,6 +672,43 @@ fm3 <- lm(jays ~ habitat, data=jayData)
 kable(broom::tidy(fm3))
 ```
 
+---
+# design matrix for anova
+
+#### Model
+
+```{r echo = TRUE}
+fm3 <- lm(jays ~ habitat, data=jayData)
+```
+
+--
+
+#### Design matrix
+
+```{r echo = TRUE}
+X3 <- model.matrix(fm3)
+head(X3, n = 4) # First 4 rows of design matrix
+```
+
+--
+
+#### Estimated $\large \beta$ coefficients
+
+```{r echo = TRUE}
+(beta.hat3 <- coef(fm3)) # Estimates of beta0, beta1, beta2
+```
+
+---
+# matrix multiplication
+
+$$\Large E(y) = \mathbf{X \beta}$$ or 
+$$\large E(y_i) = \beta_0 + \beta_1OAK_i + \beta_2PINE_i$$
+<br/>
+
+```{r echo = TRUE}
+Ey3 <- X3 %*% beta.hat3 # Expected number of jays at each site
+head(Ey3, 5)
+```
 
 ---
 # one-way anova
@@ -502,6 +733,43 @@ fm4 <- lm(jays ~ habitat + elevation, data=jayData)
 kable(broom::tidy(fm4))
 ```
 
+---
+# design matrix for ancova
+
+#### Model
+
+```{r echo = TRUE}
+fm4 <- lm(jays ~  habitat + elevation, data = jayData)
+```
+
+--
+
+#### Design matrix
+
+```{r echo = TRUE}
+X4 <- model.matrix(fm4)
+head(X4, n = 4) # First 4 rows of design matrix
+```
+
+--
+
+#### Estimated $\large \beta$ coefficients
+
+```{r echo = TRUE}
+(beta.hat4 <- coef(fm4)) # Beta estimates
+```
+
+---
+# matrix multiplication
+
+$$\Large E(y) = \mathbf{X \beta}$$ or 
+$$\large E(y_i) = \beta_0 + \beta_1OAK_i + \beta_2PINE_i+ \beta_3ELEV_i$$
+<br/>
+
+```{r echo = TRUE}
+Ey4 <- X4 %*% beta.hat4 # Expected number of jays at each site
+head(Ey4, 5)
+```
 
 ---
 # ancova
@@ -674,211 +942,6 @@ ggplot(E5.2_sf) +
   labs(title = "Expected number of Jays (no pine/oak)")
 ```
 
----
-class: center, middle, inverse
-
-# matrix notation
-
----
-# matrix notation
-
-<br/>
-
-#### Linear models are often expressed in matrix notation
-
-<br/>
-
-#### There are two reasons for this:
-
-- It is more compact and therefore easier to write  
-
-- Matrix multiplication is fast on a computer  
-
----
-# linear model
-
-#### All of the fixed effects models that we have covered can be expressed this way:
-
-$$\Large y = \mathbf{X \beta} + \epsilon$$
-
-where
-
-$$\large \epsilon \sim normal(0, \sigma^2)$$
---
-
-#### Examples include
-
-- Completely randomized ANOVA  
-
-- Randomized complete block designs with fixed block effects  
-
-- Factorial designs  
-
-- ANCOVA  
-
----
-# then how do they differ?
-
-<br/>
-
---
-
-- The design matrices are different  
-
---
-
-- And so are the number of parameters (coefficients) to be estimated  
-
---
-
-- Important to understand how to construct design matrix that includes categorical variables  
-
----
-# design matrix
-
-<br/>
-
-- A design matrix has $N$ rows and $K$ columns, where $N$ is the total sample size and $K$ is the number of coefficients (parameters) to be estimated  
-
---
-
-- The first column contains just 1’s. This column corresponds to the intercept ($\beta_0$)  
-
---
-
-- Continuous predictor variables appear unchanged in the design matrix  
-
---
-
-- Categorical predictor variables appear as dummy variables  
-
---
-
-- In `R`, the design matrix is created internally based on the formula that you provide  
-
---
-
-- The design matrix can be viewed using the `model.matrix()` function
-
----
-# design matrix
-
-#### Model
-
-```{r echo = TRUE}
-fm1 <- lm(jays ~ elevation, data = jayData)
-```
-
---
-
-#### Design matrix
-
-```{r echo = TRUE}
-X1 <- model.matrix(fm1)
-head(X1, n = 4) # First 4 rows of design matrix
-```
-
---
-
-#### Estimated $\large \beta$ coefficients  
-
-```{r echo = TRUE}
-(beta.hat1 <- coef(fm1)) # Estimates of beta0 and beta1
-```
-
----
-# matrix multiplication
-
-<br/>
-
-$$\Large E(y) = \mathbf{X \beta}$$
-
-<br/>
-
---
-
-$$\large \begin{bmatrix}
-    a\times x + b\times y + c\times z\\
-    d\times x + e\times y + f\times z\\
-    g\times x + h\times y + i\times z
-\end{bmatrix} = \begin{bmatrix}
-    a & b & c \\
-    d & e & f \\
-    g & h & i 
-\end{bmatrix}\;\;
-\mathbf \times \begin{bmatrix}
-    x \\
-    y \\
-    z
-\end{bmatrix}$$
-
-<br/>
-
---
-
-where:  
-
-- The first matrix corresponds to the expected values of $y$  
-
-- The second matrix corresponds to the design matrix $\mathbf{X}$  
-
-- The third matrix corresponds to $\mathbf{\beta}$
-
----
-# matrix multiplication
-
-<br/>
-
-$$\Large E(y) = \mathbf{X \beta}$$ or $$\Large E(y_i) = \beta_0 + \beta_1ELEV_i$$
-
-<br/>
-
-```{r echo = TRUE}
-Ey1 <- X1 %*% beta.hat1 # Expected number of jays at each site
-head(Ey1, 5)
-```
-
----
-# design matrix for ancova
-
-#### Model
-
-```{r echo = TRUE}
-fm4 <- lm(jays ~ elevation + habitat, data = jayData)
-```
-
---
-
-#### Design matrix
-
-```{r echo = TRUE}
-X4 <- model.matrix(fm4)
-head(X4, n = 4) # First 4 rows of design matrix
-```
-
---
-
-#### Estimated $\large \beta$ coefficients
-
-```{r echo = TRUE}
-(beta.hat4 <- coef(fm4)) # Estimates of beta0 and beta1
-```
-
---
-
-How do we multiply the design matrix ($\mathbf{X}$) by the vector of regression coefficients ( $\beta$)?
-
----
-# matrix multiplication
-
-$$\Large E(y) = \mathbf{X \beta}$$ or 
-$$\large E(y_i) = \beta_0 + \beta_1ELEV_i + \beta_2OAK_i + \beta_3PINE_i$$
-<br/>
-
-```{r echo = TRUE}
-Ey4 <- X4 %*% beta.hat4 # Expected number of jays at each site
-head(Ey4, 5)
-```
 
 ---
 # summary
