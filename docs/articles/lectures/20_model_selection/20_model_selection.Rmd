@@ -1,5 +1,5 @@
 ---
-title: "LECTURE 19: model selection"
+title: "LECTURE 20: model selection"
 subtitle: "FANR 6750 (Experimental design)"
 author: "<br/><br/><br/>Fall 2022"
 output:
@@ -16,10 +16,11 @@ output:
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
                       fig.retina = 2, fig.width = 9, fig.height = 6)
-library(WILD3810)
+# library(WILD3810)
 #library(emo)
 library(kableExtra)
 library(dplyr)
+library(ggplot2)
 library(FANR6750)
 # library(gganimate)
 ```
@@ -34,20 +35,20 @@ library(FANR6750)
 
 --
 
-2) AIC
+2) Approaches to model selection
 
 <br/>
 
 --
 
-3) Multi-model inference
+3) AIC
 
 
 
 ---
 # motivation
 
-#### As scientists, we usually have more than one hypothesis  
+#### As scientists, we usually have more than one hypothesis (or none at all!)  
 
 <br/>
 
@@ -65,7 +66,30 @@ library(FANR6750)
 
 --
 
-#### In cases where more than one model is highly supported, we can make inferences from multiple models using model averaging
+#### Model selection is one of the most highly debated (and confusing) topics we will cover this semester
+
+---
+# model selection approaches
+
+**Comparison of 2 (nested) models**  
+- Likelihood-ratio test  
+
+
+**Stepwise procedures**  
+- Forward/backward/stepwise selection  
+
+
+**Information-theortic approaches**  
+- Akaike’s Information Criterion (AIC)  
+
+
+**Cross-validation**  
+- Leave-one-out  
+- K-fold  
+
+
+**Out-of-sample validation**  
+- Compare predictions to new data
 
 ---
 # questions
@@ -82,41 +106,214 @@ library(FANR6750)
 
 <br/>
 
+
 --
 
 #### What is a good model?
 
----
-# what is a good model?
-
-### Explanation
-
-> A good model should be a good approximation of reality. It should describe how things actually work  
-
-
-In other words, a good model should describe the processes that give rise to the patterns we observe  
-
 <br/>
+
+--
+
+### The answers to these questions usually depend on *what* we want our models to do
+
+---
+# goals of modeling
+
+### Exploration
+
+- Identify potential relationships between variables
+
+- *Generate* hypotheses
+
+--
+
+### Inference
+
+- *Test* a priori hypotheses
 
 --
 
 ### Prediction
 
-> A good model should have good predictive abilities  
+- Predict response variable outside of observed data (usually to unobserved locations or future times)
 
----
-# explanation
-
-#### As scientists, we want:
-
-> “an explanation that is as simple as possible, but no simpler” - Einstein (paraphrased by Reader’s Digest!)  
-
-<br/>
-<br/>
 
 --
 
-#### Why do we want simplicity?
+#### The same data **cannot** be used for both exploration and inference 
+
+---
+# approaches to model selection
+
+#### The most appropriate approach to model selection depends on what you want the model to do
+
+--
+
+#### The first step in any analysis is to determine what your goal is (exploration, inference, or prediction)
+
+- Confusion about model selection often comes from not defining a clear goal
+
+- Sometimes the goal will not be obvious 
+
+--
+
+#### Excellent paper:
+
+> Tredennick, A. T., Hooker, G., Ellner, S. P., & Adler, P. B. (2021). A practical guide to selecting models for exploration, inference, and prediction in ecology. [Ecology, 102(6), e03336.](https://esajournals.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/ecy.3336?casa_token=lJ3FPGPERrEAAAAA:0iXyzHKOWSJCr7lnwryWsJuXNTCITGhZa6bsRL5rSR8deXYWDmw99yhUPHomkVmf3iso_lZsahbXYEc)
+
+---
+class: middle, center, inverse
+
+# inference
+
+---
+# inference
+
+#### Inference is a central objective of science
+
+- Using data to evaluate support for a hypothesis
+
+--
+</br>
+
+$$\Large E(y_i) = \beta_0 + \beta_1  x^1_i + \beta_2  x^2_i$$
+
+</br>
+
+--
+
+- Are coefficients ( $\beta_0$, $\beta_1$, $\beta_2$ ) non-zero?
+
+--
+
+- Are coefficients positive or negative?
+
+--
+
+- Which covariate ( $x^1$ or $x^2$ ) has a larger effect on $y$?
+
+--
+
+#### The concepts we've learned this semester regarding null hypothesis testing and effect sizes are used for inference
+
+
+---
+# inference
+
+
+#### For a well-designed study focused on inference, null hypothesis testing from a single model may be sufficient 
+
+--
+
+#### The main risk when conducting inference is Type I error
+
+- For any single study/data set, significant results may be to due to sampling error
+
+--
+
+#### As a field, inference is strengthed by replication and validation
+
+--
+
+#### For a single study, risk of spurious results can be reduced by formulating strong hypotheses
+
+- Covariates should be selected based on strong *a priori* reason to believe they influence response variable
+
+- Where do *a priori* hypotheses come from? Theory (ideally) or...
+
+---
+class: middle, center, inverse
+
+# exploration
+
+---
+# exploration
+
+**Exploratory studies are a key part of the scientific process**
+
+- Help identify *potential* relationships between variables
+
+- Particularly common in observational studies with lots of covariates
+
+- e.g., which weather covariates influence abundance of wildlife species?
+
+--
+
+**The main risk for exploratory analyses is detecting spurious relationships**
+
+- Often desirable to "cast a wide net" for potential predictors (don't want to miss something important), but including more predictors increases risk of Type I error 
+
+--
+
+**Part of the [replication crisis](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1182327/) stems from treating exploratory analyses as if they are testing hypotheses**
+
+- Evidence of a relationship should be a treated as a proposed hypothesis, which requires testing via **new** data sets (and ideally manipulative experiments)
+
+---
+class: middle, center, inverse
+
+# prediction
+
+---
+# prediction
+
+#### Historically, exploration and inference have been the primary focus in ecological research
+
+- Out-sized emphasis on null hypothesis testing + very complex systems
+
+- More prominent in other fields (meteorology, economics, political science)
+
+--
+
+#### Prediction is increasingly used to:
+
+- Forecast ecological systems (e.g., population viability analysis)
+
+- Test theory 
+
+- Aid decision making (e.g., adaptive management)
+
+---
+# prediction
+
+</br>
+
+$$\Large E(y_i) = \beta_0 + \beta_1  x^1_i + \beta_2  x^2_i$$
+
+--
+
+- *Inference* focuses on $\beta_0$, $\beta_1$, and $\beta_2$
+
+--
+
+- *Prediction* focuses on $E(y_i)$
+
+</br>
+--
+
+**Question**: Does a model that provides the best predictions also provide the best inference?
+
+--
+
+**Answer**: No! Because:
+
+- Models that predict well might include many correlated but unimportant covariates
+
+- Models that provide reliable inference may not include covariates relevant to prediction
+
+---
+# prediction
+
+</br>
+
+### In general, we seek models that are as simple as possible (but not more so)
+
+</br>
+
+--
+
+### Why do we want simplicity?
 
 ---
 # fit and over-fit
@@ -135,7 +332,7 @@ In other words, a good model should describe the processes that give rise to the
 
 --
 
-- What is the harm in adding “extra” predictor variables?
+- What is the harm in adding "extra" predictor variables?
 
 <br/>
 
@@ -168,48 +365,42 @@ ggplot(df, aes(x = x, y = y)) +
 # prediction
 
 
-#### Predictive ability is assessed by comparing observed and expected values 
+#### Predictive ability is assessed by comparing *predicted* values to *observed* values
+
+- But we can't use the same values for both prediction and validation
 
 --
 
-#### In non-scientific fields, we might not care about describing how things actually work. We might only care about prediction  
+#### Ideally, we compare predictions to *out of sample* values
 
---
+- Predict future values, gather data, compare values (e.g., [waterfowl management](https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.5836))
 
-#### However, in scientific contexts we want models that are good at description and prediction  
+```{r out.height="225px", out.width="280px"}
+knitr::include_graphics("fig/mallard_prediction.jpg")
+```
 
---
 
-#### Excellent paper:
-
-> Tredennick, A. T., Hooker, G., Ellner, S. P., & Adler, P. B. (2021). A practical guide to selecting models for exploration, inference, and prediction in ecology. [Ecology, 102(6), e03336.](https://esajournals.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/ecy.3336?casa_token=lJ3FPGPERrEAAAAA:0iXyzHKOWSJCr7lnwryWsJuXNTCITGhZa6bsRL5rSR8deXYWDmw99yhUPHomkVmf3iso_lZsahbXYEc)
 
 ---
-# model selection approaches
+# prediction
 
-**Comparison of 2 models**  
-- Likelihood-ratio test  
 
---
+#### Predictive ability is assessed by comparing *predicted* values to *observed* values
 
-**Stepwise procedures**  
-- Forward/backward/stepwise selection  
+- But we can't use the same values for both prediction and validation
 
---
 
-**Information-theortic approaches**  
-- Akaike’s Information Criterion (AIC)  
+#### Ideally, we compare predictions to *out of sample* values
 
---
+- Predict future values, gather data, compare values (e.g., [waterfowl management](https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.5836))
 
-**Cross-validation**  
-- Leave-one-out  
-- K-fold  
+- Divide data into "training" and "testing" (possibly repeated multiple times, i.e. *cross validation)
 
 --
 
-**Out-of-sample validation**  
-- Compare predictions to new data
+#### Predictive accuracy can also be approximated using *Information-theoretic* approaches
+
+
 
 ---
 class: middle, inverse, center
@@ -264,7 +455,7 @@ AIC is asymtotically equivalent to leave-one-out cross-validation
 $$\large \Delta_i = AIC_i - AIC_{min}$$
 --
 
-6) Compute the so-called Akaike weight of each model:
+6) Compute the Akaike weight of each model:
 
 $$\large w_i = \frac{e^{-0.5\Delta_i}}{\sum_i e^{-0.5 \Delta_i}}$$
 
@@ -315,287 +506,18 @@ $$\Large AIC_c = n \log(RSS/n) + 2K + \frac{2K(K + 1)}{n - K - 1}$$
 
 --
 
-#### In other words, all models must be fit to the exact same data  
+#### AIC tells you about the *relative* predictive ability of the model set, not the *absolute* predictive ability  
+
+- There will always be a model with the lowest AIC. But all of the models in the set could be terrible  
 
 --
 
-#### There will always be a model with the lowest AIC. But all of the models in the set could be terrible  
+#### Because AIC is based on predictive ability, it will be more likely to select unimportant/spurious covariates than NHST
 
 --
 
-#### Always assess the fit of your best model!
+#### AIC is best suited for *exploratory* analyses (lot's of potential covariates w/o *a priori* hypotheses). If goal is inference, use NHST. If goal is prediction, use validation 
 
----
-# aic as an alternative to null hypothesis testing
-
-#### The use of AIC avoids some of the limitations of null hypothesis testing, such as:  
-
---
-
-- Null hypotheses are rarely true  
-
---
-
-- A *p*-value tells us nothing about the alternative hypothesis  
-
---
-
-- Specification of $\alpha$ is arbitrary  
-
---
-
-- Statistical significance is a function of sample size  
-
---
-
-- Statistical significance does not equal biological significance  
-
----
-class: inverse, center, middle
-
-# multi-model inference
-
----
-# multi-model inference
-
-<br/>
-
-#### What if several models have similar weights?  
-
-<br/>
-
---
-
-#### Multi-model inference involves using all of the models in the set of models  
-
----
-# multi-model inference
-
-<br/>
-
-#### The key is to do a weighted average of parameters or predictions  
-
-$$\Large\bar{\hat{\theta}} = \sum_{i=1}^{R} \hat{\theta}_i w_i$$
-
-<br/>
-
-where $\hat{\theta}_i$ is a parameter or a predicted value from model $i$ in the set of $R$ models
-
----
-# averaging parameters
-
-<br/>
-
-#### In the case of linear models, we might want to average the $\large \beta$ parameters  
-
---
-
-#### But not all parameters are in every model. What do we do?
-
---
-
-#### Two options:
-
-1) Average estimates over models in which the parameter occurs (*bad idea*)  
-
---
-
-2) Average estimates over all models, and set the estimate to 0 when the parameter is not in the model
-
----
-# example
-
-<br/>
-
-
-```{r}
-mmi <- data.frame(Model = c("fm7", "fm8", "Average"),
-                  Intercept = c(30.7, 28.0, 29.9),
-                  Elevation = c(0.0083, 0.012, 0.0089),
-                  Elevation.sq = c("-", "-0.026", "???"),
-                  Chaparral = c("-", "0.093", "???"),
-                  Weight = c(0.80, 0.19, NA))
-
-options(knitr.kable.NA = " ")
-
-mmi %>%
-  kable(format = "html", col.names = c("Model", "Intercept", "Elevation", "Elevation squared",
-                                       "Chaparral", "weight"), align = "c", escape = FALSE)
-```
-
-
----
-# example
-
-<br/>
-
-
-```{r}
-mmi2 <- data.frame(Model = c("fm7", "fm8", "Average"),
-                  Intercept = c(30.7, 28.0, 29.9),
-                  Elevation = c(0.0083, 0.012, 0.0089),
-                  Elevation.sq = c(0, -0.026, -0.005),
-                  Chaparral = c(0, 0.093, 0.018),
-                  Weight = c(0.80, 0.19, NA))
-
-options(knitr.kable.NA = " ")
-
-mmi2 %>%
-  kable(format = "html", col.names = c("Model", "Intercept", "Elevation", "Elevation squared",
-                                       "Chaparral", "weight"), align = "c", escape = FALSE)
-```
-
-<br/>
-
---
-
-Be aware that some people recommend that you never model average regression coefficients. However, it’s always fine to model average predictions  
-
-
----
-# model-averaged predictions
-
-#### Same concept, applied to predicted values instead of parameter estimates  
-
---
-
-#### Example: predict jay abundance when in Oak habitat at 1000 m elevation, and 10% chaparral
-
-<br/>
-
---
-
-```{r}
-pred <- data.frame(Model = c("fm7", "fm8", "Average"),
-                  Pred = c(42.17, 45.95, 42.47),
-                  Weight = c(0.80, 0.19, NA))
-
-options(knitr.kable.NA = " ")
-
-pred %>%
-  kable(format = "html", col.names = c("Model", "Predicted abundance", "weight"), align = "c", escape = FALSE)
-```
-
----
-# model-averaged se and ci
-
-<br/>
-
-#### We now know how to use model averaging to compute $\large \hat{\theta}$
-
-<br/>
-
---
-
-#### But, how do we calculate the SE or CI?
-
----
-# unconditional se
-
-
-<br/>
-<br/>
-
-$$\Large SE(\bar{\hat{\theta}}) = \sum_{i=1}^{R} w_i \sqrt{var(\hat{\theta}_i + (\hat{\theta}_i - \bar{\hat{\theta}})^2}$$
-
----
-# example
-
-<br/>
-
-```{r}
-
-eg <- data.frame(Model = 1:3,
-                 beta = c(1.2, 1.1, 1.4),
-                 SE = c(0.3, 0.25, 0.26),
-                 w = c(0.5, 0.3, 0.2))
-
-eg %>%
-    kable(format = "html", col.names = c("Model", "\\(\\hat{\\beta}\\)", "SE", "weight"), align = "c", escape = FALSE)
-```
-
---
-
-$$\large \bar{\hat{\beta}} = 1.2 \times 0.5 + 1.1 \times 0.3 + 1.4 \times 0.2 = 1.21$$
-
---
-
-$$\begin{aligned}
-  SE = &0.5 \sqrt{0.3^2 + (1.2-1.21)^2} + \\
-  &0.3 \sqrt{0.25^2 + (1.1-1.21)^2} + \\
-  &0.2 \sqrt{0.26^2 + (1.4-1.21)^2} \\
-  &= 0.29
-\end{aligned}$$
-
----
-# relative variable importance
-
-<br/>
-
-#### Which of the predictor variables is most important?  
-
-<br/>
-
---
-
-#### Burnham and Anderson recommend using $\large w_+(\beta_j)$, the sum of the AIC weights over all models that include $\large \beta_j$
-
----
-# example
-
-<br/>
-
-```{r}
-
-eg <- data.frame(Model = 1:3,
-                 beta1 = c(1.2, 1.1, 1.4),
-                 beta1 = c(2.0, "-", "-"),
-                 beta3 = c("-", 0.6, 0.8),
-                 w = c(0.4, 0.3, 0.3))
-
-eg %>%
-    kable(format = "html", col.names = c("Model", "\\(\\hat{\\beta}_1\\)", 
-                                         "\\(\\hat{\\beta}_2\\)", 
-                                         "\\(\\hat{\\beta}_3\\)", "\\(w\\)"), align = "c", escape = FALSE)
-```
-
---
-
-#### Variable importance
-
-$$\begin{aligned}
-  w_+(\beta_1) = 0.4 + 0.3  + 0.3 & = 1.0\\
-  w_+(\beta_2) = 0.4 & = 0.4\\
-  w_+(\beta_3) = 0.3  + 0.3 & = 0.6
-\end{aligned}$$
-
----
-# summary
-
-Information-theoretic approaches avoid many of the problems associated with null hypothesis testing
-
---
-
-Focus is on:  
-
-- Model comparision  
-
-- Strength of evidence for each model  
-
-- Estimates of effect sizes  
-
---
-
-Requires much more thought than accept/reject approach, but just like any method, it is easy to abuse  
-
---
-
-Additional references  
-
-> Burnham, K.P. and D.R. Anderson. 2002. Model Selection and Multimodel Inference. Springer (well known book)
-
-
-> [http://www.stats.ox.ac.uk/~ripley/ModelChoice.pdf](http://www.stats.ox.ac.uk/~ripley/ModelChoice.pdf) (good overview)
 
 
 

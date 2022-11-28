@@ -19,6 +19,7 @@ library(dplyr)
 library(knitr)
 library(FANR6750)
 source(here::here("R/zzz.R"))
+data(treedata)
 ```
 
 ## Lab 1
@@ -172,6 +173,11 @@ $$\underbrace{ggplot}_{initiate\; plot}(\underbrace{data = df}_{data\;frame},\; 
 The `ggplot()` function initiates a new plot. In this function, you tell `ggplot2` what data frame you will be using for the plot (`ggplot` only accepts data frames as input) and you tell it how to map attributes of the data to the visual properties of the figures. Attributes are mapped inside the `aes()` argument. Attributes usually include location (`x-axis` and `y-axis` placement), color, size, shape, line type, and many others. In general, **each attribute will be mapped to one column of your data frame**. 
 
 The `ggplot()` function simply initiates a graph - if you run just that portion of the code you will get a blank graph. We can see that by creating a new plot showing the relationship between `elevation` (the x-axis of the plot) and `density` (the y-axis): 
+
+```{r include = FALSE}
+treedata <- data.frame(elevation = factor(rep(c("Low", "High"), each = 10), levels = c("Low", "High")),
+                       density = c(rnorm(10, 17, 2), rnorm(10, 5, 2)))
+```
 
 ```{r fig.width=5, fig.height=4, fig.align='center'}
 ggplot(data = treedata, aes(x = elevation, y = density))

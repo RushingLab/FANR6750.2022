@@ -60,6 +60,8 @@ navbar:
           href: articles/lectures/18_lm/18_lm.html
         - text: "Lecture 19: Generalized linear models"
           href: articles/lectures/19_glm/19_glm.html
+        - text: "Lecture 20: Model selection"
+          href: articles/lectures/20_model_selection/20_model_selection.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:
