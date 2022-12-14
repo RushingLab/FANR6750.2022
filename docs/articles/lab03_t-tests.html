@@ -186,6 +186,9 @@
     <li>
       <a href="../articles/lab14_glm.html">Lab 14: Generalized linear models</a>
     </li>
+    <li>
+      <a href="../articles/lab14_model_selection.html">Bonus: Model selection</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -548,7 +551,7 @@ statistic:<a class="anchor" aria-label="anchor" href="#step-1-compute-the-t-stat
 <span><span class="co"># Compute t-statistic</span></span>
 <span><span class="va">t.stat</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">mean.L</span> <span class="op">-</span> <span class="va">mean.H</span><span class="op">)</span> <span class="op">/</span> <span class="va">SE</span></span>
 <span><span class="va">t.stat</span></span>
-<span><span class="co">#&gt; [1] 15.36</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 14.85</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="step-2-compare-t-statistic-to-critical-values-two-tailed">Step 2: Compare <span class="math inline">\(t\)</span> statistic to
@@ -576,13 +579,13 @@ critical values (two-tailed)<a class="anchor" aria-label="anchor" href="#step-2-
 <span><span class="co">#&gt;  Two Sample t-test</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  yH and yL</span></span>
-<span><span class="co">#&gt; t = -15, df = 18, p-value = 9e-12</span></span>
+<span><span class="co">#&gt; t = -15, df = 18, p-value = 2e-11</span></span>
 <span><span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span></span>
 <span><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span><span class="co">#&gt;  -15.03 -11.42</span></span>
+<span><span class="co">#&gt;  -13.36 -10.05</span></span>
 <span><span class="co">#&gt; sample estimates:</span></span>
 <span><span class="co">#&gt; mean of x mean of y </span></span>
-<span><span class="co">#&gt;     4.123    17.349</span></span></code></pre></div>
+<span><span class="co">#&gt;     4.121    15.825</span></span></code></pre></div>
 <hr>
 <p>Make sure you set <code>var.equal=TRUE</code>. Otherwise,
 <code>R</code> will assume that the variances of the two populations are
@@ -600,13 +603,13 @@ unequal</p>
 <span><span class="co">#&gt;  Two Sample t-test</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  density by elevation</span></span>
-<span><span class="co">#&gt; t = 15, df = 18, p-value = 9e-12</span></span>
-<span><span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span></span>
+<span><span class="co">#&gt; t = 15, df = 18, p-value = 2e-11</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true difference in means between group Low and group High is not equal to 0</span></span>
 <span><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span><span class="co">#&gt;  11.42 15.03</span></span>
+<span><span class="co">#&gt;  10.05 13.36</span></span>
 <span><span class="co">#&gt; sample estimates:</span></span>
 <span><span class="co">#&gt;  mean in group Low mean in group High </span></span>
-<span><span class="co">#&gt;             17.349              4.123</span></span></code></pre></div>
+<span><span class="co">#&gt;             15.825              4.121</span></span></code></pre></div>
 <hr>
 <p>This second option returns identical results (though note that the
 order of the levels has been switched. Why is that?), but it is
@@ -624,13 +627,13 @@ to fit ANOVA models</p>
 <span><span class="co">#&gt;  F test to compare two variances</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  yL and yH</span></span>
-<span><span class="co">#&gt; F = 0.61, num df = 9, denom df = 9, p-value = 0.5</span></span>
+<span><span class="co">#&gt; F = 0.54, num df = 9, denom df = 9, p-value = 0.4</span></span>
 <span><span class="co">#&gt; alternative hypothesis: true ratio of variances is not equal to 1</span></span>
 <span><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span><span class="co">#&gt;  0.1526 2.4739</span></span>
+<span><span class="co">#&gt;  0.1345 2.1804</span></span>
 <span><span class="co">#&gt; sample estimates:</span></span>
 <span><span class="co">#&gt; ratio of variances </span></span>
-<span><span class="co">#&gt;             0.6145</span></span></code></pre></div>
+<span><span class="co">#&gt;             0.5416</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="paired-t-test">Paired <em>t</em>-test<a class="anchor" aria-label="anchor" href="#paired-t-test"></a>

@@ -93,6 +93,8 @@ navbar:
           href: articles/lab13_lm.html
         - text: "Lab 14: Generalized linear models"
           href: articles/lab14_glm.html
+        - text: "Bonus: Model selection"
+          href: articles/lab14_model_selection.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:
