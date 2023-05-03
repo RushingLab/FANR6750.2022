@@ -1,0 +1,359 @@
+---
+title: "LECTURE 15: split-plot designs"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, 
+                      fig.retina = 2, fig.width = 9, fig.height = 7)
+library(WILD3810)
+library(emo)
+library(kableExtra)
+library(dplyr)
+library(FANR6750)
+# library(gganimate)
+```
+
+# outline 
+
+1) Motivation
+
+<br/>
+
+--
+
+2) Model
+
+<br/>
+
+--
+
+3) Procedure
+
+<br/>
+
+--
+
+4) Example
+
+
+---
+# motivation
+
+#### Suppose we are interested in 2 factors, one with 3 levels and the other with 4, that we would apply to 1-ha plots of land. Then there would be 12 treatment level combinations in a 2-way factorial design. We would then randomly allocate units to the different combinations. With replication (say, in blocks) this is a large effort  
+
+
+```{r out.height="80%", out.width="80%"}
+knitr::include_graphics("figs/factorial.png")
+```
+
+---
+# another approach
+
+#### If factor B can be applied at a smaller scale, then all levels of B can be randomly applied to subunits within each level of A (whole units). Because the whole unit is split into subunits, which are randomly allocated to various treatment levels, the resulting design is called a **split-plot design**
+
+```{r out.height="40%", out.width="40%"}
+knitr::include_graphics("figs/splitplot.png")
+```
+
+---
+# key points
+
+
+### A standard split-plot design involves the following:  
+
+--
+
+- We apply two (or more) treatments to two types of experimental units: whole-units and sub-units  
+
+<br/>
+
+--
+
+- Whole units are arranged in blocks to account for extraneous sources of variation  
+
+<br/>
+
+--
+
+- We're interested in the effects of both treatments. Interactions can be tested too, but we are usually not interested in interactions involving the block  
+
+---
+# why?
+
+
+### Why use a split-plot design instead of a factorial design?  
+
+<br/>
+
+--
+
+1) Sometimes the different factors have to be applied at different scales (e.g., aerial application of pesticides)  
+
+<br/>
+
+--
+
+2) Saves money, space, etc.  
+
+
+---
+class: inverse, middle, center
+
+# model
+
+---
+# model
+
+$$\large y_{ijk} = \mu + \alpha_i + \beta_j + \alpha \beta_{ij} + \gamma_k + \delta_{ik} + \epsilon_{ijk}$$
+
+--
+
+$$i = 1, ..., a \;(whole-unit \;treatment \;levels)$$
+$$j = 1, ..., b \;(subunit \; treatment\;levels)$$
+$$k = 1, ..., c \;(blocks)$$
+--
+
+- $\mu =$ grand mean  
+
+- $\alpha_i =$ effect of the $i$th level of factor *A*, the whole unit treatment  
+
+- $\beta_{j} =$ effect of the $j$th level of factor *B*, the subunit treatment  
+
+- $\alpha \beta_{ij} =$ interaction between $i$th level of factor *A* and $j$th level of factor *B*  
+
+- $\gamma_k =$ $k$th block effect  
+
+- $\delta_{ik} =$ whole-unit effect  
+
+- $\epsilon_{ijk} =$ residual, unexplained variation
+
+---
+# model
+
+$$\large y_{ijk} = \mu + \alpha_i + \beta_j + \alpha \beta_{ij} + \gamma_k + \delta_{ik} + \epsilon_{ijk}$$
+
+Because we want our inferences to apply to all whole units, $\delta_{ik}$ is random. Specifically:  
+
+--
+
+$$\large \delta_{ik} \sim normal(0, \sigma^2_D)$$
+--
+
+We might view block as random too:
+
+$$\large \gamma_k \sim normal(0, \sigma^2_C)$$
+
+
+--
+And as always,
+
+$$\large \epsilon_{ijk} \sim normal(0, \sigma^2)$$
+
+<br/>
+
+--
+
+All other effects in the model are fixed effects  
+
+---
+# hypotheses
+
+#### Main hypothesis of interest
+
+$$H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$
+
+$$H_a : At \;least \;one \;inequality$$
+$$H_0 : \beta_1 = \beta_2 = ... = \beta_b = 0$$
+
+$$H_a : At \;least \;one \;inequality$$
+
+$$H_0 : \alpha \beta_{ij} = 0 \; for \; all \; i \; and \; all \; j$$
+
+$$H_a : At \;least \;one \;inequality$$
+
+#### Secondary hypothesis
+
+$$H_0 : \sigma^2_{D/C} = 0$$
+
+$$H_a : \sigma^2_{D/C} > 0$$
+
+---
+class: inverse, middle, center
+
+# procedure
+
+---
+# anova table
+
+<br/>
+
+#### In setting up the ANOVA table for the split-plot design, I like to think of the design having a whole-unit part and a subunit part, each with its own design.
+
+
+---
+# anova table
+
+First, the whole-unit part. Does it look familiar?
+
+```{r anova_tab}
+anova_tab <- data.frame(Source = c("Whole units", "   Factor A", "   Block", "   Whole unit remainder"),
+                        df = c(' ', '\\(a-1\\)', '\\(c-1\\)', '\\((a-1)(c-1)\\)'),
+                        SS = c(' ', '\\(SS_a\\)', 
+                               '\\(SS_c\\)',
+                               '\\(SS_{WUR}\\)'),
+                        MS = c(' ', '\\(\\frac{SS_a}{a-1}\\)', '\\(\\frac{SS_c}{c-1}\\)',
+                               '\\(\\frac{SS_{WUR}}{(a-1)(c-1)}\\)'),
+                        F = c(' ', '\\(\\frac{MS_a}{MS_{WUR}}\\)', '\\(\\frac{MS_c}{MS_{WUR}}\\)', ' '))
+
+anova_tab %>%
+  kable(align = c('r', 'c', 'c', 'c', 'c'), booktabs = TRUE, escape = FALSE, format = "html") %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = TRUE, font_size = 13)  %>%
+  row_spec(1, bold = TRUE,align = 'l', font_size = 15)
+```
+
+---
+# anova table
+
+```{r anova_tab2}
+anova_tab <- data.frame(Source = c("Whole units", "   Factor A", "   Block", "   Whole unit remainder"),
+                        df = c(' ', '\\(a-1\\)', '\\(c-1\\)', '\\((a-1)(c-1)\\)'),
+                        SS = c(' ', '\\(SS_a\\)', 
+                               '\\(SS_c\\)',
+                               '\\(SS_{WUR}\\)'),
+                        MS = c(' ', '\\(\\frac{SS_a}{a-1}\\)', '\\(\\frac{SS_c}{c-1}\\)',
+                               '\\(\\frac{SS_{WUR}}{(a-1)(c-1)}\\)'),
+                        F = c(' ', '\\(\\frac{MS_a}{MS_{WUR}}\\)', '\\(\\frac{MS_c}{MS_{WUR}}\\)', ' '))
+
+anova_tab %>%
+  kable(align = c('r', 'c', 'c', 'c', 'c'), booktabs = TRUE, escape = FALSE, format = "html") %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = TRUE, font_size = 13)  %>%
+  row_spec(1, bold = TRUE,align = 'l', font_size = 15)
+```
+
+```{r anova_tab3}
+anova_tab <- data.frame(Source = c("Subunits", "   Factor B", "   Interaction", "   Subunit remainder"),
+                        df = c(' ', '\\(b-1\\)', '\\((a-1)(b-1)\\)', '\\(a(b-1)(c-1)\\)'),
+                        SS = c(' ', '\\(SS_b\\)', 
+                               '\\(SS_i\\)',
+                               '\\(SS_{e}\\)'),
+                        MS = c(' ', '\\(\\frac{SS_b}{b-1}\\)', '\\(\\frac{SS_i}{(a-1)(b-1)}\\)',
+                               '\\(\\frac{SS_{e}}{a(b-1)(c-1)}\\)'),
+                        F = c(' ', '\\(\\frac{MS_b}{MS_{e}}\\)', '\\(\\frac{MS_i}{MS_{e}}\\)', ' '))
+
+anova_tab %>%
+  kable(align = c('r', 'c', 'c', 'c', 'c'), col.names = NULL, booktabs = TRUE, escape = FALSE, format = "html") %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = TRUE, font_size = 13) %>%
+  row_spec(1, bold = TRUE,align = 'l', font_size = 15)
+```
+
+---
+# estimation
+
+```{r estimation}
+est <- data.frame(diff = c("Two overall A means", "Two overall B means", "Two B means at same A level", "Two A means at same B level or different B levels"),
+                        SE = c('\\(\\sqrt{\\frac{2MS_{WUR}}{bc}}\\)', 
+                               '\\(\\sqrt{\\frac{2MS_e}{ac}}\\)',
+                               '\\(\\sqrt{\\frac{2MS_e}{c}}\\)',
+                               '\\(\\sqrt{\\frac{2[(b-1)MS_e + MS_{WUR}]}{bc}}\\)'),
+                        df = c('\\((a-1)(c-1)\\)', 
+                               '\\(a(b-1)(c-1)\\)', '\\(a(b-1)(c-1)\\)', 'see below'))
+
+options(knitr.kable.NA = " ")
+est %>%
+  kable(align = 'c', booktabs = TRUE, escape = FALSE, format = "html", 
+        col.names = c("Difference between", "SE", "df for t")) %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 18) 
+```
+
+--
+
+$$\large t^* = \frac{(b-1)MS_e t_{\alpha,a(b-1)(c-1)}+MS_{WUR}t_{\alpha,(a-1)(c-1)}}{(b-1)MS_e+MS_{WUR}}$$
+
+---
+class: inverse, center, middle
+
+# example
+
+---
+# example
+
+It's easy to understand the concept of split plots when dealing with plots of land, but nested effects arise in all kinds of settings  
+
+--
+
+Consider a food scientist who wants to study the effects of tenderizer and length of cooking time on meat. Six beef carcasses are obtained at random from a meat packaging plant. From the same section on each carcass, three rolled roasts are prepared as nearly alike as possible. Each of the roasts is assigned at random to one of three tenderizing treatments of particular interest: control, vinegar marinade, or papain marinade  
+
+--
+
+After treatment, a coring device is used to make four cores of meat near the center of each roast. The cores, are left in place, and the three roasts from the same carcass are placed together in a oven and allowed to cook. After 30 minutes, one of the cores is taken at random from each roast, another drawn randomly after 36 minutes, a third at 42 minutes, and the final at 48 minutes  
+
+--
+
+After cooling, the cores are measured for tenderness using the Warner-Bratzler device. The response variable is the WB score for each core 
+
+---
+# example
+
+```{r out.height="90%", out.width="90%"}
+knitr::include_graphics("figs/carcass.png")
+```
+
+--
+
+What is the whole-unit here? The subunit? Which factors are associated with each (i.e., the whole-unit factor and the subunit factor)? What are the blocks? Which factors are xed versus random?  
+
+---
+# example
+
+```{r}
+knitr::include_graphics("figs/carcass_table.png")
+```
+
+---
+# nested and crossed designs
+
+<br/>
+
+#### A split-plot design without the blocking variable is called a nested and crossed design  
+
+<br/>
+
+--
+
+#### These designs will provide a jumping-off point for repeated measures  
+
+---
+# summary
+
+<br/>
+
+- A split-plot design is efficient when one treatment effect can be nested within another  
+
+<br/>
+
+--
+
+- Factor *A* is applied to whole units and Factor *B* is applied to sub-units  
+
+<br/>
+
+--
+
+- This design shares much in common with $\large a \times b$ factorial designs, completely randomized block designs, and nested designs  
+
+

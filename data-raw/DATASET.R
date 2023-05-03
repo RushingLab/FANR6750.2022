@@ -2,8 +2,10 @@
 
 treedata <- data.frame(elevation = factor(rep(c("Low", "High"), each = 10), levels = c("Low", "High")),
                        density = c(rnorm(10, 17, 2), rnorm(10, 5, 2)))
-
 usethis::use_data(treedata, overwrite = TRUE)
+treeData <- read.csv("data-raw/treedata.csv")
+usethis::use_data(treeData, overwrite = TRUE)
+
 
 treeHt <- read.csv("data-raw/treeHt.csv")
 

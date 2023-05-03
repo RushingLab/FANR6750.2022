@@ -51,9 +51,9 @@ schedule <- data.frame(WK = c("1", "", "",
        "Multiple comparisons", "Statistcal Power", "Paper discussion: hypothesis testing",  "", #5
        "Contrasts", "Contrasts", "Buffer", "", #6
       "Transformations", "Nonparametrics", "Nonparametrics", "", #7
-       "Random and fixed effects", "Blocking and blocked designs",  "Blocking and blocked designs", "", #8 
-      "Nested designs", "Nested designs", "Paper discussion: Pseudoreplication", "", # 9
-       "AB factorial designs", "AB factorial designs", "ABC factorial designs",  "", #10
+       "Blocking and blocked designs",  "Blocking and blocked designs", "Random and fixed effects",  "", #8 
+             "AB factorial designs", "AB factorial designs", "ABC factorial designs",  "", #9
+      "Nested designs", "Nested designs", "Paper discussion: Pseudoreplication", "", # 10
           "Split-plot designs", "Split-plot designs", "Fall break", "", #11
       "Repeated measures", "Repeated measures", "Buffer", "",
          "Regression review", "Analysis of covariance", "Analysis of covariance", "", #13
@@ -70,8 +70,8 @@ schedule <- data.frame(WK = c("1", "", "",
                                "Contrasts and power", "", "", "",
                                "Transformations and nonparametrics*", "", "", "",
                                "Blocking", "", "", "",
-                                "Nested designs", "", "", "",
-                               "Factorial designs*", "", "", "",
+                                "Factorial designs", "", "", "",
+                               "Nested designs*", "", "", "",
                                "Split-plot designs", "", "", "",
                                "Repeated measures*", "", "", "",
                                "ANCOVA", "", "", "",

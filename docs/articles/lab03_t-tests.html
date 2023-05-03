@@ -106,6 +106,33 @@
     <li>
       <a href="../articles/lectures/11_blocking/11_blocking.html">Lecture 11: Blocking</a>
     </li>
+    <li>
+      <a href="../articles/lectures/12_raneff/12_raneff.html">Lecture 12: Random effects</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/13_factorial/13_factorial.html">Lecture 13: Factorial designs</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/14_nesting/14_nesting.html">Lecture 14: Nested effects</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/15_splitplot/15_splitplot.html">Lecture 15: Split-plot designs</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/16_repeated_measures/16_repeated_measures.html">Lecture 16: Repeated measures</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/17_ANCOVA/17_ANCOVA.html">Lecture 17: ANCOVA</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/18_lm/18_lm.html">Lecture 18: Linear regression</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/19_glm/19_glm.html">Lecture 19: Generalized linear models</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/20_model_selection/20_model_selection.html">Lecture 20: Model selection</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -137,6 +164,30 @@
     </li>
     <li>
       <a href="../articles/lab07_blocking.html">Lab 7: Blocking</a>
+    </li>
+    <li>
+      <a href="../articles/lab08_factorial.html">Lab 8: Factorial</a>
+    </li>
+    <li>
+      <a href="../articles/lab09_nested.html">Lab 9: Nesting</a>
+    </li>
+    <li>
+      <a href="../articles/lab10_splitplot.html">Lab 10: Split-plot design</a>
+    </li>
+    <li>
+      <a href="../articles/lab11_repeated_measures.html">Lab 11: Repeated Measures</a>
+    </li>
+    <li>
+      <a href="../articles/lab12_ANCOVA.html">Lab 12: ANCOVA</a>
+    </li>
+    <li>
+      <a href="../articles/lab13_lm.html">Lab 13: Linear regression</a>
+    </li>
+    <li>
+      <a href="../articles/lab14_glm.html">Lab 14: Generalized linear models</a>
+    </li>
+    <li>
+      <a href="../articles/lab14_model_selection.html">Bonus: Model selection</a>
     </li>
   </ul>
 </li>
@@ -338,7 +389,7 @@ that by creating a new plot showing the relationship between
 (the y-axis):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">treedata</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">elevation</span>, y <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-3-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>You can see that <code>ggplot</code> created a figure with the
 correct axes and labels. But no data. That’s because we didn’t tell
 <code>ggplot</code> what type of <em>geometry</em> to use to represent
@@ -349,18 +400,18 @@ many others. Once we add a geometry, we can see the data:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">treedata</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">elevation</span>, y <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>In this case, a boxplot might make more sense:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">treedata</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">elevation</span>, y <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>It’s also possible to use more than one geometry:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">treedata</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">elevation</span>, y <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-7-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>This is reasonable figure showing tree densities as a function of
 elevation. But <code>ggplot2</code> makes it very easy to tweak the way
 the data is visualized (maybe too easy, you can spend <em>a lot</em> of
@@ -372,7 +423,7 @@ this change inside of <code>aes</code>:</p>
 <code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">treedata</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">elevation</span>, y <span class="op">=</span> <span class="va">density</span>, color <span class="op">=</span> <span class="va">elevation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-7-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-8-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>That’s not exactly what we wanted. Both the boxplot and the points
 now colored a function of <code>elevation</code>. To make just the
 points a function of elevation, we specify
@@ -383,7 +434,7 @@ all geoms):</p>
 <code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">treedata</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">elevation</span>, y <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">elevation</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-8-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-9-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>We can also do things like the change the size of the geometries. In
 this case, we are <strong>not</strong> mapping a variable to an
 attribute (size is not a function of the data values). So these changes
@@ -392,7 +443,7 @@ happen <strong>outside</strong> of the <code>aes()</code> argument:</p>
 <code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">treedata</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">elevation</span>, y <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">elevation</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-9-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-10-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>One last example. Because many of the points overlap, it can be hard
 to tell how many individual points there are in each group. One way to
 deal with overplotting like this is to make each point slightly
@@ -401,7 +452,7 @@ transparent. We can do that with the <code>alpha</code> parameter:</p>
 <code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">treedata</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">elevation</span>, y <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">elevation</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">5</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-10-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-11-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>Again, because we aren’t mapping the alpha value to any data, we
 include it outside of <code>aes()</code>.</p>
 </div>
@@ -500,7 +551,7 @@ statistic:<a class="anchor" aria-label="anchor" href="#step-1-compute-the-t-stat
 <span><span class="co"># Compute t-statistic</span></span>
 <span><span class="va">t.stat</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">mean.L</span> <span class="op">-</span> <span class="va">mean.H</span><span class="op">)</span> <span class="op">/</span> <span class="va">SE</span></span>
 <span><span class="va">t.stat</span></span>
-<span><span class="co">#&gt; [1] 14.36</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 14.85</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="step-2-compare-t-statistic-to-critical-values-two-tailed">Step 2: Compare <span class="math inline">\(t\)</span> statistic to
@@ -528,13 +579,13 @@ critical values (two-tailed)<a class="anchor" aria-label="anchor" href="#step-2-
 <span><span class="co">#&gt;  Two Sample t-test</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  yH and yL</span></span>
-<span><span class="co">#&gt; t = -14, df = 18, p-value = 3e-11</span></span>
+<span><span class="co">#&gt; t = -15, df = 18, p-value = 2e-11</span></span>
 <span><span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span></span>
 <span><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span><span class="co">#&gt;  -11.858  -8.831</span></span>
+<span><span class="co">#&gt;  -13.36 -10.05</span></span>
 <span><span class="co">#&gt; sample estimates:</span></span>
 <span><span class="co">#&gt; mean of x mean of y </span></span>
-<span><span class="co">#&gt;     5.568    15.913</span></span></code></pre></div>
+<span><span class="co">#&gt;     4.121    15.825</span></span></code></pre></div>
 <hr>
 <p>Make sure you set <code>var.equal=TRUE</code>. Otherwise,
 <code>R</code> will assume that the variances of the two populations are
@@ -552,13 +603,13 @@ unequal</p>
 <span><span class="co">#&gt;  Two Sample t-test</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  density by elevation</span></span>
-<span><span class="co">#&gt; t = 14, df = 18, p-value = 3e-11</span></span>
+<span><span class="co">#&gt; t = 15, df = 18, p-value = 2e-11</span></span>
 <span><span class="co">#&gt; alternative hypothesis: true difference in means between group Low and group High is not equal to 0</span></span>
 <span><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span><span class="co">#&gt;   8.831 11.858</span></span>
+<span><span class="co">#&gt;  10.05 13.36</span></span>
 <span><span class="co">#&gt; sample estimates:</span></span>
 <span><span class="co">#&gt;  mean in group Low mean in group High </span></span>
-<span><span class="co">#&gt;             15.913              5.568</span></span></code></pre></div>
+<span><span class="co">#&gt;             15.825              4.121</span></span></code></pre></div>
 <hr>
 <p>This second option returns identical results (though note that the
 order of the levels has been switched. Why is that?), but it is
@@ -576,13 +627,13 @@ to fit ANOVA models</p>
 <span><span class="co">#&gt;  F test to compare two variances</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  yL and yH</span></span>
-<span><span class="co">#&gt; F = 0.61, num df = 9, denom df = 9, p-value = 0.5</span></span>
+<span><span class="co">#&gt; F = 0.54, num df = 9, denom df = 9, p-value = 0.4</span></span>
 <span><span class="co">#&gt; alternative hypothesis: true ratio of variances is not equal to 1</span></span>
 <span><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span><span class="co">#&gt;  0.1521 2.4653</span></span>
+<span><span class="co">#&gt;  0.1345 2.1804</span></span>
 <span><span class="co">#&gt; sample estimates:</span></span>
 <span><span class="co">#&gt; ratio of variances </span></span>
-<span><span class="co">#&gt;             0.6123</span></span></code></pre></div>
+<span><span class="co">#&gt;             0.5416</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="paired-t-test">Paired <em>t</em>-test<a class="anchor" aria-label="anchor" href="#paired-t-test"></a>
@@ -613,7 +664,7 @@ differences differs from zero<a class="anchor" aria-label="anchor" href="#for-pa
 <code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">caterpillar</span>, <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">diff</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-18-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="lab03_t-tests_files/figure-html/unnamed-chunk-19-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="paired-t-test-1">Paired <em>t</em>-test<a class="anchor" aria-label="anchor" href="#paired-t-test-1"></a>

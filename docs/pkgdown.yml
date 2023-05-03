@@ -12,16 +12,16 @@ articles:
   lab05_contrasts: lab05_contrasts.html
   lab06_assump_nonpar: lab06_assump_nonpar.html
   lab07_blocking: lab07_blocking.html
-  lab07_factorial: lab07_factorial.html
-  lab08_nested: lab08_nested.html
-  lab09_splitplot: lab09_splitplot.html
-  lab10_repeated_measures: lab10_repeated_measures.html
-  lab11_ANCOVA: lab11_ANCOVA.html
-  lab12_lm: lab12_lm.html
-  lab13_glm: lab13_glm.html
+  lab08_factorial: lab08_factorial.html
+  lab09_nested: lab09_nested.html
+  lab10_splitplot: lab10_splitplot.html
+  lab11_repeated_measures: lab11_repeated_measures.html
+  lab12_ANCOVA: lab12_ANCOVA.html
+  lab13_lm: lab13_lm.html
+  lab14_glm: lab14_glm.html
   lab14_model_selection: lab14_model_selection.html
   projects_and_directories: projects_and_directories.html
   schedule: schedule.html
   syllabus: syllabus.html
-last_built: 2022-09-21T17:33Z
+last_built: 2022-12-14T17:13Z
 

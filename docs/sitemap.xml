@@ -55,7 +55,13 @@
     <loc>/articles/lab07_factorial.html</loc>
   </url>
   <url>
+    <loc>/articles/lab08_factorial.html</loc>
+  </url>
+  <url>
     <loc>/articles/lab08_nested.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lab09_nested.html</loc>
   </url>
   <url>
     <loc>/articles/lab09_splitplot.html</loc>
@@ -64,13 +70,28 @@
     <loc>/articles/lab10_repeated_measures.html</loc>
   </url>
   <url>
+    <loc>/articles/lab10_splitplot.html</loc>
+  </url>
+  <url>
     <loc>/articles/lab11_ANCOVA.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lab11_repeated_measures.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lab12_ANCOVA.html</loc>
   </url>
   <url>
     <loc>/articles/lab12_lm.html</loc>
   </url>
   <url>
     <loc>/articles/lab13_glm.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lab13_lm.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lab14_glm.html</loc>
   </url>
   <url>
     <loc>/articles/lab14_model_selection.html</loc>
@@ -118,31 +139,31 @@
     <loc>/articles/lectures/11_blocking/11_blocking.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/11_raneff/11_raneff.html</loc>
+    <loc>/articles/lectures/12_raneff/12_raneff.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/12_factorial/12_factorial.html</loc>
+    <loc>/articles/lectures/13_factorial/13_factorial.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/13_nesting/13_nesting.html</loc>
+    <loc>/articles/lectures/14_nesting/14_nesting.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/14_splitplot/14_splitplot.html</loc>
+    <loc>/articles/lectures/15_splitplot/15_splitplot.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/15_repeated_measures/15_repeated_measures.html</loc>
+    <loc>/articles/lectures/16_repeated_measures/16_repeated_measures.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/16_ANCOVA/16_ANCOVA.html</loc>
+    <loc>/articles/lectures/17_ANCOVA/17_ANCOVA.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/17_lm/17_lm.html</loc>
+    <loc>/articles/lectures/18_lm/18_lm.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/18_glm/18_glm.html</loc>
+    <loc>/articles/lectures/19_glm/19_glm.html</loc>
   </url>
   <url>
-    <loc>/articles/lectures/19_model_selection/19_model_selection.html</loc>
+    <loc>/articles/lectures/20_model_selection/20_model_selection.html</loc>
   </url>
   <url>
     <loc>/articles/projects_and_directories.html</loc>
